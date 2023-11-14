@@ -1,0 +1,79 @@
+body
+{
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url("shop.jpg");
+    background-size: cover;
+}
+
+.box
+{
+    max-width: 390px;
+    width: 100%; 
+    background: none;
+    padding: 25px 30px;
+    border-radius: 300;
+    background:rgba(94, 135, 246, 0.461);
+}
+
+.box h1
+{
+    text-align: center;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.856);
+}
+
+.box .details
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12 px 0;
+} 
+
+.box .input-box
+{
+    margin-bottom: 15px;
+    width: calc(100%/2 -20px);
+}
+
+.box .input-box .details
+{
+   display: block;
+   font-weight: 400;
+   margin-bottom: 5px;
+}
+
+.box .input-box input
+{
+   height: 45px;
+   width: 100%;
+   outline: none;
+   border-radius: 1px solid rgb(255, 255, 255);
+   padding-left: 15px; 
+   font-size: 16px; 
+}
+
+.box .input-box input:focus
+{
+    border-color: rgba(35, 35, 201, 0.642);
+}
+
+.box .button input
+{
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 1px solid rgb(255, 255, 255);
+    padding-left: 15px; 
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.box .button input:hover
+{
+    background: #304df576;;
+    border-color: rgba(48, 48, 148, 0.301);
+}
