@@ -1,8 +1,3 @@
-<?php
-session_start();
-include_once 'connect_db.php'; 
-?>
- 
 <!DOCTYPE html>
 <html lan= "en" and dir="Itr">
  <head>
@@ -26,6 +21,20 @@ include_once 'connect_db.php';
             </div>
     
 <body> 
+<?php
+include_once 'connect_db.php'; 
+// Function to check if the user is logged in
+function checkLoggedIn() {
+    session_start();
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
+        echo '</div>';
+        exit(); // Exit the script
+    }
+}
+checkLoggedIn(); // Call the function to check if the user is logged in
+?>
     <br>
 <button onclick="history.back()"> <i class="arrow left"></i>Go Back</button>
 <form class = "box" method="POST">
