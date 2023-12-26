@@ -12,6 +12,29 @@ body {
     border-style: solid;
     border-color: #4c381e;
   }
+
+  .welcome-message {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #ae887b;
+    color: #4c381e;
+    padding: 10px;
+    border-radius: 5px;
+    animation: fadeInOut 30s ease-in-out;
+    display: none;
+  }
+  
+  @keyframes fadeInOut {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    10%,
+    90% {
+      opacity: 1;
+    }
+  }
   
   ul {
     float: right;
