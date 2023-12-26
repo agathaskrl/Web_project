@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Warehouse</title>
-        <link rel="stylesheet" href="adstyle.css?v=3">
+        <link rel="stylesheet" href="adstyle.css?v=4">
         </head>
     <body>     
     <div class="main">
