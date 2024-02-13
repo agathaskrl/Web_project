@@ -2,7 +2,7 @@
 <html lan= "en" and dir="Itr">
  <head>
     <meta charset = "utf-8">
-    <title> Sign up </title> 
+    <title> Savior Sign Up </title> 
     <link rel="stylesheet" href="adstyle.css?v=3">
     <script src="signup.js"></script>
     </head>
@@ -35,8 +35,6 @@ function checkLoggedIn() {
 }
 checkLoggedIn(); // Call the function to check if the user is logged in
 ?>
-    <br>
-<button onclick="history.back()"> <i class="arrow left"></i>Go Back</button>
 <form class = "box" method="POST">
     <h1> 
       Create an account
