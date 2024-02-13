@@ -107,7 +107,7 @@ if(isset($_POST['phone']))
     else{
         $insert = "INSERT INTO user(username,name,surname,phone,password,role) VALUES('$username','$name','$surname','$phone','$password','SAVIOR')";
         mysqli_query($conn, $insert);
-        echo "<script>alert('Account has been created!'); window.location.href = 'admindex.php';</script>";
+        echo "<script>alert('Account has been created!'); window.location.href = 'adindex.php';</script>";
         
     }
 
