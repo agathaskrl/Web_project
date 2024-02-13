@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>ADMIN</title>
+    <title>Admin Index</title>
     <link rel="stylesheet" href="adstyle.css?v=4">
     <!-- Leaflet CSS and JavaScript files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
