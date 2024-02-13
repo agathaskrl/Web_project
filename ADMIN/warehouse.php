@@ -31,10 +31,6 @@ function checkLoggedIn() {
 }
 checkLoggedIn(); // Call the function to check if the user is logged in
 ?>
-  
-<br>
-<button onclick="history.back()"> <i class="arrow left"></i>Go Back</button>
-<br>
 <br>
 <div class="button-container">
       <button><i class="filterwarehouse"></i>Filter Warehouse</button>
