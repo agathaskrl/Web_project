@@ -2,7 +2,7 @@
 <html lan="en" and dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>ANNOUNCEMENT</title>
+        <title>Announcement</title>
         <link rel="stylesheet" href="adstyle.css?v=3">
     </head>
     <body>     
@@ -34,10 +34,8 @@ function checkLoggedIn() {
 }
 checkLoggedIn(); // Call the function to check if the user is logged in
 ?>
-<br>
-<button onclick="history.back()"> <i class="arrow left"></i>Go Back</button>
-<br>
-<br>
+
+
 
 <form class = "box" method="POST">
     <h1> 
