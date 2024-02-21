@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Update Warehouse</title>
-    <link rel="stylesheet" href="adstyle.css?v=4">
+    <link rel="stylesheet" href="adstyle.css?v=5">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="insert.js"></script>
 </head>
@@ -32,8 +32,12 @@
                     <input type="submit" value="Upload"/> 
                 </div>
             </form>
+            <br>
+           <div> 
+            <input type="button" id="deleteelementsbtn" value="Delete Elements"/> 
         </div>
     </div>
+</div>
 
 
 
@@ -41,26 +45,33 @@
 </html>
 
 <?php
-if (isset($_FILES['file'])) {
-    include_once 'connect_db.php';
-
-    // Function to check if the user is logged in
-    function checkLoggedIn()
-    {
-        session_start();
-        if (!isset($_SESSION['username'])) {
-            echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
-            echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
-            echo '</div>';
-            exit(); // Exit the script
-        }
+include_once 'connect_db.php';
+if (isset($_POST['truncate_elements'])) {
+    // Truncate the products table
+    $truncateProducts = mysqli_query($conn, "TRUNCATE TABLE products");
+    if ($truncateProducts) {
+        echo "Products table truncated successfully.";
+    } else {
+        echo "Error truncating products table: " . mysqli_error($conn);
     }
-    checkLoggedIn(); // Call the function to check if the user is logged in 
 
-    // Get the JSON data from the uploaded file
+    // Truncate the categories table
+    $truncateCategories = mysqli_query($conn, "TRUNCATE TABLE categories");
+    if ($truncateCategories) {
+        echo "Categories table truncated successfully.";
+    } else {
+        echo "Error truncating categories table: " . mysqli_error($conn);
+    }
+
+    // Stop further execution
+    exit();
+}
+if (isset($_FILES['file'])) {
+    
+    //json data from te file
     $jsonData = file_get_contents($_FILES['file']['tmp_name']);
 
-    // Decode the JSON data into an associative array
+    //decode the json into an array 
     $data = json_decode($jsonData, true);
 
     if ($data === null) {
@@ -68,22 +79,22 @@ if (isset($_FILES['file'])) {
         exit();
     }
 
-    // Prepare the statement outside the loop
+    //prepare the statements
     $sql = "INSERT INTO products (id, name, category, detail_name, detail_value, quantity) VALUES (?, ?, ?, ?, ?, FLOOR(RAND()*(200-50+1))+50) 
         ON DUPLICATE KEY UPDATE name = VALUES(name), category = VALUES(category), detail_name = VALUES(detail_name), detail_value = VALUES(detail_value), quantity = FLOOR(RAND()*(200-50+1))+50;";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("issss", $id, $name, $category, $detail_name, $detail_value);
-// Loop through each item in the data array
+//a loop for eah item form the array 
 foreach ($data['items'] as $item) {
-    // Check if the record already exists in the database
+    //check if any record exists in the database
     $existingRecord = mysqli_query($conn, "SELECT * FROM products WHERE id = '{$item['id']}'");
     if (mysqli_num_rows($existingRecord) > 0) {
         echo "Record with ID {$item['id']} already exists. Skipping insertion.<br>";
         continue;
     }
 
-    // Extract item details
+    //extract the data from the array 
     $id = $item['id'];
     $name = $item['name'];
     $category = $item['category'];
@@ -91,7 +102,7 @@ foreach ($data['items'] as $item) {
         $detail_name = isset($detail['detail_name']) ? $detail['detail_name'] : '';
         $detail_value = isset($detail['detail_value']) ? $detail['detail_value'] : '';
 
-        // Execute the statement
+        //execute the statements 
         if ($stmt->execute()) {
             echo "Item inserted successfully.<br>";
         } else {
@@ -99,13 +110,36 @@ foreach ($data['items'] as $item) {
         }
     }
 }
+if (isset($_FILES['file'])) {
+    $sql2 = "INSERT INTO categories (id, category_name) VALUES (?, ?) ON DUPLICATE KEY UPDATE category_name = VALUES(category_name)";
+    $stmt2 = $conn->prepare($sql2);
+    $stmt2->bind_param("is", $id, $category_name);
+    //We choose categories bracause thats what its called in the json so we can extract the data 
+    foreach ($data['categories'] as $category) {
+        //extraxt 
+        $id = $category['id'];
+        $category_name = $category['category_name'];
 
-// Close the prepared statement
-$stmt->close();
-
-// Close the database connection
-$conn->close();
-} else {
-echo "No file uploaded!";
+        
+        $existingRecord = mysqli_query($conn, "SELECT * FROM categories WHERE id = '{$id}'");
+        if (mysqli_num_rows($existingRecord) > 0) {
+            echo "Record with ID {$id} already exists. Skipping insertion.<br>";
+            continue;
+        }
+        
+        if ($stmt2->execute()) {
+            echo "Item inserted successfully.<br>";
+            
+        } else {
+            echo "Error inserting item: " . $stmt2->error;
+        }
+    }
 }
+
+
+// Close the prepared statements
+$stmt->close();
+$stmt2->close();
+$conn->close();
+} 
 ?>
