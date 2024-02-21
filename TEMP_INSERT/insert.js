@@ -1,22 +1,50 @@
 $(document).ready(function () {
   $("#uploadForm").submit(function (event) {
-    event.preventDefault(); // Prevent the default form submission
-    console.log("Form submitted"); // Check if form submission is triggered
+    event.preventDefault();
+    console.log("Form submitted");
 
-    var formData = new FormData(this); // Create form data object
+    var fileInput = $("#file-selector")[0].files[0]; //Get the file input element
+    if (!fileInput) {
+      //if no file is selected alert the user
+      alert("Please select a file to upload");
+      return;
+    }
+
+    var formData = new FormData(this); //cretae data from the object
 
     $.ajax({
       type: "POST",
-      url: "updatewarehouse.php", // Specify the URL of your PHP script
-      data: formData, // Pass form data to the server
+      url: "updatewarehouse.php",
+      data: formData, //pass the data from the form to the server
       processData: false,
       contentType: false,
-      success: function (response) {
-        alert(response); // Display the response from the server
+      success: function () {
+        alert("Insertion successful!");
+        location.reload(); //reload the page
       },
-      error: function (xhr, status, error) {
-        console.error(xhr.responseText); // Log any errors to the console
+      error: function (xhr) {
+        console.error(xhr.responseText); //errors to the console
       },
     });
+  });
+});
+
+$(document).ready(function () {
+  $("#deleteelementsbtn").click(function () {
+    if (confirm("Are you sure you want to delete all elements?")) {
+      //confirm so that the user does not any mistakes
+      $.ajax({
+        type: "POST",
+        url: "updatewarehouse.php",
+        data: { truncate_elements: true },
+        success: function () {
+          alert("Elements deleted successful!");
+          location.reload();
+        },
+        error: function (xhr) {
+          console.error(xhr.responseText);
+        },
+      });
+    }
   });
 });
