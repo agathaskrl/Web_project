@@ -170,28 +170,48 @@ ul li a:hover {
 .form-group input:focus {
   border-color: rgba(174, 136, 123, 1);
 }
-/* Button for go back and filter basic for all pages of admin */
+
+/* for the form in the warehouse to fetch the data in a box like  */
+.form-box {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.form-box table {
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.form-box th,
+.form-box td {
+  padding: 8px;
+  border: 3px solid #4c381e;
+}
+
+.form-box th {
+  background-color: rgba(174, 136, 123, 0.808);
+  font-weight: 700;
+  color: #fff;
+  text-align: left;
+}
+
+.form-box tbody tr:nth-child(even) {
+  background-color: rgba(174, 136, 123, 0.808);
+}
+
+/* Button filter basic for all pages of admin */
 button {
   background-color: rgba(174, 136, 123, 0.808);
   border: none;
-  color: #352715;
+  color: #ffffff;
   cursor: pointer;
   border-radius: 20px;
   padding: 8px 16px;
   margin-left: 20px;
   margin-right: 20px;
-}
-
-button i.arrow {
-  border: solid #4c381e;
-  border-width: 0 2px 2px 0;
-  display: inline-block;
-  padding: 3px;
-  transform: rotate(135deg);
-}
-
-button i.arrow.right {
-  transform: rotate(-45deg);
 }
 
 /* update items table and upload */
