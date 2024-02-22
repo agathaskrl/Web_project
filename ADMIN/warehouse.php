@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Warehouse</title>
-        <link rel="stylesheet" href="adstyle.css?v=4">
+        <link rel="stylesheet" href="adstyle.css?v=7">
         </head>
     <body>     
     <div class="main">
@@ -19,8 +19,10 @@
                 </div>
 <body>
 <?php
-// Function to check if the user is logged in
-function checkLoggedIn() {
+include_once 'connect_db.php';
+
+//function to check if the user is logged in
+function checkLoggedIn() { 
     session_start();
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
@@ -38,31 +40,40 @@ checkLoggedIn(); // Call the function to check if the user is logged in
 
     </div>
 <br>
-<div class="form-container">
-  <form>
-    <div class="form-group">
-      <label for="item">Item Name:</label>
-      <input type="text" id="itemname" name="itemnaame">
-    </div>
+<div class="form-box">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Number</th>
+                        <th>Item Name</th>
+                        <th>Item Category</th>
+                        <th>Quantity</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $sql = "SELECT products.name AS name, categories.category_name AS category_name, products.quantity, products.detail_name, products.detail_value 
+                    FROM products 
+                    JOIN categories ON products.category = categories.id;";
+                    $result = mysqli_query($conn, $sql);
 
-    <div class="form-group">
-      <label for="itemctgr">Item Category:</label>
-      <input type="text" id="itemctgr" name="itemctgr" >
-    </div>
-
-    <div class="form-group">
-      <label for="quantity">Quantity:</label>
-      <input type="quantity" id="quantity" name="quantity" >
-    </div>
-
-    <div class="form-group">
-      <label for="isinveh">On Vehicle:</label>
-      <input type="isinvehy" id="isinveh" name="isnveh" >
-    </div>
-    <div class="form-group">
-    </div>
-  </form>
-</div>
+                    $counter = 1; //make a counter initialize 1 
+                    //fetch and dispaly each products
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "<tr>";
+                        echo "<td>{$counter}</td>"; // Output the counter
+                        echo "<td>{$row['name']}</td>";
+                        echo "<td>{$row['category_name']}</td>";
+                        echo "<td>{$row['quantity']}</td>";
+                        echo "<td>{$row['detail_name']} - {$row['detail_value']}</td>";
+                        echo "</tr>";
+                        $counter++;
+                    }
+                    ?>
+                </tbody>
+            </table>
+        </div>
 
 </body>
 
