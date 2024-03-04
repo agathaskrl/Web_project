@@ -1,0 +1,294 @@
+/* Admin nav bar and body css for all admin pages  */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: rgb(247, 240, 235);
+}
+
+.navbar {
+  height: 80px;
+  margin: auto;
+  background-color: rgba(174, 136, 123, 1);
+  border-style: solid;
+  border-color: rgba(76, 56, 30, 1);
+}
+
+.welcome-message {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  background-color: rgba(174, 136, 123, 1);
+  color: rgba(76, 56, 30, 1);
+  padding: 10px;
+  border-radius: 5px;
+  animation: fadeInOut 30s ease-in-out;
+  display: none;
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  10%,
+  90% {
+    opacity: 1;
+  }
+}
+
+ul {
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul li {
+  list-style: none;
+  margin-left: 30px;
+  margin-top: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+ul li a {
+  list-style: none;
+  margin-left: 20px;
+  margin-top: 15px;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  color: rgba(76, 56, 30, 1);
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: 0.4s ease-in-out;
+}
+
+ul li a:hover {
+  color: rgba(240, 222, 208, 1);
+}
+
+/* Create an account css admin page  */
+.box {
+  width: 50%;
+  margin: 50px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.box h1 {
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  color: rgba(76, 56, 30, 0.619);
+}
+
+.box .details {
+  display: block;
+  font-weight: 400;
+  margin-bottom: 5px;
+}
+
+.box .input-box {
+  margin-bottom: 20px;
+}
+
+.box .input-box input {
+  height: 40px;
+  width: calc(100% - 30px);
+  outline: none;
+  border: 1px solid rgba(174, 136, 123, 1);
+  border-radius: 8px;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.box .input-box input:focus {
+  border-color: rgba(174, 136, 123, 1);
+}
+
+.box .button input {
+  height: 45px;
+  width: 100%;
+  outline: none;
+  border: 3px solid rgba(174, 136, 123, 1);
+  background: rgba(249, 245, 242, 0.82);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(76, 56, 30, 1);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+.box .button input:hover {
+  background: rgb(252, 252, 252);
+  border-color: rgba(174, 136, 123, 1);
+}
+
+/* Warehouse css */
+.form-container form {
+  grid-template-columns: repeat(2, 1fr);
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: auto;
+  border: 3px solid rgba(174, 136, 123, 1);
+  width: 30%;
+}
+
+.form-group {
+  width: 90%;
+  margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.form-group label {
+  display: flex;
+  font-weight: 600;
+  margin-bottom: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.form-group input {
+  height: 40px;
+  width: 70%;
+  outline: none;
+  border: 3px solid rgba(174, 136, 123, 1);
+  margin-left: 20px;
+  border-radius: 8px;
+  padding-left: 15px;
+  font-size: 16px;
+}
+
+.form-group input:focus {
+  border-color: rgba(174, 136, 123, 1);
+}
+
+/* for the form in the warehouse to fetch the data in a box like  */
+.form-box {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.form-box table {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.form-box th,
+.form-box td {
+  padding: 8px;
+  border: 3px solid #4c381e;
+}
+
+.form-box th {
+  background-color: rgba(174, 136, 123, 0.808);
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.form-box tbody tr:nth-child(even) {
+  background-color: rgba(174, 136, 123, 0.808);
+}
+
+/* Button filter basic for all pages of admin */
+button {
+  background-color: rgba(174, 136, 123, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.delbutton {
+  background-color: rgba(205, 16, 16, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.container .deleteelementsbtn {
+  height: 45px;
+  width: 50%;
+  background: rgb(156, 7, 7);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+
+/* update items table and upload */
+.container {
+  text-align: center;
+  font-style: italic;
+  font-weight: 600;
+  color: rgba(76, 56, 30, 0.879);
+  background: rgb(252, 252, 252);
+  background-color: rgb(247, 240, 235);
+}
+
+.container input {
+  height: 45px;
+  width: 50%;
+  background: rgb(252, 252, 252);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  font-style: italic;
+  color: rgba(76, 56, 30, 1);
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
+}
+/*autocomplete display */
+.ui-autocomplete {
+  display:block;
+  max-height: 100px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+}
+
+.ui-helper-hidden-accessible {
+display: none;
+}
+
+/* Style for the autocomplete results container */
+.ui-autocomplete {
+max-height: 300px;
+overflow-y: auto;
+width: 200px; /* Adjust the width as needed */
+}
+
+/* Style for individual items in the autocomplete menu */
+.ui-autocomplete li {
+padding: 8px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+/* Highlight on hover */
+.ui-autocomplete li:hover {
+background-color: #f0f0f0;
+}

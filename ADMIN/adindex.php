@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
-    <title>Admin Index</title>
-    <link rel="stylesheet" href="adstyle.css?v=4">
+    <title>Your Title Here</title>
+    <link rel="stylesheet" href="adstyle.css?v=5">
     <!-- Leaflet CSS and JavaScript files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
