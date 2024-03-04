@@ -13,7 +13,7 @@
                 <li><a href="warehouse.php">WAREHOUSE</a></li>
                 <li><a href="statistics.php">STATISTICS</a></li>
                 <li><a href="savsignup.php">CREATE ACCOUNT</a></li>
-                <li><a href="announcement.php">ANNOUNCEMENT</a></li>
+                <li><a href="adminannouncement.php">ANNOUNCEMENT</a></li>
                 <li><a href="logout.php">LOG OUT</a></li>              
             </ul>
         </div>
