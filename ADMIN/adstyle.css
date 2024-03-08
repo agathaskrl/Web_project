@@ -261,7 +261,7 @@ button {
   transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
-/* update items table and upload */
+
 .container {
   text-align: center;
   font-style: italic;
@@ -298,21 +298,21 @@ button {
   display: none;
 }
 
-/* Style for the autocomplete results container */
+/* autocomplete */
 .ui-autocomplete {
   max-height: 300px;
   overflow-y: auto;
   width: 200px; /* Adjust the width as needed */
 }
 
-/* Style for individual items in the autocomplete menu */
+
 .ui-autocomplete li {
   padding: 8px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-/* Highlight on hover */
+
 .ui-autocomplete li:hover {
   background-color: #f0f0f0;
 }
