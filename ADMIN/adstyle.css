@@ -223,7 +223,31 @@ button {
   margin-left: 20px;
   margin-right: 20px;
 }
+.plus-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(174, 136, 123, 0.808);
+  color: #ffffff;
+  font-size: 18px; /* Adjust the font size as needed */
+  border: none;
+  cursor: pointer;
+  outline: none;
+  position: relative;
+}
 
+.plus-btn::before,
+.plus-btn::after {
+  content: "+";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.plus-btn::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
 .container .deleteelementsbtn {
   height: 45px;
   width: 50%;
@@ -261,7 +285,7 @@ button {
 }
 /*autocomplete display */
 .ui-autocomplete {
-  display:block;
+  display: block;
   max-height: 100px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -271,24 +295,24 @@ button {
 }
 
 .ui-helper-hidden-accessible {
-display: none;
+  display: none;
 }
 
 /* Style for the autocomplete results container */
 .ui-autocomplete {
-max-height: 300px;
-overflow-y: auto;
-width: 200px; /* Adjust the width as needed */
+  max-height: 300px;
+  overflow-y: auto;
+  width: 200px; /* Adjust the width as needed */
 }
 
 /* Style for individual items in the autocomplete menu */
 .ui-autocomplete li {
-padding: 8px;
-cursor: pointer;
-transition: background-color 0.3s ease;
+  padding: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 /* Highlight on hover */
 .ui-autocomplete li:hover {
-background-color: #f0f0f0;
+  background-color: #f0f0f0;
 }
