@@ -7,7 +7,7 @@ $(function () {
 
         // Fetch data
         $.ajax({
-          url: "ajax.php",
+          url: "adanajax.php",
           type: "post",
           dataType: "json",
           data: {
