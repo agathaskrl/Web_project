@@ -43,15 +43,15 @@ body {
     color:#f0ded0;
   }
   
-button {
-    background-color: #ae887b;
-    border: #ae887b;
-    color: #fff;
-    font-size: 20px;
+  button {
+    background-color: rgba(174, 136, 123, 0.808);
+    border: none;
+    color: #ffffff;
     cursor: pointer;
-    border-radius: 30px;
-    padding: 16px 32px;
-    margin-top:15px;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-left: 20px;
+    margin-right: 20px;
     float:right;
   }
 
@@ -152,10 +152,10 @@ button {
 
 /* Style for product items */
 .ui-autocomplete .product-item {
-  background-color: #09ff09;
+  background-color: #f0ded0;
 }
 
 /* Style for category items */
 .ui-autocomplete .category-item {
-  background-color: #0505f4;
+  background-color: #ae887b;
 }

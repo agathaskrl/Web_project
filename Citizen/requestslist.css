@@ -42,3 +42,34 @@ body {
   ul li a:hover {
     color:#f0ded0;
   }
+
+  /* for the form in the requestslist to fetch the data in a box like  */
+.form-box {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.form-box table {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.form-box th,
+.form-box td {
+  padding: 8px;
+  border: 3px solid #4c381e;
+}
+
+.form-box th {
+  background-color: rgba(174, 136, 123, 0.808);
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+}
+
+.form-box tbody tr:nth-child(even) {
+  background-color: rgba(174, 136, 123, 0.808);
+}
