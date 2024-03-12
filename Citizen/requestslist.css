@@ -1,49 +1,49 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background-color:#f0ded0;
-  }
-  
-  .navbar {
-    height: 70px;
-    margin: auto;
-    background-color: #ae887b;
-    border-style: solid;
-    border-color: #4c381e;
-  }
-  
-  ul {
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  ul li {
-    list-style: none;
-    margin-left: 50px;
-    margin-top: 15px;
-    font-size: 15px;
-    text-align: center;
-  }
-  
-  ul li a {
-    list-style: none;
-    font-size: 15px;
-    text-align: center;
-    text-decoration: none;
-    color: #4c381e;
-    font-family: sans-serif;
-    font-weight: bold;
-    transition: 0.4s ease-in-out;
-  }
-  
-  ul li a:hover {
-    color:#f0ded0;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f0ded0;
+}
 
-  /* for the form in the requestslist to fetch the data in a box like  */
+.navbar {
+  height: 70px;
+  margin: auto;
+  background-color: #ae887b;
+  border-style: solid;
+  border-color: #4c381e;
+}
+
+ul {
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul li {
+  list-style: none;
+  margin-left: 50px;
+  margin-top: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+ul li a {
+  list-style: none;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  color: #4c381e;
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: 0.4s ease-in-out;
+}
+
+ul li a:hover {
+  color: #f0ded0;
+}
+
+/* for the form in the requestslist to fetch the data in a box like  */
 .form-box {
   width: 90%;
   margin: 0 auto;
@@ -51,8 +51,10 @@ body {
 }
 
 .form-box table {
-  width: 90%;
+  width: 70%;
   margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
   margin-top: 20px;
   border-collapse: collapse;
 }
@@ -61,15 +63,27 @@ body {
 .form-box td {
   padding: 8px;
   border: 3px solid #4c381e;
+  text-align: center;
 }
 
 .form-box th {
   background-color: rgba(174, 136, 123, 0.808);
   font-weight: 700;
   color: #fff;
-  text-align: center;
 }
 
 .form-box tbody tr:nth-child(even) {
+  text-align: center;
   background-color: rgba(174, 136, 123, 0.808);
+}
+
+.offerbutton {
+  background-color: rgba(16, 224, 20, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
