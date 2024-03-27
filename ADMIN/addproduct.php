@@ -57,7 +57,7 @@
    
 
    <div class="button">
-        <input type="submit" value="Edit Warehouse" onclick="window.location.href='warehouse.php'"">
+        <input type="submit" value="Add Product" onclick="window.location.href='warehouse.php'"">
     </div>
 
 </form>
