@@ -213,6 +213,9 @@ button {
   margin-left: 20px;
   margin-right: 20px;
 }
+.button-container {
+  text-align: right;
+}
 .delbutton {
   background-color: rgba(205, 16, 16, 0.808);
   border: none;
@@ -223,6 +226,41 @@ button {
   margin-left: 20px;
   margin-right: 20px;
 }
+.editbutton {
+  background-color: rgba(16, 205, 25, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.filterbtn {
+  background-color: rgba(53, 246, 62, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 6px 10px;
+  width: 70px;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.togbtn {
+  background-color: rgba(174, 136, 123, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .plus-btn {
   width: 30px;
   height: 30px;
@@ -248,6 +286,7 @@ button {
 .plus-btn::after {
   transform: translate(-50%, -50%) rotate(90deg);
 }
+
 .container .deleteelementsbtn {
   height: 45px;
   width: 50%;
@@ -260,8 +299,19 @@ button {
   cursor: pointer;
   transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
-
-
+.category-con {
+  display: none;
+  position: relative;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  width: 200px;
+  height: 150px;
+  margin-bottom: 10px;
+  overflow-y: auto;
+}
+/* update items table and upload */
 .container {
   text-align: center;
   font-style: italic;
@@ -298,13 +348,12 @@ button {
   display: none;
 }
 
-/* autocomplete */
+/* Style for the autocomplete results container */
 .ui-autocomplete {
   max-height: 300px;
   overflow-y: auto;
-  width: 200px; /* Adjust the width as needed */
+  width: 200px;
 }
-
 
 .ui-autocomplete li {
   padding: 8px;
@@ -312,7 +361,14 @@ button {
   transition: background-color 0.3s ease;
 }
 
-
 .ui-autocomplete li:hover {
   background-color: #f0f0f0;
+}
+
+#map {
+  position: bottom;
+  top: 2pc;
+  bottom: 10pc;
+  height: 50%;
+  width: 50%;
 }
