@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lan="en" and dir="ltr">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <title>Warehouse</title>
-    <link rel="stylesheet" href="adstyle.css?v=8">
+    <link rel="stylesheet" href="adstyle.css?v=16">
 </head>
 <body>     
     <div class="main">
@@ -21,7 +21,7 @@
         <?php
         include_once 'connect_db.php';
 
-        //function to check if the user is logged in
+        // Function to check if the user is logged in
         function checkLoggedIn() { 
             session_start();
             if (!isset($_SESSION['username'])) {
@@ -36,11 +36,25 @@
 
         <br>
         <div class="button-container">
-            <button><i class="filterwarehouse"></i>Filter Warehouse</button>
             <button onclick="location.href='updatewarehouse.php'"><i class="Updatewarehouse"></i>Update Warehouse</button>
-            <button onclick="location.href='editwarehouse.php'"><i class="Editwarehouse"></i>Edit Warehouse</button>
+            <button onclick="location.href='addproduct.php'"><i class="addproduct"></i>Add Product</button>
+        </div>
+        <!-- Button to toggle category checkboxes -->
+        <button onclick="toggleCategories()" id="togbtn" class="togbtn">Filter Categories</button>
+        <br>
+        <div id="category-con" class="category-con">
+            <?php
+            $category_sql = "SELECT * FROM categories";
+            $category_result = mysqli_query($conn, $category_sql);
+            while ($category_row = mysqli_fetch_assoc($category_result)) {
+                echo "<input type='checkbox' name='category[]' value='{$category_row['id']}' style='display: inline-block; margin-right: 5px;'>";
+                echo "<label style='display: inline-block;'>{$category_row['category_name']}</label><br>";
+            }
+            ?>
         </div>
         <br>
+        <button id="filterbtn" class="filterbtn">Apply</button>
+
         <div class="form-box">
             <table>
                 <thead>
@@ -51,46 +65,125 @@
                         <th>Quantity</th>
                         <th>Details</th>
                         <th>On Vehicle</th>
-                        <th>Action</th>
+                        <th>Delete</th>
+                        <th>Edit</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <?php
-                    $sql = "SELECT products.id AS id, products.name AS name, categories.category_name AS category_name, products.quantity, products.detail_name, products.detail_value, products.on_vehicle 
-                    FROM products 
-                    JOIN categories ON products.category = categories.id;";
-                    $result = mysqli_query($conn, $sql);
+                <tbody id="products">
 
-                    $counter = 1; //make a counter initialize 1 
-                    //fetch and dispaly each products
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "<tr>";
-                        echo "<td>{$counter}</td>"; // Output the counter
-                        echo "<td>{$row['name']}</td>";
-                        echo "<td>{$row['category_name']}</td>";
-                        echo "<td>{$row['quantity']}</td>";
-                        echo "<td>{$row['detail_name']} - {$row['detail_value']}</td>";
-                        echo "<td>{$row['on_vehicle']}</td>";
-                        echo "<td><form method='post'><input type='hidden' name='product_id' value='{$row['id']}'><button type='submit' class='delbutton' name='delete' onclick='delete.js'>Delete</button></form></td>";
-                        echo "</tr>";
-                        $counter++;
-                    }
+                        <?php
+                        $sql = "SELECT products.id AS id, products.name AS name, categories.category_name AS category_name, products.quantity, products.detail_name, products.detail_value, products.on_vehicle 
+                        FROM products 
+                        JOIN categories ON products.category = categories.id";
+                
 
-                    if (isset($_POST['delete'])) {
-                        $product_id = $_POST['product_id'];
-                        $delete_sql = "DELETE FROM products WHERE id = $product_id";
-                        if (mysqli_query($conn, $delete_sql)) {
-                            // Reload the page after successful deletion
-                            echo "<meta http-equiv='refresh' content='0'>";
-                        } else {
-                            echo "Error deleting record: " . mysqli_error($conn);
+                        $result = mysqli_query($conn, $sql);
+
+                        $counter = 1; // Initialize the counter
+                        // Fetch and display each product
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "<tr>";
+                            echo "<td>{$counter}</td>"; // Output the counter
+                            echo "<td>{$row['name']}</td>";
+                            echo "<td>{$row['category_name']}</td>";
+                            echo "<td>{$row['quantity']}</td>";
+                            echo "<td>{$row['detail_name']} - {$row['detail_value']}</td>";
+                            echo "<td>{$row['on_vehicle']}</td>";
+                            echo "<td>
+                                    <form method='post'>
+                                        <input type='hidden' name='product_id' value='{$row['id']}'>
+                                        <button type='submit' class='delbutton' name='delete'>Delete</button>
+                                    </form>
+                                </td>";
+                            echo "<td>
+                                    <form method='get' action='editproduct.php'> 
+                                        <input type='hidden' name='product_id' value='{$row['id']}'>
+                                        <button type='submit' class='editbutton' name='edit'>Edit</button>
+                                    </form>
+                                </td>";
+                            echo "</tr>";
+                            $counter++;
                         }
-                        
-                    }
-                    ?>
+
+                        if (isset($_POST['delete'])) {
+                            $product_id = $_POST['product_id'];
+                            $delete_sql = "DELETE FROM products WHERE id = $product_id";
+                            if (mysqli_query($conn, $delete_sql)) {
+                                // Reload the page after successful deletion
+                                echo "<meta http-equiv='refresh' content='0'>";
+                            } else {
+                                echo "Error deleting record: " . mysqli_error($conn);
+                            }
+                        }
+                        ?>
                 </tbody>
             </table>
         </div>
     </div>
+
+
+
+<script> 
+function toggleCategories() {
+  var categoryContainer = document.getElementById("category-con");
+  categoryContainer.style.display =
+    categoryContainer.style.display === "none" ? "block" : "none";
+}
+document.getElementById("filterbtn").addEventListener("click", function() {
+    applyFilter();
+});
+
+//function for the selected categories to send them to the server
+function applyFilter() {
+    var selectedCategories = [];
+    var categoryCheckboxes = document.getElementsByName("category[]");
+
+    //loop to find the selected categories
+    for (var i = 0; i < categoryCheckboxes.length; i++) {
+        if (categoryCheckboxes[i].checked) {
+            selectedCategories.push(categoryCheckboxes[i].value);
+        }
+    }
+
+    //Send the categories to the table with ajax 
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "filter_products.php", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        //update the table in the warehouse.php
+        var productsTable = document.getElementById("products");
+        productsTable.innerHTML = xhr.responseText;
+    }
+};
+
+    xhr.send(JSON.stringify({ categories: selectedCategories }));
+}
+
+//Function to reload the page if none category is selected 
+document.getElementById("filterbtn").addEventListener("click", function() {
+    var categoryCheckboxes = document.getElementsByName("category[]");
+    var anyChecked = false;
+
+    // Check if any category is checked
+    for (var i = 0; i < categoryCheckboxes.length; i++) {
+        if (categoryCheckboxes[i].checked) {
+            anyChecked = true;
+            break;
+        }
+    }
+
+    //if no category is checked reload the page to get all the products back 
+    if (!anyChecked) {
+        window.location.reload();
+    } 
+    //else apply the filter 
+    else {
+        applyFilter();
+    }
+});
+</script>
+
 </body>
 </html>
