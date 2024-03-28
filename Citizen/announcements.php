@@ -14,7 +14,9 @@ $result = $conn->query($sql);
 <head>
     <meta charset="utf-8">
     <title>Announcements</title>
-    <link rel="stylesheet" href="requestslist.css?v=2">
+    <link rel="stylesheet" href="announcements.css?v=3">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="saveoffer.js"></script>
 </head>
 
 <body>
