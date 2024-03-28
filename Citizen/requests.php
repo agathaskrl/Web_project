@@ -52,6 +52,7 @@
 </body>
 
 <?php
+session_start(); // Start the session if it's not started already
 include_once 'connect_db.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -67,17 +68,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $alldemand .= ($alldemand == "" ? "" : ",") . $ordemand;
     }
 
-    $sql = "INSERT INTO requests (req_product, demand) VALUES (?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ss", $allreq_product, $alldemand);
+    // Retrieve username from session
+    $usrnm = $_SESSION['username'];
 
-    if ($stmt->execute()) {
-        header("Location: " . $_SERVER['REQUEST_URI']);
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;
+    // Fetch user information from the database
+    $query = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
+    $result = mysqli_query($conn, $query);
+    $user = mysqli_fetch_assoc($result);
+
+    // Check if user information is fetched successfully
+    if ($user) {
+        $civ_name = addslashes($user['name']); // Escape special characters
+        $civ_surname = addslashes($user['surname']); // Escape special characters
+        $civ_phone = addslashes($user['phone']); // Escape special characters
+
+        // Insert data into the requests table
+        $sql = "INSERT INTO requests (req_product, demand, civ_name, civ_surname, civ_phone) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", $allreq_product, $alldemand, $civ_name, $civ_surname, $civ_phone);
+
+        if ($stmt->execute()) {
+            header("Location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
+
+        $stmt->close();
     }
-
-    $stmt->close();
 }
 ?>
