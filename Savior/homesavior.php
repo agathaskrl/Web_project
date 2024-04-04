@@ -23,17 +23,17 @@
         </ul>
     </div>
     <?php
-// Function to check if the user is logged in
+//function to check if the user is logged in
 function checkLoggedIn() {
     session_start();
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
         echo '</div>';
-        exit(); // Exit the script
+        exit(); 
     }
 }
-checkLoggedIn(); // Call the function to check if the user is logged in
+checkLoggedIn(); 
 ?>
 
     <div class="welcome-message">
@@ -43,6 +43,19 @@ checkLoggedIn(); // Call the function to check if the user is logged in
             echo "Welcome, $username!";
         } 
         ?>
+          <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const welcomeMessage = document.querySelector('.welcome-message');
+
+        // Show the welcome message
+        welcomeMessage.style.display = 'block';
+
+        // Set a timeout to hide the welcome message after 30 seconds
+        setTimeout(function () {
+            welcomeMessage.style.display = 'none';
+        }, 30000);
+    });
+</script>
     </div>
     <br>
 </div>
@@ -56,22 +69,40 @@ checkLoggedIn(); // Call the function to check if the user is logged in
     
             <div class="map" id="map" style="width: 100%; height: 450px;"></div>
     </div>
-        <script src="map.js"> </script>
+        <script src="map-pol.js"> </script>
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const welcomeMessage = document.querySelector('.welcome-message');
+        //fnction to get the location of the user
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+         //show and get the coordinates
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            // Send coordinates to server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "insert_coordinates.php", true); //other file not to get things mixed
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("lat=" + lat + "&lng=" + lng);
+        }
 
-        // Show the welcome message
-        welcomeMessage.style.display = 'block';
+        //call getLocation() when the page loads so its automated 
+        window.onload = getLocation;
+    </script>
 
-        // Set a timeout to hide the welcome message after 30 seconds
-        setTimeout(function () {
-            welcomeMessage.style.display = 'none';
-        }, 30000);
-    });
-</script>
+
+  
 
 </body>
 </html>
