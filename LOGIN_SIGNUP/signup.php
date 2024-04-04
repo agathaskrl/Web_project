@@ -76,11 +76,17 @@ if(isset($_POST['phone']))
     $select = "SELECT * FROM user WHERE username='$username' && phone='$phone'"; 
     $result = mysqli_query($conn, $select);
     $resultCheck = mysqli_num_rows($result);
-
+    $select2 = "SELECT * FROM user WHERE username='$username'"; 
+    $result2 = mysqli_query($conn, $select2);
+    $resultCheck2 = mysqli_num_rows($result2);
     if($resultCheck > 0)
     { 
         echo "<script>alert('User already exists!'); window.location.href = 'signup.php';</script>";
     } 
+    if($resultCheck2>0) 
+    {
+        echo "<script>alert('Username already taken. Please pick another!'); window.location.href = 'signup.php';</script>";
+    }
     else{
         $insert = "INSERT INTO user(username,name,surname,phone,password,role) VALUES('$username','$name','$surname','$phone','$password', 'CITIZEN')";
         mysqli_query($conn, $insert);
