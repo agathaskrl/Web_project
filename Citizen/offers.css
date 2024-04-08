@@ -76,3 +76,14 @@ body {
     text-align: center;
     background-color: rgba(174, 136, 123, 0.808);
   }
+
+ .cancelbutton {
+    background-color: rgba(205, 16, 16, 0.808);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    border-radius: 20px;
+    padding: 8px 16px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
