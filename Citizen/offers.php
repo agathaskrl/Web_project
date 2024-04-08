@@ -3,7 +3,7 @@ session_start();
 include_once 'connect_db.php';
 
 // Fetch data from the database including ret_date, subm_date
-$sql = "SELECT offer_id, product_type, quantity, subm_date, ret_date FROM offers";
+$sql = "SELECT offer_id, item, quantity, subm_date, ret_date FROM offers";
 $result = $conn->query($sql);
 
 ?>
@@ -46,7 +46,7 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
-                echo "<td>" . $row["product_type"] . "</td>";
+                echo "<td>" . $row["item"] . "</td>";
                 echo "<td>" . $row["quantity"] . "</td>";
                 echo "<td>" . $row["subm_date"] . "</td>";
                 echo "<td>" . $row["ret_date"] . "</td>";
