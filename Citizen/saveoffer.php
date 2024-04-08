@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $phone = addslashes($user['phone']); // Escape special characters
 
         // Example of inserting data into a database table
-        $sql = "INSERT INTO offers (product_type, quantity, name, surname, phone) VALUES ('$item', '$quantity', '$name', '$surname', '$phone')";
+        $sql = "INSERT INTO offers (item, quantity, name, surname, phone) VALUES ('$item', '$quantity', '$name', '$surname', '$phone')";
 
         // Execute SQL query
         if (mysqli_query($conn, $sql)) {
