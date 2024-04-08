@@ -2,7 +2,7 @@
 session_start();
 include_once 'connect_db.php';
 
-//cancel button 
+//handle offer cancellation via button 
 if(isset($_POST['cancel'])) {
     // Check if offer_id is set and is a valid integer
     if(isset($_POST['offer_id']) && filter_var($_POST['offer_id'], FILTER_VALIDATE_INT)) {
