@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Admin Index</title>
-    <link rel="stylesheet" href="adstyle.css?v=5">
+    <link rel="stylesheet" href="adstyle.css">
     <!-- Leaflet CSS and JavaScript files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
@@ -53,12 +53,10 @@ checkLoggedIn(); // Call the function to check if the user is logged in
         <button>Search</button>
     </div>
     <button><i class="filtermap"></i>Filter Map</button>
-    <br>
-    <br>
-    <div class="map" id="map" style="width: 100%px; height: 300px;"></div>
-    <br>
-    <br>
-    <script src="map.js"></script>
+
+    <div class="map" id="map" style="width: 100%; height: 350px;"></div>
+
+    <script src="adminmap.js"></script>
 
 
 <script>
