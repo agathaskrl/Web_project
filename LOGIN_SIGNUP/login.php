@@ -39,7 +39,7 @@ if(isset($_POST['username']))
     if($resultCheck3 > 0)
     {
         $_SESSION['username'] = $username;
-		header("Location: asindex.php"); //edw tha mpei h main selida tou admin
+		header("Location: adindex.php"); //edw tha mpei h main selida tou admin
     }
     else{
     echo "<script>alert('Wrong username or password!'); </script>"; 
