@@ -105,11 +105,15 @@ if(isset($_POST['phone']))
     else{
         $insert = "INSERT INTO user(username,name,surname,phone,password,role) VALUES('$username','$name','$surname','$phone','$password','SAVIOR')";
         mysqli_query($conn, $insert);
+        $insert2 = "INSERT INTO vehicle(sav_username) VALUES('$username')";
+        mysqli_query($conn, $insert2);
         echo "<script>alert('Account has been created!'); window.location.href = 'adindex.php';</script>";
-        
     }
 
-};
+}; 
+
+
+
 ?>
 </body>
 
