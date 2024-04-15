@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: rgb(247, 240, 235);
+  background-color: #f0ded0;
 }
 
 .navbar {
@@ -23,7 +23,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   animation: fadeInOut 30s ease-in-out;
-  display: none;
+  position: absolute;
 }
 
 @keyframes fadeInOut {
@@ -318,7 +318,7 @@ button {
   font-weight: 600;
   color: rgba(76, 56, 30, 0.879);
   background: rgb(252, 252, 252);
-  background-color: rgb(247, 240, 235);
+  background-color: #f0ded0;
 }
 
 .container input {
@@ -363,12 +363,4 @@ button {
 
 .ui-autocomplete li:hover {
   background-color: #f0f0f0;
-}
-
-#map {
-  position: bottom;
-  top: 2pc;
-  bottom: 10pc;
-  height: 50%;
-  width: 50%;
 }
