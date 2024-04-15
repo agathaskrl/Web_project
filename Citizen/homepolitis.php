@@ -26,6 +26,7 @@
                 <li><a href="logout.php">LOGOUT</a></li>
             </ul>
         </div>
+
         <?php
         //function to check if the user is logged in
         function checkLoggedIn() {
@@ -39,7 +40,7 @@
         }
         checkLoggedIn(); //call the function
         ?>
-
+        
         <div class="welcome-message">
             <?php
             if (isset($_SESSION['username'])) {
@@ -69,7 +70,7 @@
         </div>
         <button><i class="filtermap"></i>Filter Map</button>
 
-        <div class="map" id="map" style="width: 100%; height: 310px;"></div>
+        <div class="map" id="map" style="width: 100%; height: 450px;"></div>
     </div>
     <script src="map-pol.js"></script>
 
