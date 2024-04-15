@@ -6,7 +6,7 @@ body {
   }
   
   .navbar {
-    height: 70px;
+    height: 80px;
     margin: auto;
     background-color: #ae887b;
     border-style: solid;
@@ -22,7 +22,7 @@ body {
     padding: 10px;
     border-radius: 5px;
     animation: fadeInOut 30s ease-in-out;
-    display: none;
+    position: absolute;
   }
   
   @keyframes fadeInOut {
@@ -45,7 +45,7 @@ body {
   
   ul li {
     list-style: none;
-    margin-left: 50px;
+    margin-left: 30px;
     margin-top: 15px;
     font-size: 15px;
     text-align: center;
@@ -53,6 +53,8 @@ body {
   
   ul li a {
     list-style: none;
+    margin-left:20px;
+    margin-top:15px;
     font-size: 15px;
     text-align: center;
     text-decoration: none;
