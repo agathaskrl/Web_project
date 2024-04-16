@@ -34,7 +34,7 @@ function createmark(coords) {
     iconAnchor: [16, 32],
   });
 
-  // Add marker_vash to the m4p with custom icon
+  // Add marker_vash to the map with custom icon
   let marker_vash = L.marker(coords, { draggable: true, icon: vashicon }).addTo(
     map
   );
@@ -81,3 +81,39 @@ function savemarkerdata(lat, lng) {
       console.error("Error saving marker_vash data", error);
     });
 }
+
+//dunction gi na brei ta coords twn vihicles
+function fetch_vehicle_coords() {
+  fetch("get_veh_coords.php")
+    .then((response) => response.json())
+    .then((data) => {
+      if (data && data.length > 0) {
+        data.forEach((vehicle) => {
+          // Create marker for each vehicle
+          create_vehicle_marker([
+            parseFloat(vehicle.lat),
+            parseFloat(vehicle.lng),
+          ]);
+        });
+      } else {
+        console.error("No vehicle marker coordinates found");
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to fetch vehicle marker coordinates", error);
+    });
+}
+
+// Function to create marker for vehicle
+function create_vehicle_marker(coords) {
+  var vehicon = L.icon({
+    iconUrl: "vehicle.png",
+    iconSize: [42, 42],
+    iconAnchor: [16, 32],
+  });
+
+  L.marker(coords, { icon: vehicon }).addTo(map);
+}
+
+//klhsh ths function gia na deixei ta markes oxhmatwn
+fetch_vehicle_coords();
