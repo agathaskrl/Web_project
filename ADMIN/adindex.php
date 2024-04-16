@@ -24,21 +24,42 @@
             <li><a href="logout.php">LOG OUT</a></li>              
         </ul>
     </div>
+    <?php
+    include_once 'connect_db.php';
+session_start();
 
-<?php
-// Function to check if the user is logged in
-function checkLoggedIn() {
-    session_start();
-    if (!isset($_SESSION['username'])) {
-        echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
-        echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
-        echo '</div>';
-        exit(); // Exit the script
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $query = "SELECT role FROM user WHERE username='$username'";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['role'] = $row['role']; 
+        // echo $_SESSION['role']; 
     }
 }
-checkLoggedIn(); // Call the function to check if the user is logged in
-?>
 
+function checkLoggedIn() {
+    // Check if the user is not logged in
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in!';
+        echo '</div>';
+        exit(); 
+    }
+    
+    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'Unauthorized access!';
+        echo '</div>';
+        exit(); 
+    }
+}
+
+checkLoggedIn();
+?>
     <div class="welcome-message">
         <?php
         if (isset($_SESSION['username'])) {
@@ -51,12 +72,13 @@ checkLoggedIn(); // Call the function to check if the user is logged in
     <div class="container"> 
         <input type="text" id="searchInput" placeholder="Search...">
         <button>Search</button>
-    </div>
     <button><i class="filtermap"></i>Filter Map</button>
-
-    <div class="map" id="map" style="width: 100%; height: 350px;"></div>
+     
+    <div class="map" id="map" style="width: 100%; height: 450px;"></div>
 
     <script src="adminmap.js"></script>
+    </div>
+
 
 
 <script>
