@@ -1,41 +1,21 @@
 <!DOCTYPE html>
 <html lan="en" and dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title> Home </title>
-        <link rel="stylesheet" href="home_style.css?v=2">
-        <!-- Leaflet CSS and JavaScript files -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="home_style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="">
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-    <!--Search-->
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
 </head>
-
-
 <body>
 <div class="main"> 
     <div class="navbar">
         <ul>
-            <li><a href= "homesavior.php">HOME</a></li>
-            <li><a href= "tasks.php">TASKS</a></li>
+            <li><a href="homesavior.php">HOME</a></li>
+            <li><a href="tasks.php">TASKS</a></li>
             <li><a href="logout.php">LOGOUT</a></li>
         </ul>
     </div>
-    <?php
-//function to check if the user is logged in
-function checkLoggedIn() {
-    session_start();
-    if (!isset($_SESSION['username'])) {
-        echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
-        echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
-        echo '</div>';
-        exit(); 
-    }
-}
-checkLoggedIn(); 
-?>
-
     <div class="welcome-message">
         <?php
         if (isset($_SESSION['username'])) {
@@ -43,66 +23,55 @@ checkLoggedIn();
             echo "Welcome, $username!";
         } 
         ?>
-          <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const welcomeMessage = document.querySelector('.welcome-message');
-
-        // Show the welcome message
-        welcomeMessage.style.display = 'block';
-
-        // Set a timeout to hide the welcome message after 30 seconds
-        setTimeout(function () {
-            welcomeMessage.style.display = 'none';
-        }, 30000);
-    });
-</script>
     </div>
-    <br>
 </div>
-
 <div class="container"> 
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button>Search</button>
-    </div>
-    
+    <input type="text" id="searchInput" placeholder="Search...">
+    <button>Search</button>
+</div>
 <button><i class="filtermap"></i>Filter Map</button>
-    
-            <div class="map" id="map" style="width: 100%; height: 450px;"></div>
-    </div>
-        <script src="map-pol.js"> </script>
-    </div>
+<div class="map" id="map" style="width: 100%; height: 450px;"></div>
+<script src="map-sav.js"></script>
 
-    <script>
-        //fnction to get the location of the user
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                alert("Geolocation is not supported by this browser.");
-            }
-        }
-         //show and get the coordinates
-        function showPosition(position) {
-            var lat = position.coords.latitude;
-            var lng = position.coords.longitude;
-            // Send coordinates to server using AJAX
-            var xhr = new XMLHttpRequest();
-            xhr.open("POST", "insert_coordinates.php", true); //other file not to get things mixed
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    console.log(xhr.responseText);
-                }
-            };
-            xhr.send("lat=" + lat + "&lng=" + lng);
-        }
+<?php
+include_once 'connect_db.php';
+session_start();
 
-        //call getLocation() when the page loads so its automated 
-        window.onload = getLocation;
-    </script>
+// Check if the user is logged in
+if (!isset($_SESSION['username'])) {
+    echo 'User not logged in!';
+    exit();
+}
 
+// Fetch savior's coordinates from the database
+$username = $_SESSION['username'];
+$query_savior = "SELECT lat, lng FROM coordinates";
+$result_savior = mysqli_query($conn, $query_savior);
 
-  
+if ($result_savior && mysqli_num_rows($result_savior) > 0) {
+    $row_savior = mysqli_fetch_assoc($result_savior);
+    $savior_lat = $row_savior['lat'];
+    $savior_lng = $row_savior['lng'];
+} else {
+    // Handle case where savior coordinates are not found
+    echo 'Savior coordinates not found!';
+    exit();
+}
+
+// Fetch vash's coordinates from the database
+$query_vash = "SELECT lat, lng FROM vash_marker ";
+$result_vash = mysqli_query($conn, $query_vash);
+
+if ($result_vash && mysqli_num_rows($result_vash) > 0) {
+    $row_vash = mysqli_fetch_assoc($result_vash);
+    $vash_lat = $row_vash['lat'];
+    $vash_lng = $row_vash['lng'];
+} else {
+    // Handle case where vash coordinates are not found
+    echo 'Vash coordinates not found!';
+    exit();
+}
+?>
 
 </body>
 </html>
