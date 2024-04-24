@@ -1,29 +1,4 @@
-<?php
-session_start();
-include_once 'connect_db.php';
 
-//handle offer cancellation via button 
-if(isset($_POST['cancel'])) {
-    // Check if offer_id is set and is a valid integer
-    if(isset($_POST['offer_id']) && filter_var($_POST['offer_id'], FILTER_VALIDATE_INT)) {
-        $offer_id = $_POST['offer_id'];
-        
-        // Delete the offer from the database
-        $delete_sql = "DELETE FROM offers WHERE offer_id = $offer_id";
-        if ($conn->query($delete_sql) === TRUE) {
-            // Offer deleted successfully, you can redirect or show a success message here
-        } else {
-            // Error occurred while deleting the offer
-            echo "Error: " . $delete_sql . "<br>" . $conn->error;
-        }
-    }
-}
-
-// Fetch data from the database including ret_date, subm_date
-$sql = "SELECT offer_id, item, quantity, subm_date, ret_date FROM offers";
-$result = $conn->query($sql);
-
-?>
 
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -46,6 +21,40 @@ $result = $conn->query($sql);
     </div>
 </div>
 
+<?php
+
+// Ensure session started 
+session_start();
+include_once 'connect_db.php';
+
+// Function to check if the user is logged in and has appropriate role
+function checkLoggedIn() {
+    // Check if the user is not logged in
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in!';
+        echo '</div>';
+        exit(); 
+    }
+    
+    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'Unauthorized access!';
+        echo '</div>';
+        exit(); 
+    }
+}
+
+// Check if the user is logged in and has appropriate role
+checkLoggedIn();
+
+// Query to fetch offers from the database
+$sql = "SELECT offer_id, item, quantity, subm_date, ret_date FROM offers";
+$result = $conn->query($sql);
+
+?>
+
 <div class="form-box">
     <table>
         <thead>
@@ -61,6 +70,7 @@ $result = $conn->query($sql);
         </thead>
         <tbody>
         <?php
+        // Display offers if there are any
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";

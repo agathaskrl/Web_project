@@ -76,8 +76,7 @@ body {
     text-align: center;
     background-color: rgba(174, 136, 123, 0.808);
   }
-
- .cancelbutton {
+  .cancelbutton {
     background-color: rgba(205, 16, 16, 0.808);
     border: none;
     color: #ffffff;

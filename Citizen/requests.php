@@ -23,37 +23,41 @@
     </div>
 </div>
 
-<br>
-<!-- koumpi gia selida me listes -->
-    <a href="requestslist.php" >
-    <button> REQUESTS LIST </button></a>
-</br>
-<!-- box formas -->
-<form class="box" method="POST">
-
-<h1> Create a new request </h1>
-<div class="input-box">
-<label for="autocomplete"> Item:</label>
-<input type="text" id= "autocomplete" name="req_product-input" placeholder="ex. water" required>
-
-</div>
-<div class="input-box">
-<label for="demand"> People in need:</label>
-<input type="number" id="demand" name="demand-input" placeholder="ex. 30" required>
-</div>
-
-
-<div class="button">
-        <input type="submit" value="Submit Request">
-    </div>
-</form>
-
-
-</body>
-
 <?php
-session_start(); // Start the session if it's not started already
-include_once 'connect_db.php';
+    include_once 'connect_db.php';
+session_start();
+
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $query = "SELECT role FROM user WHERE username='$username'";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['role'] = $row['role']; 
+        // echo $_SESSION['role']; 
+    }
+}
+
+function checkLoggedIn() {
+    // Check if the user is not logged in
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in!';
+        echo '</div>';
+        exit(); 
+    }
+    
+    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'Unauthorized access!';
+        echo '</div>';
+        exit(); 
+    }
+}
+
+checkLoggedIn();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $allreq_product = "";
@@ -98,3 +102,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
+
+<br>
+<!-- koumpi gia selida me listes -->
+    <a href="requestslist.php" >
+    <button> Requests List </button></a>
+</br>
+<!-- box formas -->
+<form class="box" method="POST">
+
+<h1> Create a new request </h1>
+<div class="input-box">
+<label for="autocomplete"> Item:</label>
+<input type="text" id= "autocomplete" name="req_product-input" placeholder="ex. water" required>
+
+</div>
+<div class="input-box">
+<label for="demand"> People in need:</label>
+<input type="number" id="demand" name="demand-input" placeholder="ex. 30" required>
+</div>
+
+
+<div class="button">
+        <input type="submit" value="Submit Request">
+    </div>
+</form>
+
+
+</body>
