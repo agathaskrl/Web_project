@@ -36,7 +36,33 @@ session_start();
 <button><i class="filtermap"></i>Filter Map</button>
 <div class="map" id="map" style="width: 100%; height: 450px;"></div>
 <script src="map-sav.js"></script>
-
+<script>
+        //fnction to get the location of the user
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+         //show and get the coordinates
+        function showPosition(position) {
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            // Send coordinates to server using AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "insert_coordinates.php", true); //other file not to get things mixed
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("lat=" + lat + "&lng=" + lng);
+        }
+                //call getLocation() when the page loads so its automated 
+                window.onload = getLocation;
+    </script>
 <?php
 
 
@@ -59,6 +85,9 @@ if ($result_savior && mysqli_num_rows($result_savior) > 0) {
     // Handle case where savior coordinates are not found
     echo 'Savior coordinates not found!';
     exit();
+}
+if(mysqli_num_rows($result_savior) == 0) {
+    $query_sav = "INSERT INTO coordinates (username,lat,lng) VALUES ('$username', '$savior_lat', '$savior_lng') ";
 }
 
 // Fetch vash's coordinates from the database
