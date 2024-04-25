@@ -1,3 +1,7 @@
+<?php
+include_once 'connect_db.php';
+session_start();
+?>
 <!DOCTYPE html>
 <html lan="en" and dir="ltr">
 <head>
@@ -34,8 +38,7 @@
 <script src="map-sav.js"></script>
 
 <?php
-include_once 'connect_db.php';
-session_start();
+
 
 // Check if the user is logged in
 if (!isset($_SESSION['username'])) {
