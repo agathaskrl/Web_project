@@ -1,47 +1,47 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background-color:#f0ded0;
-  }
-  
-  .navbar {
-    height: 70px;
-    margin: auto;
-    background-color: #ae887b;
-    border-style: solid;
-    border-color: #4c381e;
-  }
-  
-  ul {
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  ul li {
-    list-style: none;
-    margin-left: 50px;
-    margin-top: 15px;
-    font-size: 15px;
-    text-align: center;
-  }
-  
-  ul li a {
-    list-style: none;
-    font-size: 15px;
-    text-align: center;
-    text-decoration: none;
-    color: #4c381e;
-    font-family: sans-serif;
-    font-weight: bold;
-    transition: 0.4s ease-in-out;
-  }
-  
-  ul li a:hover {
-    color:#f0ded0;
-  }
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f0ded0;
+}
+
+.navbar {
+  height: 70px;
+  margin: auto;
+  background-color: #ae887b;
+  border-style: solid;
+  border-color: #4c381e;
+}
+
+ul {
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul li {
+  list-style: none;
+  margin-left: 50px;
+  margin-top: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+ul li a {
+  list-style: none;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  color: #4c381e;
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: 0.4s ease-in-out;
+}
+
+ul li a:hover {
+  color: #f0ded0;
+}
 /* for the form to fetch the data in a box like  */
 .form-box {
   width: 90%;
@@ -86,5 +86,27 @@ button {
   padding: 8px 16px;
   margin-left: 20px;
   margin-right: 20px;
-  float:right;
+  float: right;
+}
+
+#cancel {
+  background-color: rgba(205, 16, 16, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+#complete {
+  background-color: rgba(16, 205, 25, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
