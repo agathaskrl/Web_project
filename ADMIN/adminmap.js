@@ -104,15 +104,29 @@ function fetch_vehicle_coords() {
     });
 }
 
-// Function to create marker for vehicle
-function create_vehicle_marker(coords) {
+function create_vehicle_marker() {
   var vehicon = L.icon({
     iconUrl: "vehicle.png",
     iconSize: [42, 42],
     iconAnchor: [16, 32],
   });
 
-  L.marker(coords, { icon: vehicon }).addTo(map);
+  $.getJSON("get_veh_data.php", function (data) {
+    data.forEach(function (vehicle) {
+      var coords = [vehicle.lat, vehicle.lng]; // Use coordinates from data
+      L.marker(coords, { icon: vehicon })
+        .bindPopup(
+          "<h3>Username:</h3><p>" +
+            vehicle.sav_username +
+            "</p><h3>Cargo:</h3><p>" +
+            vehicle.cargo +
+            "</p><h3>Tasks:</h3>" +
+            vehicle.under_tasks +
+            "</p>"
+        )
+        .addTo(map);
+    });
+  });
 }
 
 //klhsh ths function gia na deixei ta markes oxhmatwn
