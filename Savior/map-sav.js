@@ -126,3 +126,45 @@ function createVashMarker(coords) {
   // Add marker for "vash" to the map with custom icon
   L.marker(coords, { icon: vashIcon }).addTo(map);
 }
+
+// Function to fetch offers from the server and display them on the map
+function fetchOffers() {
+  fetch("get_offers.php")
+      .then((response) => response.json())
+      .then((data) => {
+          console.log("Received offers data:", data); // Log the received data
+          
+          if (data.length > 0) {
+              data.forEach((offer) => {
+                  console.log("Creating marker for offer:", offer); // Log the offer data
+                  
+                  // Extract offer data
+                  const lat = offer.lat;
+                  const lng = offer.lng;
+                  const item = offer.item;
+                  const quantity = offer.quantity;
+
+                  // Create a marker with the green offer icon
+                  const marker = L.marker([lat, lng], {
+                      icon: L.icon({
+                          iconUrl: 'offer_green.png',
+                          iconSize: [32, 32],
+                          iconAnchor: [16, 32],
+                          popupAnchor: [0, -32]
+                      })
+                  }).addTo(map);
+
+                  // Add popup with offer details
+                  marker.bindPopup(`<b>${item}</b><br>Quantity: ${quantity}`).openPopup();
+              });
+          } else {
+              console.error("No offers found");
+          }
+      })
+      .catch((error) => {
+          console.error("Failed to fetch offers", error);
+      });
+}
+
+// Call the function to fetch and display offers on the map
+fetchOffers();
