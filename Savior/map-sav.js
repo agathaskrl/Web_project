@@ -127,6 +127,8 @@ function createVashMarker(coords) {
   L.marker(coords, { icon: vashIcon }).addTo(map);
 }
 
+
+//offers
 // Function to fetch offers from the server and display them on the map
 function fetchOffers() {
   fetch("get_offers.php")
@@ -168,3 +170,48 @@ function fetchOffers() {
 
 // Call the function to fetch and display offers on the map
 fetchOffers();
+
+
+//requests
+// Function to fetch requests from the server and display them on the map
+function fetchRequests() {
+  fetch("get_requests.php")
+      .then((response) => response.json())
+      .then((reqdata) => {
+          console.log("Received requests data:", reqdata); // Log the received data
+          
+          if (reqdata.length > 0) {
+              reqdata.forEach((request) => {
+                  console.log("Creating marker for requests:", request); // Log the request data
+                  
+                  // Extract req data
+                  const lat = request.lat;
+                  const lng = request.lng;
+                  const req_product = request.req_product;
+                  const demand = request.demand;
+
+                  // Create a marker with the green request icon
+                  const marker = L.marker([lat, lng], {
+                      icon: L.icon({
+                          iconUrl: 'bell_green.png',
+                          iconSize: [32, 32],
+                          iconAnchor: [16, 32],
+                          popupAnchor: [0, -32]
+                      })
+                  }).addTo(map);
+
+                  // Add popup with req details
+                  marker.bindPopup(`<b>${req_product}</b><br>Demand: ${demand}`).openPopup();
+                  console.log("Marker created for request:", marker); // Log the created marker
+              });
+          } else {
+              console.error("No requests found");
+          }
+      })
+      .catch((error) => {
+          console.error("Failed to fetch requests", error);
+      });
+}
+
+// Call the function to fetch and display requests on the map
+fetchRequests();

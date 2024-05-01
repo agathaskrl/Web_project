@@ -86,9 +86,6 @@ if ($result_savior && mysqli_num_rows($result_savior) > 0) {
     echo 'Savior coordinates not found!';
     exit();
 }
-if(mysqli_num_rows($result_savior) == 0) {
-    $query_sav = "INSERT INTO coordinates (username,lat,lng) VALUES ('$username', '$savior_lat', '$savior_lng') ";
-}
 
 // Fetch vash's coordinates from the database
 $query_vash = "SELECT lat, lng FROM vash_marker ";
