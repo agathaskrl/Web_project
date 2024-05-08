@@ -145,19 +145,61 @@ function fetchOffers() {
                   const lng = offer.lng;
                   const item = offer.item;
                   const quantity = offer.quantity;
+                  const offerId = offer.id; // Assuming the offer has an ID field
+                  
+                  // Check if the offer is taken
+                  const isTaken = offer.ret_date !== null && offer.usrnm_veh !== null;
 
-                  // Create a marker with the green offer icon
+                  // Create a marker with the appropriate icon
+                  const iconUrl = isTaken ? 'offer_yellow.png' : 'offer_green.png';
                   const marker = L.marker([lat, lng], {
                       icon: L.icon({
-                          iconUrl: 'offer_green.png',
+                          iconUrl: iconUrl,
                           iconSize: [32, 32],
                           iconAnchor: [16, 32],
                           popupAnchor: [0, -32]
                       })
                   }).addTo(map);
 
-                  // Add popup with offer details
-                  marker.bindPopup(`<b>${item}</b><br>Quantity: ${quantity}`).openPopup();
+                  // Construct the HTML string for the pop-up
+                  let popupContent = `<b>${item}</b><br>Quantity: ${quantity}`;
+                  if (!isTaken) {
+                      // For offers that are still open, add the "Take On" button
+                      popupContent += `<br><button class="take-on-btn" data-offer-id="${offerId}">Take On</button>`;
+                  }
+
+                  marker.bindPopup(popupContent);
+
+                  // Add event listener to the "Take On" button
+marker.on('popupopen', function() {
+  if (!isTaken) {
+      const takeOnBtn = document.querySelector('.take-on-btn');
+      takeOnBtn.addEventListener('click', function() {
+          // Retrieve the offer ID from the marker's data
+          const offerId = offer.offer_id; // Use offer_id attribute
+        
+          // Send AJAX request to take on the offer
+          fetch('takeonoffer.php', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  offer_id: offerId // Use offer_id attribute
+              }),
+          })
+          .then(response => {
+              if (!response.ok) {
+                  throw new Error('Failed to take on offer');
+              }
+              console.log('Offer taken on successfully');
+          })
+          .catch(error => {
+              console.error('Error taking on offer:', error);
+          });
+      });
+  }
+});
               });
           } else {
               console.error("No offers found");
