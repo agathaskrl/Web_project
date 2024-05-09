@@ -141,6 +141,9 @@ function fetchOffers() {
                   console.log("Creating marker for offer:", offer); // Log the offer data
                   
                   // Extract offer data
+                  const name = offer.name;
+                  const surname = offer.surname;
+                  const phone = offer.phone;
                   const lat = offer.lat;
                   const lng = offer.lng;
                   const item = offer.item;
@@ -162,7 +165,7 @@ function fetchOffers() {
                   }).addTo(map);
 
                   // Construct the HTML string for the pop-up
-                  let popupContent = `<b>${item}</b><br>Quantity: ${quantity}`;
+                  let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone}`;
                   if (!isTaken) {
                       // For offers that are still open, add the "Take On" button
                       popupContent += `<br><button class="take-on-btn" data-offer-id="${offerId}">Take On</button>`;
@@ -220,31 +223,71 @@ function fetchRequests() {
   fetch("get_requests.php")
       .then((response) => response.json())
       .then((reqdata) => {
-          console.log("Received requests data:", reqdata); // Log the received data
+          console.log("Received requests data:", reqdata); 
           
           if (reqdata.length > 0) {
               reqdata.forEach((request) => {
-                  console.log("Creating marker for requests:", request); // Log the request data
-                  
-                  // Extract req data
+                  console.log("Creating marker for requests:", request); 
+                
+                  const civ_name = request.civ_name;
+                  const civ_surname = request.civ_surname;
+                  const civ_phone = request.civ_phone;
                   const lat = request.lat;
                   const lng = request.lng;
                   const req_product = request.req_product;
                   const demand = request.demand;
+                  const req_Id = request.req_id; 
+                
+                  // Check if the request is taken
+                  const isTaken = request.under_date !== null && request.veh_username !== null;
 
-                  // Create a marker with the green request icon
+                  // Create a marker with the appropriate icon
+                  const iconUrl = isTaken ? 'bell_yellow.png' : 'bell_green.png';
                   const marker = L.marker([lat, lng], {
                       icon: L.icon({
-                          iconUrl: 'bell_green.png',
+                          iconUrl: iconUrl,
                           iconSize: [32, 32],
                           iconAnchor: [16, 32],
                           popupAnchor: [0, -32]
                       })
                   }).addTo(map);
 
-                  // Add popup with req details
-                  marker.bindPopup(`<b>${req_product}</b><br>Demand: ${demand}`).openPopup();
-                  console.log("Marker created for request:", marker); // Log the created marker
+                  // Construct the HTML string for the pop-up
+                  let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone}`;
+                  if (!isTaken) {
+                      // For requests that are still open, add the "Take On" button
+                      popupContent += `<br><button class="take-on-btn" data-req-id="${req_Id}">Take On</button>`;
+                  }
+
+                  marker.bindPopup(popupContent);
+
+                  // Add event listener to the "Take On" button
+                  marker.on('popupopen', function() {
+                      if (!isTaken) {
+                          const takeOnBtn = marker.getElement().querySelector('.take-on-btn');
+                          takeOnBtn.addEventListener('click', function() {
+                              // Send AJAX request to take on the request
+                              fetch('takeonrequest.php', {
+                                  method: 'POST',
+                                  headers: {
+                                      'Content-Type': 'application/json',
+                                  },
+                                  body: JSON.stringify({
+                                      req_id: req_Id // Use req_id attribute
+                                  }),
+                              })
+                              .then(response => {
+                                  if (!response.ok) {
+                                      throw new Error('Failed to take on request');
+                                  }
+                                  console.log('Request taken on successfully');
+                              })
+                              .catch(error => {
+                                  console.error('Error taking on request:', error);
+                              });
+                          });
+                      }
+                  });
               });
           } else {
               console.error("No requests found");

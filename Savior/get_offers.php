@@ -2,7 +2,7 @@
 include_once 'connect_db.php';
 
 // Query to fetch offers from the database
-$sql = "SELECT item, quantity, lat, lng, usrnm_veh FROM offers";
+$sql = "SELECT name, surname,phone, item, quantity, lat, lng, usrnm_veh FROM offers";
 $result = $conn->query($sql);
 
 // Check if there are results
@@ -13,6 +13,9 @@ if ($result->num_rows > 0) {
     // Fetch and store each offer
     while ($row = $result->fetch_assoc()) {
         $offer = array(
+            'name' => $row['name'],
+            'surname' => $row['surname'],
+            'phone' => $row['phone'],
             'item' => $row['item'],
             'quantity' => $row['quantity'],
             'lat' => $row['lat'],
