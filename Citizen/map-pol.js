@@ -17,7 +17,8 @@ function fetchCitizenCoords() {
     .then((data) => {
       if (data.length > 0) {
         data.forEach((coord) => {
-          createCitizenMarker(coord);
+          // Create a marker for each coordinate
+          L.marker([coord.lat, coord.lng]).addTo(citizenMarkersLayer);
         });
       } else {
         console.error("No citizen coordinates found");
@@ -27,12 +28,5 @@ function fetchCitizenCoords() {
       console.error("Failed to fetch citizen coordinates", error);
     });
 }
-
 // Call the function to fetch citizen coordinates and display markers
 fetchCitizenCoords();
-
-//create standard marker for citizen coordinates
-function createCitizenMarker(coord) {
-  // Add marker for citizen coordinates to the citizenMarkersLayer
-  L.marker([coord.lat, coord.lng]).addTo(citizenMarkersLayer);
-}

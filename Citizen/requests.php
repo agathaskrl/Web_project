@@ -1,3 +1,8 @@
+<?php
+include_once 'connect_db.php';
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lan="en" and dir="ltr">
     <head>
@@ -23,10 +28,11 @@
     </div>
 </div>
 
-<?php
-    include_once 'connect_db.php';
-session_start();
 
+
+
+
+<?php
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $query = "SELECT role FROM user WHERE username='$username'";
@@ -76,20 +82,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usrnm = $_SESSION['username'];
 
     // Fetch user information from the database
-    $query = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
-    $result = mysqli_query($conn, $query);
-    $user = mysqli_fetch_assoc($result);
+    $query_user = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
+    $result_user = mysqli_query($conn, $query_user);
+    $user = mysqli_fetch_assoc($result_user);
 
-    // Check if user information is fetched successfully
-    if ($user) {
-        $civ_name = addslashes($user['name']); // Escape special characters
-        $civ_surname = addslashes($user['surname']); // Escape special characters
-        $civ_phone = addslashes($user['phone']); // Escape special characters
+    // Fetch user coordinates from the database
+    $query_coordinates = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
+    $result_coordinates = mysqli_query($conn, $query_coordinates);
+    $coordinates = mysqli_fetch_assoc($result_coordinates);
+
+    // Check if user information and coordinates are fetched successfully
+    if ($user && $coordinates) {
+        $civ_name = addslashes($user['name']); 
+        $civ_surname = addslashes($user['surname']); 
+        $civ_phone = addslashes($user['phone']); 
+        $lat = $coordinates['lat'];
+        $lng = $coordinates['lng'];
 
         // Insert data into the requests table
-        $sql = "INSERT INTO requests (req_product, demand, civ_name, civ_surname, civ_phone) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO requests (req_product, demand, civ_name, civ_surname, civ_phone, lat, lng) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $allreq_product, $alldemand, $civ_name, $civ_surname, $civ_phone);
+        $stmt->bind_param("sssssss", $allreq_product, $alldemand, $civ_name, $civ_surname, $civ_phone, $lat, $lng);
 
         if ($stmt->execute()) {
             header("Location: " . $_SERVER['REQUEST_URI']);
@@ -101,9 +114,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->close();
     }
 }
-?>
-
-<br>
+?><br>
 <!-- koumpi gia selida me listes -->
     <a href="requestslist.php" >
     <button> Requests List </button></a>
@@ -127,6 +138,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="submit" value="Submit Request">
     </div>
 </form>
-
-
-</body>
+</body> 
