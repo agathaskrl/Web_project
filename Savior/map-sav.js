@@ -151,6 +151,7 @@ function fetchOffers() {
           const lng = offer.lng;
           const item = offer.item;
           const quantity = offer.quantity;
+          const usrnm_veh = offer.usrnm_veh;
 
           // Check if the offer is taken
           const isTaken = offer.ret_date !== null && offer.usrnm_veh !== null;
@@ -167,10 +168,10 @@ function fetchOffers() {
           }).addTo(map);
 
           // Construct the HTML string for the pop-up
-          let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone}`;
+          let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone} <br>Vehicle: ${usrnm_veh}<br>`;
           if (!isTaken) {
             // For offers that are still open, add the "Take On" button
-            popupContent += `<br><button class="take-on-btn" data-offer-id="${offer_id}">Take On</button>`;
+            popupContent += `<button class="take-on-btn" data-offer-id="${offer_id}">Take On</button>`;
           }
 
           marker.bindPopup(popupContent);
@@ -252,6 +253,7 @@ function fetchRequests() {
           const lng = request.lng;
           const req_product = request.req_product;
           const demand = request.demand;
+          const veh_username = request.veh_username;
 
           // Check if the request is taken
           const isTaken =
@@ -269,7 +271,7 @@ function fetchRequests() {
           }).addTo(map);
 
           // Construct the HTML string for the pop-up
-          let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone}`;
+          let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone} <br>Vehicle: ${veh_username}`;
           if (!isTaken) {
             // For requests that are still open, add the "Take On" button
             popupContent += `<br><button class="take-on-btn" data-req-id="${req_id}">Take On</button>`;
