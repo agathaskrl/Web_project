@@ -2,31 +2,38 @@
 session_start();
 include_once 'connect_db.php';
 
-// Check if data is received via POST request
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the request is being taken by a savior
-    if (isset($_SESSION['username'])) {
-        // Retrieve request ID from POST data
-        $req_Id = $_POST['req_id'];
+$_POST = json_decode(file_get_contents('php://input'), true);
 
-        // Retrieve session username (savior's username)
-        $saviorUsername = $_SESSION['username'];
+if(isset($_POST['req_Id'])) {
 
-        // Get the current timestamp
-        $currentTimestamp = date('Y-m-d H:i:s');
+    $req_Id = $_POST['req_Id'];
+    
+    if(isset($_SESSION['username'])) {
+        $sav_usrnm = $_SESSION['username'];
+        
 
-        // Update the requests record in the database with savior's username and timestamp
-        $updateQuery = "UPDATE requests SET under_date = '$currentTimestamp', veh_username = '$saviorUsername' WHERE req_id = $req_Id";
+        $curen_time = date('Y-m-d H:i:s');
 
-        if (mysqli_query($conn, $updateQuery)) {
-            echo "Request details saved successfully!";
+        $sql = "UPDATE requests 
+                SET veh_username = '$sav_usrnm', under_date = '$curen_time' 
+                WHERE req_id = $req_Id";
+
+        if($conn->query($sql) === TRUE) {
+            if($conn->affected_rows > 0) {
+                echo "Request taken on successfully";
+            } else {
+                echo "Request already taken or invalid offer ID.";
+            }
         } else {
-            echo "Error updating request details: " . mysqli_error($conn);
+            echo "Error taking on request: " . $conn->error;
         }
     } else {
         echo "Error: Session username not found!";
     }
 } else {
-    echo "Invalid request!";
+    echo "Error: Request ID not provided!";
 }
-?>
+
+// Close the database connection
+$conn->close();
+

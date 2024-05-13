@@ -1,8 +1,8 @@
 <?php
 include_once 'connect_db.php';
 
-// Query to fetch offers from the database
-$sql = "SELECT name, surname,phone, item, quantity, lat, lng, usrnm_veh FROM offers";
+// fetch offers from the database
+$sql = "SELECT offer_id, name, surname, phone, item, quantity, lat, lng, usrnm_veh FROM offers";
 $result = $conn->query($sql);
 
 // Check if there are results
@@ -13,6 +13,7 @@ if ($result->num_rows > 0) {
     // Fetch and store each offer
     while ($row = $result->fetch_assoc()) {
         $offer = array(
+            'offer_id' => $row['offer_id'], 
             'name' => $row['name'],
             'surname' => $row['surname'],
             'phone' => $row['phone'],
@@ -33,7 +34,6 @@ if ($result->num_rows > 0) {
     header('Content-Type: application/json');
     echo $jsonOffers;
 } else {
-    // No offers found
     echo json_encode(array('message' => 'No offers found'));
 }
-?>
+

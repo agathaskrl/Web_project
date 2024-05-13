@@ -2,31 +2,38 @@
 session_start();
 include_once 'connect_db.php';
 
-// Check if data is received via POST request
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if the offer is being taken by a savior
-    if (isset($_SESSION['username'])) {
-        // Retrieve offer ID from POST data
-        $offerId = $_POST['offer_id'];
+$_POST = json_decode(file_get_contents('php://input'), true);
 
-        // Retrieve session username (savior's username)
-        $saviorUsername = $_SESSION['username'];
+if(isset($_POST['offerId'])) {
 
-        // Get the current timestamp
-        $currentTimestamp = date('Y-m-d H:i:s');
+    $offerId = $_POST['offerId'];
+    
+    if(isset($_SESSION['username'])) {
+        $sav_usrnm = $_SESSION['username'];
+        
 
-        // Update the offer record in the database with savior's username and timestamp
-        $updateQuery = "UPDATE offers SET ret_date = '$currentTimestamp', usrnm_veh = '$saviorUsername' WHERE offer_id = $offerId";
+        $curen_time = date('Y-m-d H:i:s');
 
-        if (mysqli_query($conn, $updateQuery)) {
-            echo "Offer details saved successfully!";
+        $sql = "UPDATE offers 
+                SET usrnm_veh = '$sav_usrnm', ret_date = '$curen_time' 
+                WHERE offer_id = $offerId";
+
+        if($conn->query($sql) === TRUE) {
+            if($conn->affected_rows > 0) {
+                echo "Offer taken on successfully";
+            } else {
+                echo "Offer already taken or invalid offer ID.";
+            }
         } else {
-            echo "Error updating offer details: " . mysqli_error($conn);
+            echo "Error taking on offer: " . $conn->error;
         }
     } else {
         echo "Error: Session username not found!";
     }
 } else {
-    echo "Invalid request!";
+    echo "Error: Offer ID not provided!";
 }
-?>
+
+// Close the database connection
+$conn->close();
+

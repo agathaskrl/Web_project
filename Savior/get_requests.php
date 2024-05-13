@@ -1,18 +1,18 @@
 <?php
 include_once 'connect_db.php';
 
-// Query to fetch requests from the database
-$sql = "SELECT civ_name, civ_surname, civ_phone, req_product, demand, lat, lng, veh_username FROM requests";
+$sql = "SELECT req_id, civ_name, civ_surname, civ_phone, req_product, demand, lat, lng, veh_username FROM requests";
 $result = $conn->query($sql);
 
 // Check if there are results
 if ($result->num_rows > 0) {
-    // Initialize an array to store requests
+
     $requests = array();
 
     // Fetch and store each request
     while ($row = $result->fetch_assoc()) {
         $request = array(
+            'req_id' => $row['req_id'],
             'civ_name' => $row['civ_name'],
             'civ_surname' => $row['civ_surname'],
             'civ_phone' =>$row['civ_phone'],
