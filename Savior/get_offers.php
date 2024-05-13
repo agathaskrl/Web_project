@@ -2,7 +2,7 @@
 include_once 'connect_db.php';
 
 // fetch offers from the database
-$sql = "SELECT offer_id, name, surname, phone, item, quantity, lat, lng, usrnm_veh FROM offers";
+$sql = "SELECT offer_id, name, surname, phone, item, quantity, lat, lng, usrnm_veh, subm_date, ret_date FROM offers";
 $result = $conn->query($sql);
 
 // Check if there are results
@@ -21,7 +21,9 @@ if ($result->num_rows > 0) {
             'quantity' => $row['quantity'],
             'lat' => $row['lat'],
             'lng' => $row['lng'],
-            'usrnm_veh' => $row['usrnm_veh'] 
+            'usrnm_veh' => $row['usrnm_veh'], 
+            'subm_date' => $row['subm_date'],
+            'ret_date' => $row['ret_date'], 
         );
         // Add the offer to the offers array
         $offers[] = $offer;
