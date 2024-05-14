@@ -76,6 +76,12 @@ ul li a:hover {
   background-color: rgba(174, 136, 123, 0.808);
 }
 
+.form-box h3 {
+  padding: 5px;
+  text-align: center;
+  color: #4c381e;
+}
+
 /*button gia mytasks*/
 button {
   background-color: rgba(174, 136, 123, 0.808);
