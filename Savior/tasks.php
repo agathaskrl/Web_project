@@ -1,26 +1,23 @@
 <?php
     include_once 'connect_db.php';
     session_start();
-    if (isset($_SESSION['username'])) {
-        $username = $_SESSION['username'];
-        $query = "SELECT role FROM user WHERE username='$username'";
-        $result = mysqli_query($conn, $query);
-        
-        if ($result && mysqli_num_rows($result) > 0) {
-            $row = mysqli_fetch_assoc($result);
-            $_SESSION['role'] = $row['role']; 
-
+    function checkLoggedIn() {
+        // Check if the user is not logged in
+        if (!isset($_SESSION['username'])) {
+            echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+            echo 'User not logged in!';
+            echo '</div>';
+            exit(); 
         }
-    }
         
-        if (isset($_SESSION['role']) && ($_SESSION['role'] == "ADMIN" || $_SESSION['role'] == "CITIZEN")) {
+        if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
             echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
             echo 'Unauthorized access!';
             echo '</div>';
             exit(); 
         }
+    }
     
-
     checkLoggedIn();
 
     $username = $_SESSION['username'];
