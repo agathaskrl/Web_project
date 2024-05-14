@@ -23,11 +23,11 @@
 
 <?php
 
-// Ensure session started 
+
 session_start();
 include_once 'connect_db.php';
 
-// Function to check if the user is logged in and has appropriate role
+
 function checkLoggedIn() {
     // Check if the user is not logged in
     if (!isset($_SESSION['username'])) {
@@ -46,11 +46,10 @@ function checkLoggedIn() {
     }
 }
 
-// Check if the user is logged in and has appropriate role
 checkLoggedIn();
 
 // Query to fetch offers from the database
-$sql = "SELECT offer_id, item, quantity, subm_date, ret_date FROM offers";
+$sql = "SELECT * FROM offers";
 $result = $conn->query($sql);
 
 ?>
@@ -78,21 +77,38 @@ $result = $conn->query($sql);
                 echo "<td>" . $row["quantity"] . "</td>";
                 echo "<td>" . $row["subm_date"] . "</td>";
                 echo "<td>" . $row["ret_date"] . "</td>";
-                echo "<td></td>"; // Placeholder for veh username column
-                echo "<td></td>"; // Placeholder for status column
-                echo "<td>
-                <form method='post'>
-                        <input type='hidden' name='offer_id' value='" . $row["offer_id"] . "'>
-                        <button type='submit' class='cancelbutton' name='cancel'>Cancel</button>
-                        </form>
-                </td>"; 
+                echo "<td>" . $row["usrnm_veh"] . "</td>";
+                echo "<td>" . $row["status"] . "</td>";
+                echo "<td>";
+                
+                if ($row["usrnm_veh"] === NULL) {
+                    echo "<form method='post'>";
+                    echo "<input type='hidden' name='offer_id' value='" . $row["offer_id"] . "'>";
+                    echo "<button type='submit' class='cancel_offer' id='cancel' name='cancel_offer'>Cancel</button>";
+                    echo "</form>";
+                } else {
+                    echo "Cannot Cancel";
+                }
+        
+                echo "</td>";
                 echo "</tr>";
             }
         } else {
             echo "<tr><td colspan='7'>No offers found.</td></tr>";
         }
+        
+        if(isset($_POST['cancel_offer'])) {
+            $offer_id = $_POST['offer_id'];
+            $cancel_sql = "DELETE FROM offers WHERE offer_id = $offer_id";
+            if (mysqli_query($conn, $cancel_sql)) {
+                // Reload the page after successful 
+                echo "<meta http-equiv='refresh' content='0'>";
+            } else {
+                echo "Error updating record: " . mysqli_error($conn);
+            }
+        }
         ?>
-        </tbody>
+      </tbody>
     </table>
 </div>
 </body>
