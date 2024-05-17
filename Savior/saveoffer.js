@@ -3,6 +3,7 @@ $(document).ready(function () {
     var item = $(this).closest("tr").find("td:eq(0)").text();
     var quantity = $(this).closest("tr").find("td:eq(1)").text();
     var subm_date = $(this).closest("tr").find("td:eq(2)").text();
+
     // Retrieve user information from session
     var name = "<?php echo addslashes($_SESSION['name']); ?>";
     var surname = "<?php echo addslashes($_SESSION['surname']); ?>";
@@ -18,13 +19,11 @@ $(document).ready(function () {
         item: item,
         quantity: quantity,
         subm_date: subm_date,
-        ret_date: ret_date,
         name: name,
         surname: surname,
         phone: phone,
-        usernm_veh: usrnm_veh,
+        usrnm_veh: usrnm_veh,
       },
-
       success: function (response) {
         alert(response);
         window.location.href = "offers.php";

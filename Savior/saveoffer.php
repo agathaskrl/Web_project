@@ -2,15 +2,15 @@
 session_start();
 include_once 'connect_db.php';
 
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
     $item = $_POST['item'];
     $quantity = $_POST['quantity'];
-
+    $subm_date = $_POST['subm_date'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $phone = $_POST['phone'];
 
     $usrnm = $_SESSION['username'];
-
 
     $query = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
     $result = mysqli_query($conn, $query);
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $surname = addslashes($user['surname']); 
         $phone = addslashes($user['phone']); 
 
-        // Fetch coordinates for the current sessions user from the coordinates table
+        // Fetch coordinates for the current session's user from the coordinates table
         $coordsQuery = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
         $coordsResult = mysqli_query($conn, $coordsQuery);
         $coords = mysqli_fetch_assoc($coordsResult);
@@ -32,9 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $lat = $coords['lat'];
             $lng = $coords['lng'];
 
-
-            $sql = "INSERT INTO offers (item, quantity, name, surname, phone, lat, lng, usrnm_veh, ret_date, status) 
-                    VALUES ('$item', '$quantity', '$name', '$surname', '$phone', '$lat', '$lng', '$userm_veh', '$ret_date', '$status')";
+            $sql = "INSERT INTO offers (item, quantity, name, surname, phone, lat, lng) 
+                    VALUES ('$item', '$quantity', '$name', '$surname', '$phone', '$lat', '$lng')";
 
             // Execute SQL query
             if (mysqli_query($conn, $sql)) {
@@ -51,3 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Invalid request!";
 }
+
+// Close the database connection
+$conn->close();
+?>
