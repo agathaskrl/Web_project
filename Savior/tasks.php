@@ -10,7 +10,7 @@
             exit(); 
         }
         
-        if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
+        if (isset($_SESSION['role']) && ($_SESSION['role'] == "CITIZEN" || $_SESSION['role'] == "ADMIN")) {
             echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
             echo 'Unauthorized access!';
             echo '</div>';
