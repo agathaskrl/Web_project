@@ -209,6 +209,7 @@ function fetchOffers() {
                           }
                           console.log("Offer taken on successfully");
                           console.log(offerId);
+                          window.location.reload();
                         })
                         .catch((error) => {
                           console.error("Error taking on offer:", error);
@@ -309,6 +310,8 @@ function fetchRequests() {
                             throw new Error("Failed to take on request");
                           }
                           console.log("Request taken on successfully");
+                          console.log(req_id);
+                          window.location.reload();
                         })
                         .catch((error) => {
                           console.error("Error taking on request:", error);
@@ -331,3 +334,31 @@ function fetchRequests() {
 
 // Call the function to fetch and display requests on the map
 fetchRequests();
+
+// function updateVehicleTasks() {
+//   fetch("update_vehicle_tasks.php", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       sav_usrnm: "HAHHAHA",
+//     }),
+//   })
+//     .then((response) => {
+//       if (!response.ok) {
+//         throw new Error("Failed to update vehicle tasks");
+//       }
+//       return response;
+//     })
+//     .then((data) => {
+//       if (data.ok) {
+//         console.log("Vehicle tasks updated successfully");
+//       } else {
+//         console.error("Failed to update vehicle tasks:", data.message);
+//       }
+//     })
+//     .catch((error) => {
+//       console.error("Error updating vehicle tasks:", error);
+//     });
+// }

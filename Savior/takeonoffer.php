@@ -15,9 +15,10 @@ if(isset($_POST['offerId'])) {
         $curen_time = date('Y-m-d H:i:s');
 
         $sql = "UPDATE offers 
-                SET usrnm_veh = '$sav_usrnm', ret_date = '$curen_time' 
+                SET usrnm_veh = '$sav_usrnm', ret_date = '$curen_time' , status = 'ONGOING'
                 WHERE offer_id = $offerId";
-
+ 
+   
         if($conn->query($sql) === TRUE) {
             if($conn->affected_rows > 0) {
                 echo "Offer taken on successfully";
@@ -27,13 +28,10 @@ if(isset($_POST['offerId'])) {
         } else {
             echo "Error taking on offer: " . $conn->error;
         }
-    } else {
-        echo "Error: Session username not found!";
-    }
 } else {
     echo "Error: Offer ID not provided!";
 }
-
+}
 // Close the database connection
 $conn->close();
 
