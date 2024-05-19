@@ -168,15 +168,14 @@ function fetchOffers() {
           }).addTo(map);
 
           // Construct the HTML string for the pop-up
-          let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone} <br>Vehicle: ${usrnm_veh}<br>`;
+          let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone}<br>Vehicle: ${usrnm_veh}`;
           if (!isTaken) {
             // For offers that are still open, add the "Take On" button
-            popupContent += `<button class="take-on-btn" data-offer-id="${offer_id}">Take On</button>`;
+            popupContent += `<br><button class="take-on-btn" data-offer-id="${offer_id}">Take On</button>`;
           }
 
           marker.bindPopup(popupContent);
 
-          // Add event listener to the "Take On" button
           marker.on("popupopen", function () {
             if (!isTaken) {
               // Wait for the popup to open fully
@@ -192,7 +191,6 @@ function fetchOffers() {
                     );
 
                     if (isSure) {
-                      const offerId = offer.offer_id; // Capture the offer id here
                       // Send AJAX request to take on the offer
                       fetch("takeonoffer.php", {
                         method: "POST",
@@ -200,16 +198,17 @@ function fetchOffers() {
                           "Content-Type": "application/json",
                         },
                         body: JSON.stringify({
-                          offerId: offerId,
+                          offerId: offer_id,
                         }),
                       })
-                        .then((response) => {
-                          if (!response.ok) {
-                            throw new Error("Failed to take on offer");
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.error) {
+                            alert(data.error);
+                          } else {
+                            alert(data.message);
+                            window.location.reload();
                           }
-                          console.log("Offer taken on successfully");
-                          console.log(offerId);
-                          window.location.reload();
                         })
                         .catch((error) => {
                           console.error("Error taking on offer:", error);
@@ -243,7 +242,7 @@ function fetchRequests() {
 
       if (reqdata.length > 0) {
         reqdata.forEach((request) => {
-          console.log("Creating marker for requests:", request);
+          console.log("Creating marker for request:", request);
 
           // Extract request data
           const req_id = request.req_id;
@@ -272,7 +271,7 @@ function fetchRequests() {
           }).addTo(map);
 
           // Construct the HTML string for the pop-up
-          let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone} <br>Vehicle: ${veh_username}`;
+          let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone}<br>Vehicle: ${veh_username}`;
           if (!isTaken) {
             // For requests that are still open, add the "Take On" button
             popupContent += `<br><button class="take-on-btn" data-req-id="${req_id}">Take On</button>`;
@@ -305,13 +304,14 @@ function fetchRequests() {
                           req_Id: req_id,
                         }),
                       })
-                        .then((response) => {
-                          if (!response.ok) {
-                            throw new Error("Failed to take on request");
+                        .then((response) => response.json())
+                        .then((data) => {
+                          if (data.error) {
+                            alert(data.error);
+                          } else {
+                            alert(data.message);
+                            window.location.reload();
                           }
-                          console.log("Request taken on successfully");
-                          console.log(req_id);
-                          window.location.reload();
                         })
                         .catch((error) => {
                           console.error("Error taking on request:", error);
@@ -334,31 +334,3 @@ function fetchRequests() {
 
 // Call the function to fetch and display requests on the map
 fetchRequests();
-
-// function updateVehicleTasks() {
-//   fetch("update_vehicle_tasks.php", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       sav_usrnm: "HAHHAHA",
-//     }),
-//   })
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Failed to update vehicle tasks");
-//       }
-//       return response;
-//     })
-//     .then((data) => {
-//       if (data.ok) {
-//         console.log("Vehicle tasks updated successfully");
-//       } else {
-//         console.error("Failed to update vehicle tasks:", data.message);
-//       }
-//     })
-//     .catch((error) => {
-//       console.error("Error updating vehicle tasks:", error);
-//     });
-// }
