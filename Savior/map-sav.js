@@ -152,9 +152,18 @@ function fetchOffers() {
           const item = offer.item;
           const quantity = offer.quantity;
           const usrnm_veh = offer.usrnm_veh;
+          const status = offer.status;
 
           // Check if the offer is taken
           const isTaken = offer.ret_date !== null && offer.usrnm_veh !== null;
+
+          const complete = status === "COMPLETE";
+
+          // Do not add the marker if the request is complete
+          if (complete) {
+            console.log("Offer is complete", offer_id);
+            return;
+          }
 
           // Create a marker with the appropriate icon
           const iconUrl = isTaken ? "offer_yellow.png" : "offer_green.png";
@@ -254,10 +263,18 @@ function fetchRequests() {
           const req_product = request.req_product;
           const demand = request.demand;
           const veh_username = request.veh_username;
+          const status = request.status;
 
           // Check if the request is taken
           const isTaken =
             request.under_date !== null && request.veh_username !== null;
+
+          const complete = status === "COMPLETE";
+
+          if (complete) {
+            console.log("Request is complete", req_id); // Fixed the variable name
+            return;
+          }
 
           // Create a marker with the appropriate icon
           const iconUrl = isTaken ? "bell_yellow.png" : "bell_green.png";

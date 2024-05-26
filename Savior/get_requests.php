@@ -1,7 +1,7 @@
 <?php
 include_once 'connect_db.php';
 
-$sql = "SELECT req_id, civ_name, civ_surname, civ_phone, req_product, demand, lat, lng, veh_username,req_date, under_date FROM requests";
+$sql = "SELECT req_id, civ_name, civ_surname, civ_phone, req_product, demand, lat, lng, veh_username,req_date, under_date, status FROM requests";
 $result = $conn->query($sql);
 
 // Check if there are results
@@ -23,6 +23,7 @@ if ($result->num_rows > 0) {
             'veh_username' => $row['veh_username'], 
             'req_date'=> $row['req_date'],
             'under_date' => $row['under_date'],
+            'status' => $row['status'], 
         );
         // Add the request to the requests array
         $requests[] = $request;
