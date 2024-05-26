@@ -107,7 +107,7 @@ function fetch_vehicle_coords() {
 function create_vehicle_marker() {
   var vehicon = L.icon({
     iconUrl: "vehicle.png",
-    iconSize: [42, 42],
+    iconSize: [32, 32],
     iconAnchor: [16, 32],
   });
 
@@ -116,13 +116,12 @@ function create_vehicle_marker() {
       var coords = [vehicle.lat, vehicle.lng]; // Use coordinates from data
       L.marker(coords, { icon: vehicon })
         .bindPopup(
-          "<h3>Username:</h3><p>" +
+          "<b>Username: </b>" +
             vehicle.sav_username +
-            "</p><h3>Cargo:</h3><p>" +
+            "<br><b>Cargo: </b>" +
             vehicle.cargo +
-            "</p><h3>Tasks:</h3>" +
-            vehicle.under_tasks +
-            "</p>"
+            "<br><b>Tasks: </b>" +
+            vehicle.under_tasks
         )
         .addTo(map);
     });
@@ -131,3 +130,150 @@ function create_vehicle_marker() {
 
 //klhsh ths function gia na deixei ta markes oxhmatwn
 fetch_vehicle_coords();
+
+//offers & requests :
+
+function fetchOffers() {
+  fetch("get_offers.php")
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Received offers data:", data);
+
+      if (data.length > 0) {
+        data.forEach((offer) => {
+          console.log("Creating marker for offer:", offer);
+
+          // Extract offer data
+          const offer_id = offer.offer_id;
+          const name = offer.name;
+          const surname = offer.surname;
+          const phone = offer.phone;
+          const lat = offer.lat;
+          const lng = offer.lng;
+          const item = offer.item;
+          const quantity = offer.quantity;
+          const subm_date = offer.subm_date;
+          const ret_date = offer.ret_date;
+          const usrnm_veh = offer.usrnm_veh;
+          const status = offer.status;
+
+          // Check if the offer is taken
+          const isTaken = offer.ret_date !== null && offer.usrnm_veh !== null;
+
+          const complete = status === "COMPLETE";
+
+          // Do not add the marker if the request is complete
+          if (complete) {
+            console.log("Offer is complete", offer_id);
+            return;
+          }
+
+          // Create a marker with the appropriate icon
+          const iconUrl = isTaken ? "offer_yellow.png" : "offer_green.png";
+          const marker = L.marker([lat, lng], {
+            icon: L.icon({
+              iconUrl: iconUrl,
+              iconSize: [32, 32],
+              iconAnchor: [16, 32],
+              popupAnchor: [0, -32],
+            }),
+          }).addTo(map);
+
+          // Construct the HTML string for the pop-up
+          let popupContent = `
+              <b>${item}</b>
+              <b>Quantity:</b> ${quantity}</p>
+              <p><b>Name:</b> ${name}</p>
+              <p><b>Surname:</b> ${surname}</p>
+              <p><b>Phone:</b> ${phone}</p>
+              <p><b>Vehicle:</b> ${usrnm_veh}</p>
+              <p><b>Submit Date:</b> ${subm_date}</p>
+              <p><b>Undertaken Date:</b> ${ret_date}</p>`;
+
+          marker.bindPopup(popupContent);
+        });
+      } else {
+        console.error("No offers found");
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to fetch offers", error);
+    });
+}
+
+// Call the function to fetch and display offers on the map
+fetchOffers();
+
+//requests
+// Function to fetch requests from the server and display them on the map
+function fetchRequests() {
+  fetch("get_requests.php")
+    .then((response) => response.json())
+    .then((reqdata) => {
+      console.log("Received requests data:", reqdata);
+
+      if (reqdata.length > 0) {
+        reqdata.forEach((request) => {
+          console.log("Creating marker for requests:", request);
+
+          // Extract request data
+          const req_id = request.req_id;
+          const civ_name = request.civ_name;
+          const civ_surname = request.civ_surname;
+          const civ_phone = request.civ_phone;
+          const lat = request.lat;
+          const lng = request.lng;
+          const req_product = request.req_product;
+          const demand = request.demand;
+          const req_date = request.req_date;
+          const under_date = request.under_date;
+          const veh_username = request.veh_username;
+          const status = request.status;
+
+          // Check if the request is taken
+          const isTaken =
+            request.under_date !== null && request.veh_username !== null;
+
+          const complete = status === "COMPLETE";
+
+          if (complete) {
+            console.log("Request is complete", req_id); // Fixed the variable name
+            return;
+          }
+
+          // Create a marker with the appropriate icon
+          const iconUrl = isTaken ? "bell_yellow.png" : "bell_green.png";
+          const marker = L.marker([lat, lng], {
+            icon: L.icon({
+              iconUrl: iconUrl,
+              iconSize: [32, 32],
+              iconAnchor: [16, 32],
+              popupAnchor: [0, -32],
+            }),
+          }).addTo(map);
+
+          // Construct the HTML string for the pop-up
+          let popupContent = `
+              <b>${req_product}</b>
+            <div class="popup-body">
+              <p><b>Demand:</b> ${demand}</p>
+              <p><b>Name:</b> ${civ_name}</p>
+              <p><b>Surname:</b> ${civ_surname}</p>
+              <p><b>Phone:</b> ${civ_phone}</p>
+              <p><b>Vehicle:</b> ${veh_username}</p>
+              <p><b>Request Date:</b> ${req_date}</p>
+              <p><b>Undertaken Date:</b> ${under_date}</p>`;
+
+          marker.bindPopup(popupContent);
+        });
+      } else {
+        console.error("No requests found");
+      }
+    })
+    .catch((error) => {
+      console.error("Failed to fetch requests", error);
+    });
+}
+
+// Call the function to fetch and display requests on the map
+fetchRequests();
