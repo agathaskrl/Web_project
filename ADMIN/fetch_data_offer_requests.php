@@ -20,13 +20,13 @@ switch ($timePeriod) {
         $startDate = date('Y-m-d', strtotime('-3 months'));
         break;
     default:
-        $startDate = date('Y-m-d', strtotime('-7 days')); // Default to 7 days if invalid period is provided
+        $startDate = date('Y-m-d', strtotime('-7 days')); 
         break;
 }
 
 try {
     $data = [
-        'labels' => ['New Requests', 'New Offers', 'Processed Requests', 'Processed Offers'],
+        'labels' => ['New Requests', 'New Offers', 'Complete Requests', 'Complete Offers'],
         'datasets' => []
     ];
 
@@ -34,8 +34,8 @@ try {
     $queries = [
         "SELECT COUNT(*) AS count FROM requests WHERE req_date >= ? AND status = ''" => 'New Requests',
         "SELECT COUNT(*) AS count FROM offers WHERE subm_date >= ? AND status = ''" => 'New Offers',
-        "SELECT COUNT(*) AS count FROM requests WHERE status = 'COMPLETE' AND req_date >= ?" => 'Processed Requests',
-        "SELECT COUNT(*) AS count FROM offers WHERE status = 'COMPLETE' AND subm_date >= ?" => 'Processed Offers'
+        "SELECT COUNT(*) AS count FROM requests WHERE status = 'COMPLETE' AND req_date >= ?" => 'Complete Requests',
+        "SELECT COUNT(*) AS count FROM offers WHERE status = 'COMPLETE' AND subm_date >= ?" => 'Complete Offers'
     ];
 
     $counts = [];
@@ -68,14 +68,14 @@ try {
             'borderWidth' => 1
         ],
         [
-            'label' => 'Processed Requests',
+            'label' => 'Complete Requests',
             'data' => [$counts[2]],
             'backgroundColor' => 'rgba(255, 206, 86, 0.2)',
             'borderColor' => 'rgba(255, 206, 86, 1)',
             'borderWidth' => 1
         ],
         [
-            'label' => 'Processed Offers',
+            'label' => 'Complete Offers',
             'data' => [$counts[3]],
             'backgroundColor' => 'rgba(153, 102, 255, 0.2)',
             'borderColor' => 'rgba(153, 102, 255, 1)',
