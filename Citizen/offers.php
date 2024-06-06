@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
     <title>Offers</title>
-    <link rel="stylesheet" href="offers.css?v=3">
+    <link rel="stylesheet" href="offers.css">
 </head>
 
 <body>
@@ -29,7 +29,6 @@ include_once 'connect_db.php';
 
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
@@ -48,8 +47,8 @@ function checkLoggedIn() {
 
 checkLoggedIn();
 
-// Query to fetch offers from the database
-$sql = "SELECT * FROM offers";
+$usrnm = $_SESSION['username'];
+$sql = "SELECT * FROM offers WHERE cit_username = '$usrnm'";
 $result = $conn->query($sql);
 
 ?>

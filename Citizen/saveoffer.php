@@ -2,34 +2,52 @@
 session_start();
 include_once 'connect_db.php';
 
-// Check if data is received via POST request
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Retrieve item and quantity from POST data
+    $ann_id = intval($_POST['ann_id']);
     $item = $_POST['item'];
     $quantity = $_POST['quantity'];
+    $subm_date = $_POST['subm_date'];
+    $name = $_POST['name'];
+    $surname = $_POST['surname'];
+    $phone = $_POST['phone'];
 
-    // Retrieve username from session
     $usrnm = $_SESSION['username'];
 
-    // Fetch user information from the database
     $query = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_assoc($result);
 
-    // Check if user information is fetched successfully
     if ($user) {
-        $name = addslashes($user['name']); // Escape special characters
-        $surname = addslashes($user['surname']); // Escape special characters
-        $phone = addslashes($user['phone']); // Escape special characters
+        $name = addslashes($user['name']); 
+        $surname = addslashes($user['surname']); 
+        $phone = addslashes($user['phone']); 
 
-        // Example of inserting data into a database table
-        $sql = "INSERT INTO offers (item, quantity, name, surname, phone) VALUES ('$item', '$quantity', '$name', '$surname', '$phone')";
+        // Fetch coordinates for the user from the coordinates table
+        $coordsQuery = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
+        $coordsResult = mysqli_query($conn, $coordsQuery);
+        $coords = mysqli_fetch_assoc($coordsResult);
 
-        // Execute SQL query
-        if (mysqli_query($conn, $sql)) {
-            echo "Offer made successfully!";
+        
+        if ($coords) {
+            $lat = $coords['lat'];
+            $lng = $coords['lng'];
+
+            $sql = "INSERT INTO offers (item, quantity, name, surname, cit_username, phone, lat, lng) 
+                    VALUES ('$item', '$quantity', '$name', '$surname', '$usrnm' ,'$phone', '$lat', '$lng')";
+
+           
+            if (mysqli_query($conn, $sql)) {
+                $sql2 = "UPDATE announcements SET offer_made = 'YES' WHERE ann_id = $ann_id";
+                if (mysqli_query($conn, $sql2)) {
+                    echo "Offer made successfully!";
+                } else {
+                    echo "Error updating offer_made field: " . mysqli_error($conn);
+                }
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
         } else {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "Error: Coordinates not found!";
         }
     } else {
         echo "Error: User information not found!";
@@ -37,4 +55,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 } else {
     echo "Invalid request!";
 }
-?>
+
+$conn->close();
