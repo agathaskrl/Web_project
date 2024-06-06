@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -22,11 +20,8 @@
 </div>
 
 <?php
-
-
 session_start();
 include_once 'connect_db.php';
-
 
 function checkLoggedIn() {
     if (!isset($_SESSION['username'])) {
@@ -36,7 +31,6 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -50,7 +44,6 @@ checkLoggedIn();
 $usrnm = $_SESSION['username'];
 $sql = "SELECT * FROM offers WHERE cit_username = '$usrnm'";
 $result = $conn->query($sql);
-
 ?>
 
 <div class="form-box">
@@ -68,7 +61,6 @@ $result = $conn->query($sql);
         </thead>
         <tbody>
         <?php
-        // Display offers if there are any
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
@@ -83,7 +75,9 @@ $result = $conn->query($sql);
                 if ($row["usrnm_veh"] === NULL) {
                     echo "<form method='post'>";
                     echo "<input type='hidden' name='offer_id' value='" . $row["offer_id"] . "'>";
-                    echo "<button type='submit' class='cancel_offer' id='cancel' name='cancel_offer'>Cancel</button>";
+                    echo "<input type='hidden' name='item' value='" . $row["item"] . "'>";
+                    echo "<input type='hidden' name='quantity' value='" . $row["quantity"] . "'>";
+                    echo "<button type='submit' id='cancel' class='cancel_offer' name='cancel_offer'>Cancel</button>";
                     echo "</form>";
                 } else {
                     echo "Cannot Cancel";
@@ -96,14 +90,23 @@ $result = $conn->query($sql);
             echo "<tr><td colspan='7'>No offers found.</td></tr>";
         }
         
-        if(isset($_POST['cancel_offer'])) {
+        if (isset($_POST['cancel_offer'])) {
             $offer_id = $_POST['offer_id'];
+            $item = $_POST['item'];
+            $quantity = $_POST['quantity'];
+            
+            // Delete the offer
             $cancel_sql = "DELETE FROM offers WHERE offer_id = $offer_id";
+            
             if (mysqli_query($conn, $cancel_sql)) {
-                // Reload the page after successful 
-                echo "<meta http-equiv='refresh' content='0'>";
+                $update_ann_sql = "UPDATE announcements SET offer_made = NULL WHERE item = '$item' AND quantity = '$quantity'";
+                if (mysqli_query($conn, $update_ann_sql)) {
+                    echo "<meta http-equiv='refresh' content='0'>";
+                } else {
+                    echo "Error updating announcements: " . mysqli_error($conn);
+                }
             } else {
-                echo "Error updating record: " . mysqli_error($conn);
+                echo "Error deleting offer: " . mysqli_error($conn);
             }
         }
         ?>
