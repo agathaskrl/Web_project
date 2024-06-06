@@ -74,7 +74,6 @@ checkLoggedIn();
         document.addEventListener("DOMContentLoaded", function () {
             const welcomeMessage = document.querySelector('.welcome-message');
 
-            //welcome message
             welcomeMessage.style.display = 'block';
 
             //timeout 30 secs
@@ -85,12 +84,6 @@ checkLoggedIn();
     </script>
         </div>
         <br>
-
-        <div class="container">
-            <input type="text" id="searchInput" placeholder="Search...">
-            <button>Search</button>
-        </div>
-        <button><i class="filtermap"></i>Filter Map</button>
 
         <div class="map" id="map" style="width: 100%; height: 450px;"></div>
     </div>
