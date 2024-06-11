@@ -1,87 +1,181 @@
 body {
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    background-color:#f0ded0;
-  }
-  
-  .navbar {
-    height: 70px;
-    margin: auto;
-    background-color: #ae887b;
-    border-style: solid;
-    border-color: #4c381e;
-  }
-  
-  ul {
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f0ded0;
+}
+
+.navbar {
+  height: 70px;
+  margin: auto;
+  background-color: #ae887b;
+  border-style: solid;
+  border-color: #4c381e;
+}
+
+ul {
+  float: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul li {
+  list-style: none;
+  margin-left: 50px;
+  margin-top: 15px;
+  font-size: 15px;
+  text-align: center;
+}
+
+ul li a {
+  list-style: none;
+  font-size: 15px;
+  text-align: center;
+  text-decoration: none;
+  color: #4c381e;
+  font-family: sans-serif;
+  font-weight: bold;
+  transition: 0.4s ease-in-out;
+}
+
+ul li a:hover {
+  color: #f0ded0;
+}
+
+.form-box {
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.form-box table {
+  width: 70%;
+  margin: 0 auto;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 20px;
+  border-collapse: collapse;
+}
+
+.form-box th,
+.form-box td {
+  padding: 8px;
+  border: 3px solid #4c381e;
+  text-align: center;
+}
+
+.form-box th {
+  background-color: rgba(174, 136, 123, 0.808);
+  font-weight: 700;
+  color: #fff;
+}
+
+.form-box tbody tr:nth-child(even) {
+  text-align: center;
+  background-color: rgba(174, 136, 123, 0.808);
+}
+
+.offerbutton {
+  background-color: rgba(16, 224, 20, 0.808);
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 20px;
+  padding: 8px 16px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+/* Media Queries */
+@media only screen and (max-width: 1200px) {
   ul li {
-    list-style: none;
-    margin-left: 50px;
-    margin-top: 15px;
-    font-size: 15px;
-    text-align: center;
+    margin-left: 30px;
+    font-size: 14px;
   }
-  
+
   ul li a {
-    list-style: none;
-    font-size: 15px;
-    text-align: center;
-    text-decoration: none;
-    color: #4c381e;
-    font-family: sans-serif;
-    font-weight: bold;
-    transition: 0.4s ease-in-out;
+    font-size: 14px;
   }
-  
-  ul li a:hover {
-    color:#f0ded0;
+
+  .form-box table {
+    width: 80%;
+  }
+
+  .form-box th,
+  .form-box td {
+    padding: 6px;
+  }
+
+  .offerbutton {
+    padding: 6px 14px;
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  ul {
+    float: none;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 10px;
+  }
+
+  ul li {
+    margin-left: 0;
+    margin-top: 10px;
+    font-size: 13px;
+  }
+
+  ul li a {
+    font-size: 13px;
+  }
+
+  .form-box table {
+    width: 90%;
+  }
+
+  .form-box th,
+  .form-box td {
+    padding: 5px;
+  }
+
+  .offerbutton {
+    padding: 5px 12px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  ul li {
+    margin-left: 0;
+    margin-top: 5px;
+    font-size: 12px;
+  }
+
+  ul li a {
+    font-size: 12px;
   }
 
   .form-box {
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 20px;
+    width: 100%;
+    margin-top: 10px;
   }
-  
+
   .form-box table {
-    width: 70%;
-    margin: 0 auto;
-    margin-right: auto;
-    margin-left: auto;
-    margin-top: 20px;
-    border-collapse: collapse;
+    width: 100%;
   }
-  
+
   .form-box th,
   .form-box td {
-    padding: 8px;
-    border: 3px solid #4c381e;
-    text-align: center;
+    padding: 4px;
   }
-  
-  .form-box th {
-    background-color: rgba(174, 136, 123, 0.808);
-    font-weight: 700;
-    color: #fff;
-  }
-  
-  .form-box tbody tr:nth-child(even) {
-    text-align: center;
-    background-color: rgba(174, 136, 123, 0.808);
-  }
+
   .offerbutton {
-    background-color: rgba(16, 224, 20, 0.808);
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 20px;
-    padding: 8px 16px;
-    margin-left: 20px;
-    margin-right: 20px;
+    padding: 4px 10px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
+}

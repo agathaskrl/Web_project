@@ -43,7 +43,6 @@ ul li a:hover {
   color: #f0ded0;
 }
 
-/* for the form in the requestslist to fetch the data in a box like  */
 .form-box {
   width: 90%;
   margin: 0 auto;
@@ -75,4 +74,15 @@ ul li a:hover {
 .form-box tbody tr:nth-child(even) {
   text-align: center;
   background-color: rgba(174, 136, 123, 0.808);
+}
+@media only screen and (max-width: 480px) {
+  ul li {
+    margin-left: 10px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  ul li {
+    margin-left: 10px;
+  }
 }

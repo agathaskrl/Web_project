@@ -85,3 +85,48 @@ ul li a:hover {
   margin-left: 20px;
   margin-right: 20px;
 }
+@media (max-width: 768px) {
+  ul {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+
+  .side-menu a {
+    font-size: 18px;
+    padding: 15px 0;
+  }
+
+  .form-box table {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 10px;
+  }
+
+  .menu-btn {
+    font-size: 24px;
+  }
+
+  .form-box table {
+    width: 100%;
+  }
+
+  .form-box th,
+  .form-box td {
+    padding: 4px;
+  }
+
+  #cancel {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+}
