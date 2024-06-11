@@ -1,3 +1,4 @@
+/* Admin nav bar and body css for all admin pages  */
 body {
   margin: 0;
   padding: 0;
@@ -22,7 +23,7 @@ body {
   padding: 10px;
   border-radius: 5px;
   animation: fadeInOut 30s ease-in-out;
-  z-index: 1000;
+  position: absolute;
 }
 
 @keyframes fadeInOut {
@@ -68,9 +69,9 @@ ul li a:hover {
   color: rgba(240, 222, 208, 1);
 }
 
+/* Create an account css admin page  */
 .box {
-  width: 90%;
-  max-width: 600px;
+  width: 50%;
   margin: 50px auto;
   background-color: #fff;
   padding: 20px;
@@ -129,34 +130,38 @@ ul li a:hover {
   border-color: rgba(174, 136, 123, 1);
 }
 
+/* Warehouse css */
 .form-container form {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  margin: 50px auto;
+  grid-template-columns: repeat(2, 1fr);
+  margin-right: 20px;
+  margin-left: 20px;
+  margin-top: 50px;
+  margin-bottom: auto;
   border: 3px solid rgba(174, 136, 123, 1);
-  width: 90%;
-  max-width: 600px;
-  padding: 20px;
-  border-radius: 8px;
+  width: 30%;
 }
 
 .form-group {
-  width: 100%;
+  width: 90%;
   margin-top: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .form-group label {
-  display: block;
+  display: flex;
   font-weight: 600;
   margin-bottom: 5px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .form-group input {
   height: 40px;
-  width: 100%;
+  width: 70%;
   outline: none;
   border: 3px solid rgba(174, 136, 123, 1);
+  margin-left: 20px;
   border-radius: 8px;
   padding-left: 15px;
   font-size: 16px;
@@ -166,6 +171,7 @@ ul li a:hover {
   border-color: rgba(174, 136, 123, 1);
 }
 
+/* for the form in the warehouse to fetch the data in a box like  */
 .form-box {
   width: 90%;
   margin: 0 auto;
@@ -173,7 +179,7 @@ ul li a:hover {
 }
 
 .form-box table {
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
   margin-top: 20px;
   border-collapse: collapse;
@@ -196,6 +202,7 @@ ul li a:hover {
   background-color: rgba(174, 136, 123, 0.808);
 }
 
+/* Button filter basic for all pages of admin */
 button {
   background-color: rgba(174, 136, 123, 0.808);
   border: none;
@@ -203,13 +210,12 @@ button {
   cursor: pointer;
   border-radius: 20px;
   padding: 8px 16px;
-  margin: 10px 0;
+  margin-left: 20px;
+  margin-right: 20px;
 }
-
 .button-container {
   text-align: right;
 }
-
 .delbutton {
   background-color: rgba(205, 16, 16, 0.808);
   border: none;
@@ -220,7 +226,6 @@ button {
   margin-left: 20px;
   margin-right: 20px;
 }
-
 .editbutton {
   background-color: rgba(16, 205, 25, 0.808);
   border: none;
@@ -231,7 +236,6 @@ button {
   margin-left: 20px;
   margin-right: 20px;
 }
-
 .filterbtn {
   background-color: rgba(53, 246, 62, 0.808);
   border: none;
@@ -240,9 +244,10 @@ button {
   border-radius: 20px;
   padding: 6px 10px;
   width: 70px;
-  margin: 10px 40px;
+  margin-top: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
 }
-
 .togbtn {
   background-color: rgba(174, 136, 123, 0.808);
   border: none;
@@ -250,7 +255,8 @@ button {
   cursor: pointer;
   border-radius: 20px;
   padding: 8px 16px;
-  margin: 10px 20px;
+  margin-left: 20px;
+  margin-right: 20px;
   font-size: 16px;
   font-weight: 500;
 }
@@ -283,7 +289,7 @@ button {
 
 .container .deleteelementsbtn {
   height: 45px;
-  width: 90%;
+  width: 50%;
   background: rgb(156, 7, 7);
   border-radius: 8px;
   font-size: 16px;
@@ -292,9 +298,7 @@ button {
   color: rgb(255, 255, 255);
   cursor: pointer;
   transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
-  margin: 20px auto;
 }
-
 .category-con {
   display: none;
   position: relative;
@@ -302,12 +306,11 @@ button {
   border: 1px solid #ccc;
   padding: 10px;
   border-radius: 5px;
-  width: 90%;
-  max-width: 200px;
+  width: 200px;
+  height: 150px;
   margin-bottom: 10px;
   overflow-y: auto;
 }
-
 /* update items table and upload */
 .container {
   text-align: center;
@@ -320,8 +323,7 @@ button {
 
 .container input {
   height: 45px;
-  width: 90%;
-  max-width: 500px;
+  width: 50%;
   background: rgb(252, 252, 252);
   border-radius: 8px;
   font-size: 16px;
@@ -330,9 +332,7 @@ button {
   color: rgba(76, 56, 30, 1);
   cursor: pointer;
   transition: background 0.3s ease-in-out, border-color 0.3s ease-in-out;
-  margin: 20px auto;
 }
-
 /*autocomplete display */
 .ui-autocomplete {
   display: block;
@@ -364,13 +364,13 @@ button {
 .ui-autocomplete li:hover {
   background-color: #f0f0f0;
 }
-
 #map {
-  position: relative;
+  position: bottom;
+  top: 2pc;
+  bottom: 10pc;
   height: 50%;
-  width: 100%;
+  width: 50%;
   z-index: 1;
-  margin: 20px 0;
 }
 
 .popup-container {
@@ -391,11 +391,9 @@ button {
 }
 
 .container-chart {
-  width: 90%;
-  max-width: 800px;
+  width: 70%;
   margin: 0 auto;
 }
-
 .container-chart h1 {
   text-align: center;
   font-style: italic;
@@ -407,50 +405,63 @@ button {
   max-width: 100%;
 }
 
-/* Dropdown button */
-.dropbtn {
-  background-color: #ae887b;
-  color: white;
-  padding: 14px;
-  font-size: 12px;
-  border: none;
-  cursor: pointer;
-}
-
-.dropbtn:hover,
-.dropbtn:focus {
-  background-color: #ae887b;
-}
-
 .dropdown {
   position: relative;
   display: inline-block;
   z-index: 1000;
+  left: 0;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  min-width: 160px;
-  overflow: auto;
+  min-width: 140px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  font-size: 10px;
+  z-index: 1000;
 }
 
-.dropdown-content a {
+.dropdown-content label {
   color: black;
-  padding: 12px 16px;
+  padding: 4px 8px;
   text-decoration: none;
-  display: block;
+  display: flex;
+  align-items: center;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-size: 14px;
+  margin: 0;
 }
 
-.dropdown-content a:hover {
+.dropdown-content input[type="checkbox"] {
+  transform: scale(0.4);
+  margin-right: 8px;
+}
+
+/* Apply Filter button */
+.dropdown-content button {
+  background-color: #ae887b;
+  color: white;
+  padding: 8px 12px;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: center;
+  width: 100%;
+}
+
+.dropdown-content button:hover {
+  background-color: #ae887b;
+}
+
+.dropdown-content label:hover {
   background-color: #f1f1f1;
 }
 
-.dropdown-content.show {
+.show {
   display: block;
 }
 
@@ -497,11 +508,6 @@ button {
     padding: 5px;
   }
 
-  .dropbtn {
-    padding: 10px;
-    font-size: 10px;
-  }
-
   .dropdown-content {
     min-width: 120px;
   }
@@ -530,11 +536,6 @@ button {
 
   .container-chart {
     width: 100%;
-  }
-
-  .dropbtn {
-    padding: 8px;
-    font-size: 8px;
   }
 
   .dropdown-content {
