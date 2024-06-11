@@ -70,7 +70,6 @@ function updateChart() {
     });
 }
 
-// Initial chart load
 document.addEventListener("DOMContentLoaded", () => {
   updateChart();
 });

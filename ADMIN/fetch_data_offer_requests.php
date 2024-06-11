@@ -83,11 +83,11 @@ try {
         ]
     ];
 
-    // Return data as JSON
+   
     header('Content-Type: application/json');
+
     echo json_encode($data);
 
 } catch (Exception $e) {
-
     echo json_encode(['error' => 'Caught exception: ' . $e->getMessage()]);
 }

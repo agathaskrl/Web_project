@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Statistics</title>
-    <link rel="stylesheet" href="adstyle.css?v=4">
+    <link rel="stylesheet" href="adstyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>     
