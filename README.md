@@ -1,2 +1,2 @@
 # Web_project
-2023-2024
+Creation of a webiste for victims of natural disasters with HTML, CSS, PHP JavaScript & SQL. 
