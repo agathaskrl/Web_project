@@ -25,19 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
     dropdownContent.classList.remove("show");
   });
 
-  let drawnLines = []; // Track drawn lines
+  let drawnLines = [];
 
   function applyFilters() {
     const showLines = showLinesCheckbox.checked;
 
-    console.log("Applying filters");
     console.log("Show lines checkbox checked:", showLines);
 
     // Fetch or remove lines based on filter value
     if (showLines) {
       fetchUndertakenCoords();
     } else {
-      removeDrawnLines();
+      removeDrawnLines(); // Remove drawn lines when showLines is false
     }
 
     // Show/hide markers based on the filter values
@@ -50,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((response) => response.json())
       .then((data) => {
         if (data && data.length > 0) {
-          console.log("Undertaken coordinates fetched:", data); // Added logging
+          console.log("Undertaken coordinates fetched:", data);
           removeDrawnLines(); // Remove existing lines before adding new ones
           data.forEach((undertaken) => {
             const offerCoords = [undertaken.offer_lat, undertaken.offer_lng];
@@ -85,7 +84,8 @@ document.addEventListener("DOMContentLoaded", function () {
       map.removeLayer(line);
       console.log("Line removed:", line);
     });
-    drawnLines = [];
+
+    drawnLines = []; // Clear the array of drawn lines
     console.log("Total lines after removal:", drawnLines.length);
   }
 
@@ -139,15 +139,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function filterRequestMarkers(showOpen, showUndertaken) {
     console.log("Filtering request markers");
+
     requestMarkers.forEach((marker) => {
       const isTaken =
         marker.options.icon.options.iconUrl.includes("bell_yellow.png");
       const shouldShow = (showOpen && !isTaken) || (showUndertaken && isTaken);
+
       console.log(
         `Request marker at ${marker.getLatLng()} is ${
           isTaken ? "undertaken" : "open"
         }. Should show: ${shouldShow}`
       );
+
       if (shouldShow) {
         if (!map.hasLayer(marker)) {
           map.addLayer(marker);
@@ -161,36 +164,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
-  // Fetch undertaken coordinates and draw lines between vehicles and markers
-  function fetch_undertaken_coords() {
-    fetch("get_undertaken_coords.php")
-      .then((response) => response.json())
-      .then((data) => {
-        if (data && data.length > 0) {
-          data.forEach((undertaken) => {
-            const offerCoords = [undertaken.offer_lat, undertaken.offer_lng];
-            const vehicleCoords = [
-              undertaken.vehicle_lat,
-              undertaken.vehicle_lng,
-            ];
-
-            // Create a polyline between offer and vehicle coordinates
-            const polyline = L.polyline([offerCoords, vehicleCoords], {
-              color: "red",
-            }).addTo(map);
-          });
-        } else {
-          console.error("No ongoing offers found");
-        }
-      })
-      .catch((error) => {
-        console.error("Failed to fetch ongoing offers", error);
-      });
-  }
-
-  fetch_undertaken_coords();
 });
-
 //arxikopoihsi xarti
 const map = L.map("map").setView([39.192232, 24.242514], 5);
 
