@@ -6,7 +6,7 @@ function debug_log($message) {
     error_log($message . "\n", 3, 'debug.log');
 }
 
-// Ensure the user is logged in
+// elegxos an einai o xristis logged in
 if (!isset($_SESSION['username'])) {
     echo json_encode(["error" => "User is not logged in"]);
     debug_log("Error: User is not logged in");
@@ -16,16 +16,16 @@ if (!isset($_SESSION['username'])) {
 $username = $_SESSION['username'];
 $data = json_decode(file_get_contents('php://input'), true);
 
-// Check if 'items' key exists in the JSON data
+// elegxos an yparxei 'items' sta JSON data
 if (!isset($data['items'])) {
     echo json_encode(["error" => "No items data provided"]);
     debug_log("Error: No items data provided");
     exit(); 
 }
 
-$items = $data['items']; // Assign the value to $items
+$items = $data['items']; // dinei timi sto $items
 
-// Prepare the update query to update the quantity in the products table
+// update query gia na kanei update to quantity ston pinaka products
 $updateQuery = "UPDATE products SET quantity = quantity + ?, on_vehicle = NULL WHERE name = ?";
 $updateStmt = $conn->prepare($updateQuery);
 $deleteQuery = "UPDATE vehicle SET cargo = NULL, items = NULL WHERE sav_username = ?";
@@ -36,7 +36,7 @@ if ($updateStmt && $deleteStmt) {
         $name = $item['name'];
         $cargo = $item['cargo'];
 
-        // Randomly distribute the cargo quantity into multiple products entries
+        // tyxaia dianomi tis posotitas tou cargo se pollapla entries proiontwn
         while ($cargo > 0) {
             $quantity = rand(1, min($cargo, 100)); 
             $updateStmt->bind_param("is", $quantity, $name);
@@ -49,7 +49,7 @@ if ($updateStmt && $deleteStmt) {
         }
     }
 
-    // Clear items and cargo from vehicle table
+    // adiasma items kai cargo apo ton pinaka vehicle
     $deleteStmt->bind_param("s", $username);
     if (!$deleteStmt->execute()) {
         echo json_encode(['error' => 'Failed to delete from vehicle']);
@@ -57,17 +57,18 @@ if ($updateStmt && $deleteStmt) {
         exit();
     }
 
-    // Construct JSON response for success message
+    // apantisi JSON gia epityximeno minima
     $successResponse = json_encode(['success' => 'Items updated in products and deleted from vehicle']);
     echo $successResponse;
 } else {
+//apantisi json gia minima error
     echo json_encode(['error' => 'Failed to prepare update or delete statement']);
     debug_log("Error preparing update or delete statement: " . $conn->error);
 }
 
-// Close prepared statements
+// kleinei ta statements
 $updateStmt->close();
 $deleteStmt->close();
 
-// Close database connection
+// kleinei syndesi me th vash
 mysqli_close($conn);
