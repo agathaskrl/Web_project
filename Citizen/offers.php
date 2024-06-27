@@ -30,7 +30,7 @@ function checkLoggedIn() {
         echo '</div>';
         exit(); 
     }
-    
+     // elegxos gia to role tou xristi, an einai "SAVIOR" or "ADMIN", kai arnisi prosvasis
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -42,6 +42,7 @@ function checkLoggedIn() {
 checkLoggedIn();
 
 $usrnm = $_SESSION['username'];
+// Query gia na kanei fetch ta offers apo ti vasi 
 $sql = "SELECT * FROM offers WHERE cit_username = '$usrnm'";
 $result = $conn->query($sql);
 ?>
@@ -61,6 +62,7 @@ $result = $conn->query($sql);
         </thead>
         <tbody>
         <?php
+        // emfanisi offers an uparxoun
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
