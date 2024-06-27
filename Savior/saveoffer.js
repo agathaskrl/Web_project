@@ -4,12 +4,12 @@ $(document).ready(function () {
     var quantity = $(this).closest("tr").find("td:eq(1)").text();
     var subm_date = $(this).closest("tr").find("td:eq(2)").text();
 
-    // Retrieve user information from session
+    // pairnei stoixeia tou xristi apo to session 
     var name = "<?php echo addslashes($_SESSION['name']); ?>";
     var surname = "<?php echo addslashes($_SESSION['surname']); ?>";
     var phone = "<?php echo addslashes($_SESSION['phone']); ?>";
 
-    // Retrieve vehicle information from the user input
+    // pairnei stoixeia tou vehicle apo ti vash
     var usrnm_veh = $("#usrnm_veh").val();
 
     $.ajax({
