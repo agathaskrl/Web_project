@@ -1,7 +1,7 @@
 <?php
 include_once 'connect_db.php';
 
-// Check if the timePeriod parameter is set and valid
+// Check for the time parameter 
 if (isset($_GET['timePeriod'])) {
     $timePeriod = $_GET['timePeriod'];
 } else {
@@ -30,7 +30,6 @@ try {
         'datasets' => []
     ];
 
-    // Prepare and execute queries
     $queries = [
         "SELECT COUNT(*) AS count FROM requests WHERE req_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Requests',
         "SELECT COUNT(*) AS count FROM offers WHERE subm_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Offers',
