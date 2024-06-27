@@ -26,7 +26,7 @@
     session_start();
     include_once 'connect_db.php';
 
-    // Function to check if the user is logged in and has appropriate role
+    // Elegxos gia to an o xrhsths einai syndedemenos
     function checkLoggedIn() {
         // Check if the user is not logged in
         if (!isset($_SESSION['username'])) {
@@ -36,7 +36,7 @@
             exit(); 
         }
         
-
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "ADMIN" kai aporich peraitero prosvashs
         if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
             echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
             echo 'Unauthorized access!';
@@ -46,7 +46,7 @@
     }
 
     checkLoggedIn();
-
+    //Query gia na fernei ta deodomena twn announcments
     $sql = "SELECT ann_id, item, quantity, offer_made FROM announcements";
     $result_announcements = $conn->query($sql);
     ?>
@@ -63,6 +63,7 @@
             <tbody>
                 <?php
                 if ($result_announcements->num_rows > 0) {
+                    //T fenrei se styl pinaka 
                     while ($row = $result_announcements->fetch_assoc()) {
                         $ann_id = $row["ann_id"];
                         $offer_made = $row["offer_made"];
