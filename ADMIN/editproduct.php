@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Edit Product</title>
-    <link rel="stylesheet" href="adstyle.css?v=10">
+    <link rel="stylesheet" href="adstyle.css">
 </head>
 <body>     
     <div class="main">
@@ -26,9 +26,9 @@
                 <?php
                 include_once 'connect_db.php';
 
-                //Check for the product id 
+                //Elegxos tou product id
                 if(isset($_GET['product_id'])) {
-                    //Get the product details from its id 
+                    //Fernei ta dedomena tou porduct mesw tou id  
                     $product_id = $_GET['product_id'];
                     $sql = "SELECT products.id AS id, products.name AS name, categories.category_name AS category, products.quantity, products.detail_name, products.detail_value, products.on_vehicle 
                     FROM products 
@@ -37,7 +37,7 @@
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
 
-                    //display in form like 
+                    //Bazei ta dedena se forma
                     echo "<input type='hidden' name='product_id' value='{$row['id']}'>";
                     echo "<div class='input-box'>";
                     echo "<span class='details'>Item:</span>";
@@ -69,7 +69,7 @@
                         $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
                         $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
 
-                        //update quantity in the table
+                        //Update th posothta ston pinaka products
                         $sql = "UPDATE products SET quantity = '$quantity' WHERE id = '$product_id'";
                         if(mysqli_query($conn, $sql)) {
                             //redirect to warehouse.php after successful update
