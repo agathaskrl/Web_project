@@ -13,7 +13,7 @@ let markersLayer = new L.LayerGroup();
 const markers = [];
 map.addLayer(markersLayer);
 
-// Define markerData as a global variable
+
 let markerData = [];
 
 function success(pos) {
