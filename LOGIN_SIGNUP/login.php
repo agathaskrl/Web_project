@@ -30,7 +30,7 @@ if(isset($_POST['username']))
     if($resultCheck2 > 0)
     {
         $_SESSION['username'] = $username;
-		header("Location: adindex.php"); //edw tha mpei h main selida tou admin
+		header("Location: adindex.php"); 
     }
     else{
     echo "<script>alert('Wrong username or password!'); </script>"; 
@@ -39,7 +39,7 @@ if(isset($_POST['username']))
     if($resultCheck3 > 0)
     {
         $_SESSION['username'] = $username;
-		header("Location: homesavior.php"); //edw tha mpei h main selida tou admin
+		header("Location: homesavior.php"); 
     }
     else{
     echo "<script>alert('Wrong username or password!'); </script>"; 
@@ -55,7 +55,7 @@ if(isset($_POST['username']))
  <head>
     <meta charset = "utf-8">
     <title> Login </title> 
-    <link rel="stylesheet" href="logstyle.css?v=1">
+    <link rel="stylesheet" href="logstyle.css">
     <scipt src="login.js"> </scipt> 
     
 </head>
