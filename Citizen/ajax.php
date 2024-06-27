@@ -8,7 +8,7 @@ require_once 'connect_db.php';
 if(isset($_POST['search'])){
     $search = mysqli_real_escape_string($conn,$_POST['search']);
 
-    //fetch product names
+    //Fernei ta onomata twn proiontwn me to query
     $productQuery = "SELECT name FROM products WHERE name LIKE '%" . $search . "%'";
     $productResult = mysqli_query($conn,$productQuery);
 
@@ -21,7 +21,7 @@ if(isset($_POST['search'])){
         $productResponse[] = array("label"=>$row['name'], "type" => "Product");
     }
 
-    //fetch category names 
+    //Fernei ta onomata twn kathgoriwn me to query
     $categoryQuery = "SELECT category_name FROM categories WHERE category_name LIKE '%" . $search . "%'";
     $categoryResult = mysqli_query($conn,$categoryQuery);
 
