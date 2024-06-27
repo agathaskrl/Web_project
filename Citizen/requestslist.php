@@ -17,14 +17,14 @@ if (isset($_SESSION['username'])) {
 }
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+     // Elegxos gia to an o xrhsths einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
         echo '</div>';
         exit(); 
     }
-    
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "ADMIN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -34,7 +34,7 @@ function checkLoggedIn() {
 }
 
 checkLoggedIn();
-
+//Query gia na fenrei ta stoiceia tou xrhsth
 $sql1 = "SELECT name, surname FROM user WHERE username=?";
 $stmt1 = $conn->prepare($sql1);
 $stmt1->bind_param("s", $username);
@@ -43,7 +43,7 @@ $result1 = $stmt1->get_result();
 $row1 = $result1->fetch_assoc();
 $civ_name = $row1['name'];
 $civ_surname = $row1['surname'];
-
+//Query gia na fernei ta requets pou exei kanei o xrhsths
 $sql = "SELECT * FROM requests WHERE civ_name = ? AND civ_surname = ?";
 $stmt2 = $conn->prepare($sql);
 $stmt2->bind_param("ss", $civ_name, $civ_surname);
@@ -85,6 +85,7 @@ $result = $stmt2->get_result();
         </thead>
         <tbody>
             <?php
+            //fernei ta dedomenna se pinaka
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
                     echo "<tr>";
