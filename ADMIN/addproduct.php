@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Add Product</title>
-        <link rel="stylesheet" href="adstyle.css?v=10">
+        <link rel="stylesheet" href="adstyle.css">
     </head>
     <body>     
     
@@ -34,6 +34,7 @@
         <?php
         include_once 'connect_db.php'; 
         session_start();
+        //query gia na fernei ta stoixeia twn kathgoriwn
         $category_query = "SELECT id, category_name FROM categories";
         $category_result = mysqli_query($conn, $category_query);
         while ($row = mysqli_fetch_assoc($category_result)) {
@@ -79,17 +80,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quantity = $_POST['quantity'];
     $detail_name = $_POST['detail_name'];
     $detail_value = $_POST['detail_value'];
-
+    //query gia na fernei to proion tou opoiou to onoma einai ayto pou evale o xrhsths
     $query = "SELECT * FROM products WHERE name = '$item'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
+        //An nai tou emfanizei mynhma 
         echo "<script>alert('Product already exists. Please choose a different name.');</script>";
     } else {
+        //alliws ginetai h eisagwgh sth vash
         $insert_query = "INSERT INTO products (name, category, quantity, detail_name, detail_value) VALUES ('$item', '$category', '$quantity', '$detail_name', '$detail_value')";
         if (mysqli_query($conn, $insert_query)) {
             echo "<script>alert('Product added successfully.');</script>";
-            // Redirect to warehouse.php after successful insertion
+            // Anakateythinsh sto warehouse an htan epitxyhs
             echo "<script>window.location.href='warehouse.php';</script>";
             exit();
         } else {
