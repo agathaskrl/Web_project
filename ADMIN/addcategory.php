@@ -45,14 +45,14 @@ session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $category = $_POST['category'];
 
-    // Check if the category already exists
+    // Elegxos gia to an yparxei hdh ayth h kathgorias\
     $query = "SELECT * FROM categories WHERE category_name = '$category'";
     $result = mysqli_query($conn, $query);
 
     if (mysqli_num_rows($result) > 0) {
         echo "<script>alert('Category already exists. Please choose a different name.');</script>";
     } else {
-        // Get the last id from the categories table
+        // Fernei to teleytaio id apo to pinaka categories
         $last_id_query = "SELECT id FROM categories ORDER BY id DESC LIMIT 1";
         $last_id_result = mysqli_query($conn, $last_id_query);
 
@@ -60,14 +60,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $last_id = $last_id_row['id'];
             $new_id = $last_id + 1;
         } else {
-            $new_id = 1; // If no categories exist, start from 1
+            $new_id = 1; //An oxi jekinaei apo to 1
         }
 
-        // Insert the new category with the incremented id
+        // Eisagei to neo prostethimeno id kata 1
         $insert_query = "INSERT INTO categories (id, category_name) VALUES ('$new_id', '$category')";
         if (mysqli_query($conn, $insert_query)) {
             echo "<script>alert('Category added successfully.');</script>";
-            // Redirect to warehouse.php after successful insertion
+            //Anakateythinsh sto warehouse an htan epityxhs
             echo "<script>window.location.href='warehouse.php';</script>";
             exit();
         } else {
