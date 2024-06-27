@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>ANNOUNCEMENT</title>
-    <link rel="stylesheet" href="adstyle.css?v=8" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="adstyle.css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script src="adanscript.js"></script>
@@ -23,20 +23,40 @@
     </div>
 
     <?php
-   
-    //Function to check if user is logged in
-    function checkLoggedIn() {
-        session_start();
-        if (!isset($_SESSION['username'])) {
-            echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
-            echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
-            echo '</div>';
-            exit(); // Exit the script
-        }
-    }
-    checkLoggedIn();
-    ?>
+    include_once 'connect_db.php';
+session_start();
 
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $query = "SELECT role FROM user WHERE username='$username'";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['role'] = $row['role']; 
+    }
+}
+
+function checkLoggedIn() {
+
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in!';
+        echo '</div>';
+        exit(); 
+    }
+    
+
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'Unauthorized access!';
+        echo '</div>';
+        exit(); 
+    }
+}
+
+checkLoggedIn();
+?>
 <form class="box" id="form-ann" method="POST">
         <h1>Create an announcement</h1>
 
@@ -47,7 +67,7 @@
 
       <div class="input-box">
         <span class="details">Quantity</span>
-        <input type="number" name="quantity-input" placeholder="Quantity" id="quantity" required> 
+        <input type="number" name="quantity-input" placeholder="Quantity" id="quantity" min=1 required> 
       </div>
         <br>
 
