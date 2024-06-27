@@ -54,7 +54,6 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -78,20 +77,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $alldemand .= ($alldemand == "" ? "" : ",") . $ordemand;
     }
 
-    // Retrieve username from session
+
     $usrnm = $_SESSION['username'];
 
-    // Fetch user information from the database
     $query_user = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
     $result_user = mysqli_query($conn, $query_user);
     $user = mysqli_fetch_assoc($result_user);
 
-    // Fetch user coordinates from the database
     $query_coordinates = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
     $result_coordinates = mysqli_query($conn, $query_coordinates);
     $coordinates = mysqli_fetch_assoc($result_coordinates);
 
-    // Check if user information and coordinates are fetched successfully
     if ($user && $coordinates) {
         $civ_name = addslashes($user['name']); 
         $civ_surname = addslashes($user['surname']); 
