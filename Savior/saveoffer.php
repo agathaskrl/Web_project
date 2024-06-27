@@ -16,18 +16,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_assoc($result);
 
-    // Check if user information is fetched successfully
+    // elegxos an pairnei ta stoixeia tou xristi
     if ($user) {
         $name = addslashes($user['name']); 
         $surname = addslashes($user['surname']); 
         $phone = addslashes($user['phone']); 
 
-        // Fetch coordinates for the current session's user from the coordinates table
+        // Fetch syntetagmenes apo to session tou xristi pou apothikeyontai ston pinaka coordinates sti vash
         $coordsQuery = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
         $coordsResult = mysqli_query($conn, $coordsQuery);
         $coords = mysqli_fetch_assoc($coordsResult);
 
-        // Check if coordinates are fetched successfully
+        // elegxos an pairnei swsta tis syntetagmenes
         if ($coords) {
             $lat = $coords['lat'];
             $lng = $coords['lng'];
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO offers (item, quantity, name, surname, phone, lat, lng) 
                     VALUES ('$item', '$quantity', '$name', '$surname', '$phone', '$lat', '$lng')";
 
-            // Execute SQL query
+            // ektelesi SQL query me minimata elegxou
             if (mysqli_query($conn, $sql)) {
                 echo "Offer made successfully!";
             } else {
@@ -51,6 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo "Invalid request!";
 }
 
-// Close the database connection
+// kleinei h syndesh me ti vash
 $conn->close();
 ?>
