@@ -32,14 +32,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log("Show lines checkbox checked:", showLines);
 
-    // Fetch or remove lines based on filter value
+    // Fetch i afairei tis grammes me vasi to filtro
     if (showLines) {
       fetchUndertakenCoords();
     } else {
-      removeDrawnLines(); // Remove drawn lines when showLines is false
+      removeDrawnLines(); // afairei tis grammes otan to showLines einai false
     }
 
-    // Show/hide markers based on the filter values
+    // emfanise/krypse ta markers me vasi to filtro
     filterMarkers();
   }
 
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         if (data && data.length > 0) {
           console.log("Undertaken coordinates fetched:", data);
-          removeDrawnLines(); // Remove existing lines before adding new ones
+          removeDrawnLines(); // afairei tis uparxouses grammes prin valei nees 
           data.forEach((undertaken) => {
             const offerCoords = [undertaken.offer_lat, undertaken.offer_lng];
             const vehicleCoords = [
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const polyline = L.polyline([offerCoords, vehicleCoords], {
               color: "red",
             }).addTo(map);
-            drawnLines.push(polyline); // Store the drawn line
+            drawnLines.push(polyline); // apothikeysi twn grammwn drawn line
             console.log(
               "Line drawn between:",
               offerCoords,
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log("Line removed:", line);
     });
 
-    drawnLines = []; // Clear the array of drawn lines
+    drawnLines = []; //adeiasma tou pinaka drawn lines
     console.log("Total lines after removal:", drawnLines.length);
   }
 
@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showLines,
     });
 
-    // Show/hide markers based on the filter values
+    // emfanise/krypse ta markers me vasi to filtro
     filterOfferMarkers(showOpenOffers, showTakenOffers);
     filterRequestMarkers(showOpenRequests, showUndertakenRequests);
   }
@@ -179,7 +179,7 @@ let vash_marker;
 let offerMarkers = [];
 let requestMarkers = [];
 
-// Function to fetch savior coordinates from the server and display marker
+// Function na pairnei syntetagmenes tou savior apo ti vasi kai emfanisi marker sto xarti 
 function fetchSaviorCoords() {
   fetch("get_sav_coords.php")
     .then((response) => response.json())
@@ -203,7 +203,7 @@ function createSaviorMarker(coords) {
     map.removeLayer(saviorMarker);
   }
 
-  // Fetch items for the savior from the server
+  // Fetch ta proionta gia ton savior apo ti vash
   fetch("get_items.php")
     .then((response) => {
       if (!response.ok) {
@@ -235,24 +235,24 @@ function createSaviorMarker(coords) {
         saviorMarker.bindPopup(popupContent).openPopup();
       });
 
-      // Check if the vehicle is within 100 meters of the base
+      // Check an to oxima vehicle einai se aktina 100 metra apo ti vash 
       checkdistance(coords);
 
-      // Add drag event listener to savior marker
+      // savior marker draggable 
       saviorMarker.on("dragend", function (event) {
         const marker = event.target;
         const position = marker.getLatLng();
 
-        // Ask the user if he is sure
+        // epivevaiwsi allagis topothesias
         const isSure = window.confirm(
           "Are you sure you want to update the coordinates in the database?"
         );
 
         if (isSure) {
-          // Update the coordinates in the database
+          // Update tis syntetagmenes sti vash
           updateCoordinates(position.lat, position.lng);
         } else {
-          // If user cancels stay in same position
+          // an patisei akyrwsi paramenei stin arxiki tou thesi
           marker.setLatLng(coords);
         }
       });
@@ -262,7 +262,7 @@ function createSaviorMarker(coords) {
     });
 }
 
-// Function to create marker for Vash coordinates
+// Function gia dimiourgia marker tis vashs me syntetagmenes
 function createVashMarker(coords) {
   var vashIcon = L.icon({
     iconUrl: "vash_mark.png",
@@ -273,12 +273,12 @@ function createVashMarker(coords) {
   vash_marker = L.marker(coords, { icon: vashIcon }).addTo(map);
 }
 
-// Function to update coordinates in the database
+// Function gia update twn syntetagmenwn sti vash
 function updateCoordinates(lat, lng) {
-  // Log the data being sent in the AJAX request for debugging
+  // elegxos an stelnontai ta dedomena tou AJAX request for debugging
   console.log("Updating coordinates:", lat, lng);
 
-  // Send AJAX request to update coordinates in the database
+  // apostoli AJAX request gia na ginei update stis syntetagmenes sti vash
   fetch("update_sav_coords.php", {
     method: "POST",
     headers: {
@@ -294,17 +294,17 @@ function updateCoordinates(lat, lng) {
         throw new Error("Failed to update coordinates");
       }
       console.log("Coordinates updated successfully:", lat, lng);
-      // After successful update, fetch savior coordinates to update the marker position
+      // afou ginoun update, fetch syntetagmenes tou savior gia na enimerwthi i thesi tou marker 
       fetchSaviorCoords();
     })
     .catch((error) => {
       console.error("Error updating coordinates:", error);
-      // Revert to original position if there's an error
+      // epistrofi stin arxiki thesi an uparxei error
       fetchSaviorCoords();
     });
 }
 
-// Function to fetch marker coordinates for base from the server and display the marker
+// Function  na ferei tis syntetagmenes tis vasis apo ti vasi kai emfanisi marker
 function fetchVashMarkerCoords() {
   fetch("get_marker_coords.php")
     .then((response) => response.json())
@@ -360,7 +360,7 @@ function fetchvashitems() {
 
         vash_marker.bindPopup(popupContent).openPopup();
 
-        // Event listener for the take-on button
+        // Event listener gia to take-on button
         const takeOnBtn = document.querySelector(".take-on-btn");
         takeOnBtn.addEventListener("click", function () {
           const checkedItems = document.querySelectorAll(
@@ -399,7 +399,7 @@ function fetchvashitems() {
             });
         });
 
-        // Event listener for the "Take Out" button
+        // Event listener gia to "Take Out" button
         const takeOutBtn = document.querySelector(".take-out-btn");
         takeOutBtn.addEventListener("click", function () {
           const isSure = window.confirm(
@@ -450,20 +450,20 @@ function fetchvashitems() {
       }
     });
 }
-// Function to check the distance between two sets of coordinates
+// Function gia elegxo apostasis metaksi syntetagmenwn 
 function checkdistance(veh_coords) {
   if (vash_marker) {
     const vashCoords = vash_marker.getLatLng();
     const distance = vashCoords.distanceTo(veh_coords);
     if (distance <= 100) {
-      //call the function if the vehicle is 100 meters or so away
+      //to function kaleitai an to vehicle einai se akrina 100 metrwn 
       vash_marker.on("click", function () {
         fetchvashitems();
       });
     }
   }
 }
-// Function to fetch offers from the server and display them on the map
+// Function gia na ferei ta offers apo ti vasi kai emfanisi twn markers sto xarti 
 function fetchOffers() {
   fetch("get_offers.php")
     .then((response) => response.json())
@@ -474,7 +474,7 @@ function fetchOffers() {
         data.forEach((offer) => {
           console.log("Creating marker for offer:", offer);
 
-          // Extract offer data
+          // offer data
           const offer_id = offer.offer_id;
           const name = offer.name;
           const surname = offer.surname;
@@ -486,18 +486,18 @@ function fetchOffers() {
           const usrnm_veh = offer.usrnm_veh;
           const status = offer.status;
 
-          // Check if the offer is taken
+          // elegxos an to offer is taken
           const isTaken = offer.ret_date !== null && offer.usrnm_veh !== null;
 
           const complete = status === "COMPLETE";
 
-          // Do not add the marker if the offer is complete
+          // den emfanizetai to marker sto xarti an einai completed 
           if (complete) {
             console.log("Offer is complete", offer_id);
             return;
           }
 
-          // Create a marker with the appropriate icon
+          // dimiourgia marker me to katallilo icon 
           const iconUrl = isTaken ? "offer_yellow.png" : "offer_green.png";
           const marker = L.marker([lat, lng], {
             icon: L.icon({
@@ -508,13 +508,13 @@ function fetchOffers() {
             }),
           }).addTo(map);
 
-          // Add marker to the offerMarkers array
+          // prosthiki marker ston pinaka offerMarkers
           offerMarkers.push(marker);
 
-          // Construct the HTML string for the pop-up
+          //  HTML domi gia to pop up
           let popupContent = `<b>${item}</b><br>Quantity: ${quantity}<br>Name: ${name}<br>Surname: ${surname}<br>Phone: ${phone}<br>Vehicle: ${usrnm_veh}`;
           if (!isTaken) {
-            // For offers that are still open, add the "Take On" button
+            // gia offers pou den exoun analifthei, emfanisi "Take On" button
             popupContent += `<br><button class="take-on-btn" data-offer-id="${offer_id}">Take On</button>`;
           }
 
@@ -522,20 +522,20 @@ function fetchOffers() {
 
           marker.on("popupopen", function () {
             if (!isTaken) {
-              // Wait for the popup to open fully
+              // Wait na fortwsei to popup
               setTimeout(() => {
                 const takeOnBtn = document.querySelector(
                   `.leaflet-popup-content-wrapper .take-on-btn[data-offer-id='${offer_id}']`
                 );
                 if (takeOnBtn) {
                   takeOnBtn.addEventListener("click", function () {
-                    // Ask the user for confirmation
+                    // epivevaiwsi apo to xristi gia analipsi
                     const isSure = window.confirm(
                       "Are you sure you want to take on this offer?"
                     );
 
                     if (isSure) {
-                      // Send AJAX request to take on the offer
+                      // apostoli AJAX request gia analipsi tou offer 
                       fetch("takeonoffer.php", {
                         method: "POST",
                         headers: {
@@ -573,10 +573,10 @@ function fetchOffers() {
     });
 }
 
-// Call the function to fetch and display offers on the map
+// klisi tou function gia na kanei fetch kai na emfanisei ta offers sto xarti
 fetchOffers();
 
-// Function to fetch requests from the server and display them on the map
+// Function gia na kanei fetch ta requests apo ti vasi kai na ta emfanisei sto xarti
 function fetchRequests() {
   fetch("get_requests.php")
     .then((response) => response.json())
@@ -587,7 +587,7 @@ function fetchRequests() {
         reqdata.forEach((request) => {
           console.log("Creating marker for request:", request);
 
-          // Extract request data
+          // request data
           const req_id = request.req_id;
           const civ_name = request.civ_name;
           const civ_surname = request.civ_surname;
@@ -599,19 +599,19 @@ function fetchRequests() {
           const veh_username = request.veh_username;
           const status = request.status;
 
-          // Check if the request is taken
+          // elegxos an to request exei analifthei
           const isTaken =
             request.under_date !== null && request.veh_username !== null;
 
           const complete = status === "COMPLETE";
 
-          // Do not add the marker if the request is complete
+          // den emfanizetai to marker sto xarti an einai completed
           if (complete) {
             console.log("Request is complete", req_id); // Fixed the variable name
             return;
           }
 
-          // Create a marker with the appropriate icon
+          // dimiourgia marker me to katallilo icon
           const iconUrl = isTaken ? "bell_yellow.png" : "bell_green.png";
           const marker = L.marker([lat, lng], {
             icon: L.icon({
@@ -622,13 +622,13 @@ function fetchRequests() {
             }),
           }).addTo(map);
 
-          // Add marker to the requestMarkers array
+          //prosthiki marker ston pinaka requestMarkers
           requestMarkers.push(marker);
 
-          // Construct the HTML string for the pop-up
+          //HTML domi gia to pop-up
           let popupContent = `<b>${req_product}</b><br>Demand: ${demand}<br>Name: ${civ_name}<br>Surname: ${civ_surname}<br>Phone: ${civ_phone}<br>Vehicle: ${veh_username}`;
           if (!isTaken) {
-            // For requests that are still open, add the "Take On" button
+            // gia requests pou den exoun analifthei, emfanisi tou "Take On" button
             popupContent += `<br><button class="take-on-btn" data-req-id="${req_id}">Take On</button>`;
           }
 
@@ -636,20 +636,20 @@ function fetchRequests() {
 
           marker.on("popupopen", function () {
             if (!isTaken) {
-              // Wait for the popup to open fully
+              // Wait na fortwsei to popup
               setTimeout(() => {
                 const takeOnBtn = document.querySelector(
                   `.leaflet-popup-content-wrapper .take-on-btn[data-req-id='${req_id}']`
                 );
                 if (takeOnBtn) {
                   takeOnBtn.addEventListener("click", function () {
-                    // Ask the user for confirmation
+                    // epivevaiwsi apo xristi
                     const isSure = window.confirm(
                       "Are you sure you want to take on this request?"
                     );
 
                     if (isSure) {
-                      // Send AJAX request to take on the request
+                      // apostoli AJAX request gia na analifthei to request
                       fetch("takeonrequest.php", {
                         method: "POST",
                         headers: {
@@ -687,5 +687,5 @@ function fetchRequests() {
     });
 }
 
-// Call the function to fetch and display requests on the map
+//klisi tou function gia na kanei fetch kai na emfanisei ta requests sto xarti 
 fetchRequests();
