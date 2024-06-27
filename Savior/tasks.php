@@ -2,7 +2,7 @@
     include_once 'connect_db.php';
     session_start();
     function checkLoggedIn() {
-        // Check if the user is not logged in
+        // elegxos an einai logged in o xristis
         if (!isset($_SESSION['username'])) {
             echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
             echo 'User not logged in!';
@@ -42,13 +42,13 @@
     </div>
 
     <br>
-    <!-- Button for savior's tasks page -->
+   
     <a href="mytasks.php" >
         <button> My tasks </button>
     </a>
     <br>
 <?php
-    // Fetch offers from the database
+    // Fetch offers apo ti vasi
     $query1 = "SELECT name, surname, phone, subm_date, item, quantity, ret_date, usrnm_veh, status 
             FROM offers";
     $result1 = $conn->query($query1);
@@ -98,7 +98,7 @@
     </div>
 
     <?php
-    // Fetch requests from the database
+    // Fetch requests apo ti vash
     $query2 = "SELECT civ_name , civ_surname, civ_phone, req_date , req_product , demand, under_date, veh_username, status  
             FROM requests";
     $result2 = $conn->query($query2);
