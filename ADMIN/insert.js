@@ -3,7 +3,7 @@ $(document).ready(function () {
     event.preventDefault();
     console.log("Form submitted");
 
-    var fileInput = $("#file-selector")[0].files[0]; //Get the file input element
+    var fileInput = $("#file-selector")[0].files[0]; 
     if (!fileInput) {
       //if no file is selected alert the user
       alert("Please select a file to upload");
@@ -20,10 +20,10 @@ $(document).ready(function () {
       contentType: false,
       success: function () {
         alert("Insertion successful!");
-        location.reload(); //reload the page
+        location.reload(); 
       },
       error: function (xhr) {
-        console.error(xhr.responseText); //errors to the console
+        console.error(xhr.responseText); 
       },
     });
   });
@@ -31,8 +31,8 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $("#deleteelementsbtn").click(function () {
+    //user must confirm 
     if (confirm("Are you sure you want to delete all elements?")) {
-      //confirm so that the user does not any mistakes
       $.ajax({
         type: "POST",
         url: "updatewarehouse.php",
