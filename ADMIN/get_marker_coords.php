@@ -1,7 +1,7 @@
 <?php
 
 include_once 'connect_db.php';
-//get the current corrdinates to show the makrer of the base  
+//Query gia na ferei ta coordinates apo to pinaka vash_marker gia to marker ths vashs
 $sql = "SELECT lat, lng FROM vash_marker WHERE id = 1";
 $result = $conn->query($sql);
 
