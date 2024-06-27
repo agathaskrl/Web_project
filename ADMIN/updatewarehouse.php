@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Update Warehouse</title>
-    <link rel="stylesheet" href="adstyle.css?v=8">
+    <link rel="stylesheet" href="adstyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="insert.js"></script>
 </head>
@@ -63,7 +63,6 @@ if (isset($_POST['truncate_elements'])) {
         echo "Error truncating categories table: " . mysqli_error($conn);
     }
 
-    // Stop further execution
     exit();
 }
 if (isset($_FILES['file'])) {
@@ -79,13 +78,11 @@ if (isset($_FILES['file'])) {
         exit();
     }
 
-    //prepare the statements
     $sql = "INSERT INTO products (id, name, category, detail_name, detail_value, quantity) VALUES (?, ?, ?, ?, ?, FLOOR(RAND()*(200-50+1))+50) 
         ON DUPLICATE KEY UPDATE name = VALUES(name), category = VALUES(category), detail_name = VALUES(detail_name), detail_value = VALUES(detail_value), quantity = FLOOR(RAND()*(200-50+1))+50;";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("issss", $id, $name, $category, $detail_name, $detail_value);
-//a loop for eah item form the array 
 foreach ($data['items'] as $item) {
     //check if any record exists in the database
     $existingRecord = mysqli_query($conn, "SELECT * FROM products WHERE id = '{$item['id']}'");
@@ -101,8 +98,7 @@ foreach ($data['items'] as $item) {
     foreach ($item['details'] as $detail) {
         $detail_name = isset($detail['detail_name']) ? $detail['detail_name'] : '';
         $detail_value = isset($detail['detail_value']) ? $detail['detail_value'] : '';
-
-        //execute the statements 
+ 
         if ($stmt->execute()) {
             echo "Item inserted successfully.<br>";
         } else {
@@ -116,7 +112,6 @@ if (isset($_FILES['file'])) {
     $stmt2->bind_param("is", $id, $category_name);
     //We choose categories bracause thats what its called in the json so we can extract the data 
     foreach ($data['categories'] as $category) {
-        //extraxt 
         $id = $category['id'];
         $category_name = $category['category_name'];
 
@@ -137,7 +132,6 @@ if (isset($_FILES['file'])) {
 }
 
 
-// Close the prepared statements
 $stmt->close();
 $stmt2->close();
 $conn->close();
