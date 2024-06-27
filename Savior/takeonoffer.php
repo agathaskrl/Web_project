@@ -10,7 +10,7 @@ if (isset($_POST['offerId'])) {
     if (isset($_SESSION['username'])) {
         $sav_usrnm = $_SESSION['username'];
 
-        // Check the number of tasks for the vehicle/savior
+        // elegxos tou arithmou twn tasks gia ton savior
         $checkTasksQuery = "SELECT under_tasks FROM vehicle WHERE sav_username = '$sav_usrnm'";
         $tasksResult = $conn->query($checkTasksQuery);
 
@@ -18,11 +18,11 @@ if (isset($_POST['offerId'])) {
             $row = $tasksResult->fetch_assoc();
             $underTasks = $row['under_tasks'];
 
-            // Check if the vehicle can take another task
+            // elegxos an mporei na parei allo task
             if ($underTasks < 4) {
                 $underTasks++;
 
-                // Update the offer in the database
+                // Update to offer sti vash
                 $curen_time = date('Y-m-d H:i:s');
                 $sql = "UPDATE offers 
                         SET usrnm_veh = '$sav_usrnm', ret_date = '$curen_time', status = 'ONGOING'
