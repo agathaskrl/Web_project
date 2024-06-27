@@ -1,6 +1,6 @@
 <?php
 include_once 'connect_db.php';
-
+//Query gia na fernei ta dedomena tou vehicle
 $sql = 'SELECT vehicle.sav_username, vehicle.cargo, vehicle.under_tasks, coordinates.lat, coordinates.lng
    FROM vehicle
    INNER JOIN user ON vehicle.sav_username = user.username
