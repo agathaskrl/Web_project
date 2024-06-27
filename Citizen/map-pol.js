@@ -10,7 +10,7 @@ const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 let citizenMarkersLayer = new L.LayerGroup();
 map.addLayer(citizenMarkersLayer);
 
-// Function to fetch citizen coordinates from the server and display markers
+// Function fernei tis syntetagmenes twn politwn apo ton server kai deixnei ta markers
 function fetchCitizenCoords() {
   fetch("get_citizen_coords.php")
     .then((response) => response.json())
@@ -28,5 +28,5 @@ function fetchCitizenCoords() {
       console.error("Failed to fetch citizen coordinates", error);
     });
 }
-// Call the function to fetch citizen coordinates and display markers
+// Klhsh tou function gi na deijei to marker
 fetchCitizenCoords();
