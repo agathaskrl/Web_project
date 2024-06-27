@@ -7,11 +7,11 @@ if (!isset($_SESSION['username'])) {
     exit;
 }
 
-//get the lat and lon 
+//Pairnei ta lat ki lng toy xrhsth
 $lat = $_POST['lat'];
 $lng = $_POST['lng'];
 
-//get the users id from user table
+//Pairnei to users id apo ton pinaka user
 $username = $_SESSION['username'];
 $sql_user = "SELECT id FROM user WHERE username = '$username'";
 $result_user = $conn->query($sql_user);
@@ -20,7 +20,7 @@ if ($result_user->num_rows > 0) {
     $row_user = $result_user->fetch_assoc();
     $userid = $row_user['id'];
 
-    //check with id this current user has coordinates
+    //Elegxos me to id an yparxoun hdh coordinates
     $sql_coordinates = "SELECT userid, lat, lng FROM coordinates WHERE userid = '$userid'";
     $result_coordinates = $conn->query($sql_coordinates);
 
@@ -29,7 +29,7 @@ if ($result_user->num_rows > 0) {
         $old_lat = $row_coordinates['lat'];
         $old_lng = $row_coordinates['lng'];
 
-        //if coordinates are different then update them 
+        //An einai diaforetikes tis ananewnei  
         if ($old_lat != $lat || $old_lng != $lng) {
             $sql_update = "UPDATE coordinates SET lat = '$lat', lng = '$lng' WHERE userid = '$userid'";
             if ($conn->query($sql_update) === TRUE) {
@@ -41,7 +41,7 @@ if ($result_user->num_rows > 0) {
             echo "Coordinates are the same. No update needed.";
         }
     } else {
-        //inert into the coordinates table 
+        //An den exei katholou bazei ta coordinates
         $sql_insert = "INSERT INTO coordinates (userid, username, lat, lng) VALUES ('$userid', '$username', '$lat', '$lng')";
         if ($conn->query($sql_insert) === TRUE) {
             echo "Coordinates saved successfully.";
