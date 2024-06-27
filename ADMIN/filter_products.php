@@ -14,7 +14,7 @@ if (isset($data->categories)) {
 
     $result = mysqli_query($conn, $sql);
 
-    //generate the products in warehouse.php as they were 
+    //generate the products in warehouse page as they were 
     $output = '';
     $counter = 1;
     while ($row = mysqli_fetch_assoc($result)) {
