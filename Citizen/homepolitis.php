@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Home</title>
-    <link rel="stylesheet" href="home_style.css?v=4">
+    <link rel="stylesheet" href="home_style.css">
     <!-- Leaflet CSS and JavaScript files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
@@ -39,12 +39,11 @@ if (isset($_SESSION['username'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['role'] = $row['role']; 
-        // echo $_SESSION['role']; 
     }
 }
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+     // Elegxos gia to an o xrhsths einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
@@ -52,7 +51,7 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "ADMIN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -91,7 +90,7 @@ checkLoggedIn();
 
 
     <script>
-        //fnction to get the location of the user
+        //Funxtio ngia na pairnei thn topothesia tou xrhsth
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -99,13 +98,13 @@ checkLoggedIn();
                 alert("Geolocation is not supported by this browser.");
             }
         }
-         //show and get the coordinates
+         //Deije kai fere tis syntetagmenes
         function showPosition(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-            // Send coordinates to server using AJAX
+            //Steleni ta coordinates ston server mesw AJAZ
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "insert_coordinates.php", true); //other file not to get things mixed
+            xhr.open("POST", "insert_coordinates.php", true); 
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -115,7 +114,7 @@ checkLoggedIn();
             xhr.send("lat=" + lat + "&lng=" + lng);
         }
 
-        //call getLocation() when the page loads so its automated 
+        //Klhsh toy geolocation gia na einai aytmatopoihmenh h selida
         window.onload = getLocation;
     </script>
 
