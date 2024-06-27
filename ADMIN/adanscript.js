@@ -1,11 +1,11 @@
 $(function () {
-  //function for autocomplete
+  //function gia to autocomplete
   function initializeAutocomplete(element) {
     element.autocomplete({
       source: function (request, response) {
         console.log("Fetching data for:", request.term);
 
-        // Fetch data
+        // Fernei ta dedomena me texnikes AJAX
         $.ajax({
           url: "adanajax.php",
           type: "post",
@@ -21,8 +21,8 @@ $(function () {
       },
       select: function (event, ui) {
         console.log("Item selected:", ui.item.label);
-        // Set selection
-        element.val(ui.item.label); // display the selected text
+    
+        element.val(ui.item.label);
         return false;
       },
       focus: function (event, ui) {
@@ -41,7 +41,7 @@ $(function () {
     $("#addann").on("click", function () {
       counter++;
 
-      //Expand the form
+      //Expand th forma me to koumpi + 
       var newInputFields =
         '<div class="input-box">' +
         '<label for="autocomplete"> Need for item:</label>' +
@@ -60,7 +60,7 @@ $(function () {
 
       initializeAutocomplete($(".product-input").last());
 
-      //Move the buttons to the end of the form
+      //Metakinhs twn koumpiwn sto telos ths formas
       $(".button").appendTo("#form-ann");
       $("<br>").appendTo("#form-ann");
       $("#addann").appendTo("#form-ann");
