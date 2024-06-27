@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>Admin Index</title>
-    <link rel="stylesheet" href="adstyle.css">
-    <!-- Leaflet CSS and JavaScript files -->
+    <link rel="stylesheet" href="adstyle.css?">
+    <!-- Leaflet CSS && JavaScript files -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-    <!-- For search -->
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>     
     
@@ -27,7 +27,6 @@
     <?php
     include_once 'connect_db.php';
 session_start();
-
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     $query = "SELECT role FROM user WHERE username='$username'";
@@ -36,11 +35,12 @@ if (isset($_SESSION['username'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['role'] = $row['role']; 
+
     }
 }
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+    // Elegxos gia to an o xrhsths einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
@@ -48,6 +48,7 @@ function checkLoggedIn() {
         exit(); 
     }
     
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "CITIZEN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -58,6 +59,7 @@ function checkLoggedIn() {
 
 checkLoggedIn();
 ?>
+    //mhnhma kalwsorismatos me to username tou xrhsth
     <div class="welcome-message">
         <?php
         if (isset($_SESSION['username'])) {
@@ -67,10 +69,21 @@ checkLoggedIn();
         ?>
     </div>
     <br>
+
+    <button id="dropdownButton" class="dropbtn">Filter Map</button>
+            <div id="dropdownContent" class="dropdown-content">
+                <label><input type="checkbox" id="showOpenOffers" checked> Show Open Offers</label>
+                <label><input type="checkbox" id="showTakenOffers" checked> Show Taken Offers</label>
+                <label><input type="checkbox" id="showOpenRequests" checked> Show Open Requests</label>
+                <label><input type="checkbox" id="showUndertakenRequests" checked> Show Undertaken Requests</label>
+                <label><input type="checkbox" id="showAvailableVehicles" checked> Show Available Vehicles</label>
+                <label><input type="checkbox" id="showOccupiedVehicles" checked> Show Occupied Vehicles</label>
+                <label><input type="checkbox" id="showLines" checked> Show Lines</label>
+
+            </div>
     <div class="container"> 
-        <input type="text" id="searchInput" placeholder="Search...">
-        <button>Search</button>
-    <button><i class="filtermap"></i>Filter Map</button>
+        
+        </div>
      
     <div class="map" id="map" style="width: 100%; height: 450px;"></div>
 
@@ -83,15 +96,14 @@ checkLoggedIn();
     document.addEventListener("DOMContentLoaded", function () {
         const welcomeMessage = document.querySelector('.welcome-message');
 
-        // Show the welcome message
+        // Emfanise to welcome message
         welcomeMessage.style.display = 'block';
 
-        // Set a timeout to hide the welcome message after 30 seconds
+        // Vazei timeout 30 seconds gia to mhnyma
         setTimeout(function () {
             welcomeMessage.style.display = 'none';
         }, 30000);
     });
 </script>
-
 </body>
 </html>
