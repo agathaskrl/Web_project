@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //fernei ta dedomena tou marker vash
   fetch_current_coords();
 
-  //function gia save marker_vash data in the server
+  //function gia apothikeysh toy marker_vash dedoemnwn ston server
   function savemarkerdata(lat, lng) {
     //Dhmioyrgia AJAX requests gia na kanei save ta nea coords
     fetch("save_marker_data.php", {
@@ -97,6 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+//Function gia na ftiaxnei vehicle markers
   function create_vehicle_marker(coords, vehicle) {
     const vehicon = L.icon({
       iconUrl: "vehicle.png",
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch_vehicle_coords();
 
 
-  // Fetch kai dimiourgia offer markers
+  // Fetch dedomenwn kai dimiourgia offer markers
   function fetchOffers() {
     fetch("get_offers.php")
       .then((response) => response.json())
@@ -172,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  // Fetch kai dimiourgia request markers
+  // Fetch dedokmenwn kai dimiourgia request markers
   function fetchRequests() {
     fetch("get_requests.php")
       .then((response) => response.json())
@@ -220,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
     fetchOffers();
     fetchRequests();
   
-    // Fetch coords twn task undertaken kai dhmiourgia grammwn anamesa se ayta ta dyp 
+    // Fetch coords twn task undertaken kai dhmiourgia grammwn anamesa se ayta ta dyo
 function fetch_undertaken_coords() {
   fetch("get_undertaken_coords.php")
     .then((response) => response.json())
@@ -230,7 +231,7 @@ function fetch_undertaken_coords() {
           const offerCoords = [undertaken.offer_lat, undertaken.offer_lng];
           const vehicleCoords = [undertaken.vehicle_lat, undertaken.vehicle_lng];
 
-          // Dhmiourgia grammhs gia veh kai task
+          // Dhmiourgia grammhs gia vehicles kai tasks
           const polyline = L.polyline([offerCoords, vehicleCoords], { color: 'red' }).addTo(map);
         });
       } else {
@@ -244,7 +245,7 @@ function fetch_undertaken_coords() {
 
 fetch_undertaken_coords();
   
-    // For filter changes
+    //Gia tis allages twn filtrwn
     document
       .getElementById("showOpenOffers")
       .addEventListener("change", function () {
@@ -281,7 +282,7 @@ fetch_undertaken_coords();
         filterVehicleMarkers(vehicleMarkers, this.checked, "vehicle.png", "occ");
       });
   
-    // Funtions of the filters 
+    // Function twn filtrwn  
     function filterMarkers(markers, show, iconUrl) {
       markers
         .filter((marker) => marker.options.icon.options.iconUrl === iconUrl)
@@ -339,7 +340,7 @@ fetch_undertaken_coords();
     // event listener gia to apply filter button
     const applyFilterButton = document.getElementById("applyFilterButton");
     applyFilterButton.addEventListener("click", function (event) {
-      // Handle filter application here
+      // Diaxeirish ths epiloghs twn filtrwn
       console.log("Apply filter button clicked");
       offerMarkers.forEach((marker) => marker.removeFrom(map));
       requestMarkers.forEach((marker) => marker.removeFrom(map));
@@ -352,7 +353,7 @@ fetch_undertaken_coords();
       event.stopPropagation(); // Prevent the click event from propagating to the window
     });
   
-    // kleisimo tou dropdown an o xristis clicks outside of it
+    // kleisimo tou dropdown an o xristis clicks ejw apo ayto
     window.addEventListener("click", function (event) {
       if (!event.target.matches("#dropdownButton")) {
         if (dropdownContent.classList.contains("show")) {
@@ -361,7 +362,7 @@ fetch_undertaken_coords();
       }
     });
   
-    // Prevent propagation of click events from the dropdown content
+    // Apotroph diadwshs deodmenwn me to click 
     dropdownContent.addEventListener("click", function (event) {
       event.stopPropagation();
     });
