@@ -26,14 +26,14 @@
                 <?php
                 include_once 'connect_db.php';
 
-                //check if the product id is set 
+                //Check for the product id 
                 if(isset($_GET['product_id'])) {
                     //Get the product details from its id 
                     $product_id = $_GET['product_id'];
                     $sql = "SELECT products.id AS id, products.name AS name, categories.category_name AS category, products.quantity, products.detail_name, products.detail_value, products.on_vehicle 
                     FROM products 
                     JOIN categories ON products.category = categories.id
-                    WHERE products.id = $product_id"; // Add condition to select only the product with the specified ID
+                    WHERE products.id = $product_id"; 
                     $result = mysqli_query($conn, $sql);
                     $row = mysqli_fetch_assoc($result);
 
@@ -66,7 +66,6 @@
                 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if(isset($_POST['product_id']) && isset($_POST['quantity'])) {
-                        // Sanitize input
                         $product_id = mysqli_real_escape_string($conn, $_POST['product_id']);
                         $quantity = mysqli_real_escape_string($conn, $_POST['quantity']);
 
