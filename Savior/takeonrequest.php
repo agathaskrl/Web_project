@@ -10,7 +10,7 @@ if (isset($_POST['req_Id'])) {
     if (isset($_SESSION['username'])) {
         $sav_usrnm = $_SESSION['username'];
 
-        // Check the number of tasks for the vehicle
+        // elegxos tou arithmou twn tasks gia ton savior
         $checkTasksQuery = "SELECT under_tasks FROM vehicle WHERE sav_username = '$sav_usrnm'";
         $tasksResult = $conn->query($checkTasksQuery);
 
@@ -18,18 +18,18 @@ if (isset($_POST['req_Id'])) {
             $row = $tasksResult->fetch_assoc();
             $underTasks = $row['under_tasks'];
 
-            // Check if the vehicle can take on another task
+            // elegxos an mporei na parei allo task
             if ($underTasks < 4) {
                 $underTasks++;
 
-                // Update the request in the database
+                // Update to request sti vash
                 $curen_time = date('Y-m-d H:i:s');
                 $sql = "UPDATE requests 
                         SET veh_username = '$sav_usrnm', under_date = '$curen_time', status = 'ONGOING'
                         WHERE req_id = $req_Id";
                 if ($conn->query($sql) === TRUE) {
                     if ($conn->affected_rows > 0) {
-                        // Update the tasks count
+                        // Update tou tasks count
                         $updateTasksQuery = "UPDATE vehicle SET under_tasks = $underTasks WHERE sav_username = '$sav_usrnm'";
                         if ($conn->query($updateTasksQuery)) {
                             echo json_encode(["message" => "Request taken on successfully"]);
