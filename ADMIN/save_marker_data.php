@@ -1,13 +1,13 @@
 <?php
 include_once 'connect_db.php';
 
-//fere apo to post
+//bring ht edata from the post
 $postData = file_get_contents("php://input");
 
 //json data
 $data = json_decode($postData);
 
-//fere ta dedomena 
+//data lan,lng 
 $lat = $data->lat;
 $lng = $data->lng;
 
