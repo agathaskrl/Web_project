@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone = $_POST['phone'];
 
     $usrnm = $_SESSION['username'];
-
+   //Query gia na fernei ta stoixeia tou syndedemenou xrhsh
     $query = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
     $result = mysqli_query($conn, $query);
     $user = mysqli_fetch_assoc($result);
@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $surname = addslashes($user['surname']); 
         $phone = addslashes($user['phone']); 
 
-        // Fetch coordinates for the user from the coordinates table
+        // Query gia na fenrei ta coordinates tou xrhsth
         $coordsQuery = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
         $coordsResult = mysqli_query($conn, $coordsQuery);
         $coords = mysqli_fetch_assoc($coordsResult);
@@ -31,12 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($coords) {
             $lat = $coords['lat'];
             $lng = $coords['lng'];
-
+            //Eisagwgh twn deomenwn sto offers
             $sql = "INSERT INTO offers (item, quantity, name, surname, cit_username, phone, lat, lng) 
                     VALUES ('$item', '$quantity', '$name', '$surname', '$usrnm' ,'$phone', '$lat', '$lng')";
 
            
             if (mysqli_query($conn, $sql)) {
+                //Update to announcements an egine offer
                 $sql2 = "UPDATE announcements SET offer_made = 'YES' WHERE ann_id = $ann_id";
                 if (mysqli_query($conn, $sql2)) {
                     echo "Offer made successfully!";
