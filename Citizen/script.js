@@ -1,3 +1,4 @@
+//Function gia to autocomplete
 $(function() {
      $("#autocomplete").autocomplete({
          source: function(request, response) {
