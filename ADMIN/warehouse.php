@@ -34,14 +34,14 @@ if (isset($_SESSION['username'])) {
 }
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+     // Elegxos gia to an o xrhsths einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
         echo '</div>';
         exit(); 
     }
-    
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "CITIZEN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -99,7 +99,7 @@ checkLoggedIn();
                         $result = mysqli_query($conn, $sql);
 
                         $counter = 1; 
-                        // Fetch and display each product
+                        // Fernei kai deixnei ta proionta san pinaka
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                             echo "<td>{$counter}</td>"; 
@@ -128,7 +128,7 @@ checkLoggedIn();
                             $product_id = $_POST['product_id'];
                             $delete_sql = "DELETE FROM products WHERE id = $product_id";
                             if (mysqli_query($conn, $delete_sql)) {
-                                // Reload the page after successful deletion
+                                // Epanafortwsh ean htan epityxhs
                                 echo "<meta http-equiv='refresh' content='0'>";
                             } else {
                                 echo "Error deleting record: " . mysqli_error($conn);
@@ -143,6 +143,7 @@ checkLoggedIn();
 
 
 <script> 
+//Fucntion gia na filtrarei tis kathgories me toggle button kai checkboxes
 function toggleCategories() {
   var categoryContainer = document.getElementById("category-con");
   categoryContainer.style.display =
@@ -152,7 +153,7 @@ document.getElementById("filterbtn").addEventListener("click", function() {
     applyFilter();
 });
 
-//function for the selected categories to send them to the server
+//Function gia na ginei h apaloifh tou filrou ki na fenrei ta proionta me sygkekrimens kathgories
 function applyFilter() {
     var selectedCategories = [];
     var categoryCheckboxes = document.getElementsByName("category[]");
@@ -163,7 +164,7 @@ function applyFilter() {
         }
     }
 
-    //Send the categories to the table with ajax 
+    //Stelnei tis kathgories me AJAX
     var xhr = new XMLHttpRequest();
     xhr.open("POST", "filter_products.php", true);
     xhr.setRequestHeader("Content-Type", "application/json");
@@ -179,12 +180,12 @@ function applyFilter() {
     xhr.send(JSON.stringify({ categories: selectedCategories }));
 }
 
-//Function to reload the page if none category is selected 
+//Function gia epanafortwsh ths selidas ean kanena filtro den epilexgei
 document.getElementById("filterbtn").addEventListener("click", function() {
     var categoryCheckboxes = document.getElementsByName("category[]");
     var anyChecked = false;
 
-    // Check if any category is checked
+    // Elegxos ean exei epilgxei opoiadhpote kathgoria
     for (var i = 0; i < categoryCheckboxes.length; i++) {
         if (categoryCheckboxes[i].checked) {
             anyChecked = true;
@@ -192,11 +193,11 @@ document.getElementById("filterbtn").addEventListener("click", function() {
         }
     }
 
-    //if no category is checked reload the page to get all the products back 
+    //An oxi fernei ola ta proionta opws prin 
     if (!anyChecked) {
         window.location.reload();
     } 
-    //else apply the filter 
+    //Alliws ginetai apaloifh tou filtrou
     else {
         applyFilter();
     }
