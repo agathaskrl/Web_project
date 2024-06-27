@@ -1,16 +1,16 @@
 <?php
 include_once 'connect_db.php';
 
-// fetch offers from the database
+// fetch offers apo vash
 $sql = "SELECT offer_id, name, surname, phone, item, quantity, lat, lng, usrnm_veh, subm_date, ret_date, status FROM offers";
 $result = $conn->query($sql);
 
-// Check if there are results
+// Check an uparxoun apotelesmata
 if ($result->num_rows > 0) {
     // Initialize an array to store offers
     $offers = array();
 
-    // Fetch and store each offer
+    // Fetch kai apothikeusi kathe offer
     while ($row = $result->fetch_assoc()) {
         $offer = array(
             'offer_id' => $row['offer_id'], 
@@ -26,14 +26,14 @@ if ($result->num_rows > 0) {
             'ret_date' => $row['ret_date'], 
             'status' => $row['status'], 
         );
-        // Add the offer to the offers array
+        // prosthiki tou offer ston pinaka offers
         $offers[] = $offer;
     }
 
-    // Convert offers array to JSON format
+    // metatropi tou offers pinaka se JSON morfi
     $jsonOffers = json_encode($offers);
 
-    // Output JSON data
+    // ektupwsi JSON data
     header('Content-Type: application/json');
     echo $jsonOffers;
 } else {
