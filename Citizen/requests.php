@@ -46,14 +46,15 @@ if (isset($_SESSION['username'])) {
 }
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+  
+    // Elegxos gia to an o xrhsths einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
         echo '</div>';
         exit(); 
     }
-    
+     // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "ADMIN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -68,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $allreq_product = "";
     $alldemand = "";
 
-    // Original items
+    // Ta original items
     $orreq_product = $_POST['req_product-input'];
     $ordemand = $_POST['demand-input'];
 
@@ -79,11 +80,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     $usrnm = $_SESSION['username'];
-
+    //Query gia na fernei ta stoixeia toy xrhsth apo ton pinaka user 
     $query_user = "SELECT name, surname, phone FROM user WHERE username='$usrnm'";
     $result_user = mysqli_query($conn, $query_user);
     $user = mysqli_fetch_assoc($result_user);
-
+  //Query gia na fernei ta coordinate stou xrhsth
     $query_coordinates = "SELECT lat, lng FROM coordinates WHERE username='$usrnm'";
     $result_coordinates = mysqli_query($conn, $query_coordinates);
     $coordinates = mysqli_fetch_assoc($result_coordinates);
@@ -95,7 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $lat = $coordinates['lat'];
         $lng = $coordinates['lng'];
 
-        // Insert data into the requests table
+        // Eisagwgh twn dedomenwn ston pinaka offers
         $sql = "INSERT INTO requests (req_product, demand, civ_name, civ_surname, civ_phone, lat, lng) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssssss", $allreq_product, $alldemand, $civ_name, $civ_surname, $civ_phone, $lat, $lng);
