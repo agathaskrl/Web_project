@@ -1,3 +1,4 @@
+//Function gia na eisagei ta dedomena on sumbit sto pinaka procuts & categories
 $(document).ready(function () {
   $("#uploadForm").submit(function (event) {
     event.preventDefault();
@@ -5,7 +6,7 @@ $(document).ready(function () {
 
     var fileInput = $("#file-selector")[0].files[0]; 
     if (!fileInput) {
-      //if no file is selected alert the user
+      //An den exei peilxthei arxeio eidopoihse me mhnyma ton xrhsth
       alert("Please select a file to upload");
       return;
     }
@@ -15,7 +16,7 @@ $(document).ready(function () {
     $.ajax({
       type: "POST",
       url: "updatewarehouse.php",
-      data: formData, //pass the data from the form to the server
+      data: formData, //Pernaei ta dedomena ston server
       processData: false,
       contentType: false,
       success: function () {
@@ -28,10 +29,10 @@ $(document).ready(function () {
     });
   });
 });
-
+//Function gia na diagrafei ta dedomena apo ton pinaka products kai categories
 $(document).ready(function () {
   $("#deleteelementsbtn").click(function () {
-    //user must confirm 
+    //O xrhsths epivevaiwnei oti thelei na diagracei ta arxeia
     if (confirm("Are you sure you want to delete all elements?")) {
       $.ajax({
         type: "POST",
