@@ -1,6 +1,6 @@
 <?php
 include_once 'connect_db.php';
-
+//Query gia na fernei ta coordinates twn xrhstwn
 $sql = 'SELECT lat, lng FROM coordinates INNER JOIN user ON user.username = coordinates.username WHERE user.role = "SAVIOR"';
 $result = $conn->query($sql);
 
