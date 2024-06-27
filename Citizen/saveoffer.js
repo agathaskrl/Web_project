@@ -1,3 +1,4 @@
+//Funxtion gia na apothikeyei to offerpou kanei o poliths 
 $(document).ready(function () {
   $(".offerbutton").click(function () {
     var row = $(this).closest("tr");
@@ -6,7 +7,7 @@ $(document).ready(function () {
     var subm_date = row.find("td:eq(2)").text();
     var ann_id = $(this).data("ann-id");
 
-    // Retrieve user information from session
+    // Fernei ta deodmena apo to session
     var name = "<?php echo addslashes($_SESSION['name']); ?>";
     var surname = "<?php echo addslashes($_SESSION['surname']); ?>";
     var cit_username = "<?php echo addslashes($_SESSION['username']); ?>";
