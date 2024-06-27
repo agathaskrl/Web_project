@@ -32,8 +32,8 @@ try {
 
     // Prepare and execute queries
     $queries = [
-        "SELECT COUNT(*) AS count FROM requests WHERE req_date >= ? AND status = ''" => 'New Requests',
-        "SELECT COUNT(*) AS count FROM offers WHERE subm_date >= ? AND status = ''" => 'New Offers',
+        "SELECT COUNT(*) AS count FROM requests WHERE req_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Requests',
+        "SELECT COUNT(*) AS count FROM offers WHERE subm_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Offers',
         "SELECT COUNT(*) AS count FROM requests WHERE status = 'COMPLETE' AND req_date >= ?" => 'Complete Requests',
         "SELECT COUNT(*) AS count FROM offers WHERE status = 'COMPLETE' AND subm_date >= ?" => 'Complete Offers'
     ];
