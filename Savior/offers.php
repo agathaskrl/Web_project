@@ -29,7 +29,7 @@ include_once 'connect_db.php';
 
 
 function checkLoggedIn() {
-    // Check if the user is not logged in
+    // elegxos an einai logged in o xristis
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
@@ -37,7 +37,7 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
+    // elegxos gia to role tou xristi, an einai "SAVIOR" or "ADMIN", kai arnisi prosvasis
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -48,7 +48,7 @@ function checkLoggedIn() {
 
 checkLoggedIn();
 
-// Query to fetch offers from the database
+// Query gia na kanei fetch ta offers apo ti vasi 
 $sql = "SELECT * FROM offers";
 $result = $conn->query($sql);
 
@@ -69,7 +69,7 @@ $result = $conn->query($sql);
         </thead>
         <tbody>
         <?php
-        // Display offers if there are any
+        // emfanisi offers an uparxoun
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 echo "<tr>";
@@ -101,7 +101,7 @@ $result = $conn->query($sql);
             $offer_id = $_POST['offer_id'];
             $cancel_sql = "DELETE FROM offers WHERE offer_id = $offer_id";
             if (mysqli_query($conn, $cancel_sql)) {
-                // Reload the page after successful 
+                // ananewsi selidas meta apo update 
                 echo "<meta http-equiv='refresh' content='0'>";
             } else {
                 echo "Error updating record: " . mysqli_error($conn);
