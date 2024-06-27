@@ -36,7 +36,6 @@ if (isset($_SESSION['username'])) {
     if ($result && mysqli_num_rows($result) > 0) {
         $row = mysqli_fetch_assoc($result);
         $_SESSION['role'] = $row['role']; 
-        // echo $_SESSION['role']; 
     }
 }
 
@@ -49,7 +48,6 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
