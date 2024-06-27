@@ -38,7 +38,7 @@ if (isset($_SESSION['username'])) {
 }
 
 function checkLoggedIn() {
-
+    //Elegxos gia to an o xrhsths  einai syndedemenos
     if (!isset($_SESSION['username'])) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'User not logged in!';
@@ -46,7 +46,7 @@ function checkLoggedIn() {
         exit(); 
     }
     
-
+    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "CITIZEN" kai aporich peraitero prosvashs
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $allitems = "";
     $allquan = "";
 
-     //for dynamic form values
+     //Gia ta dynamic values dhladh pao to expand
     for ($i = 0; $i <= $valuejs; $i++) {
         $item = $_POST['product-input-' . $i];
         $quantity = $_POST['quantity-input-' . $i];
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $allquan .= ($allquan == "" ? "" : ",") . $quantity;
         }
     }
-    //for original items
+    //kai edw gia ta origian values
     $oritems = $_POST['product-input'];
     $orquan = $_POST['quantity-input'];
 
@@ -117,13 +117,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $allquan .= ($allquan == "" ? "" : ",") . $orquan;
     }
 
-
+    //query gia eisagwgh twn dedomenwn sto pinaka announcemnts
     $sql = "INSERT INTO announcements (item, quantity) VALUES (?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $allitems, $allquan);
 
     if ($stmt->execute()) {
-        //redirect when success
+        //Anakateythinsh an einai epityxhs
         header("Location: " . $_SERVER['REQUEST_URI']);
         exit(); 
     } else {
