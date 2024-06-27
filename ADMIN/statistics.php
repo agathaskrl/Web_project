@@ -35,14 +35,14 @@
             }
 
             function checkLoggedIn() {
-                // Check if the user is not logged in
+                // Elegxos gia to an o xrhsths einai syndedemenos
                 if (!isset($_SESSION['username'])) {
                     echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
                     echo 'User not logged in!';
                     echo '</div>';
                     exit(); 
                 }
-                
+                    // Elegxos gia to an o rolos tou xrhsth einai  "SAVIOR" h "CITIZEN" kai aporich peraitero prosvashs
                 if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
                     echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
                     echo 'Unauthorized access!';
