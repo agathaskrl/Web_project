@@ -36,7 +36,7 @@ session_start();
     }
 
     function checkLoggedIn() {
-        // Check if the user is not logged in
+        // elegxos an o xristis den einai logged in
         if (!isset($_SESSION['username'])) {
             echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
             echo 'User not logged in!';
@@ -73,7 +73,7 @@ session_start();
 <div class="map" id="map" style="width: 100%; height: 450px;"></div>
 <script src="map-sav.js"></script>
 <script>
-        //fnction to get the location of the user
+        //function gia na pairnei tin topothesia tou xristi
         function getLocation() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(showPosition);
@@ -81,13 +81,13 @@ session_start();
                 alert("Geolocation is not supported by this browser.");
             }
         }
-         //show and get the coordinates
+         //pairnei kai emfanizei tis syntetagmenes
         function showPosition(position) {
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-            // Send coordinates to server using AJAX
+            // stelnei tis syntetagmenes me methodo AJAX
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "insert_coordinates.php", true); //other file not to get things mixed
+            xhr.open("POST", "insert_coordinates.php", true); //arxeio sto opoio ta stelnei gia na min mperdeyetai
             xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
@@ -96,19 +96,19 @@ session_start();
             };
             xhr.send("lat=" + lat + "&lng=" + lng);
         }
-                //call getLocation() when the page loads so its automated 
+                //kalei to getLocation() otan fortwnei i selida gia na ginetai automata 
                 window.onload = getLocation;
     </script>
 <?php
 
 
-// Check if the user is logged in
+// elegxos an o xristis einai logged in
 if (!isset($_SESSION['username'])) {
     echo 'User not logged in!';
     exit();
 }
 
-// Fetch savior's coordinates from the database
+// Fetch systetagmenes tou savior apo ti vasi
 $username = $_SESSION['username'];
 $query_savior = "SELECT lat, lng FROM coordinates";
 $result_savior = mysqli_query($conn, $query_savior);
@@ -118,12 +118,12 @@ if ($result_savior && mysqli_num_rows($result_savior) > 0) {
     $savior_lat = $row_savior['lat'];
     $savior_lng = $row_savior['lng'];
 } else {
-    // Handle case where savior coordinates are not found
+    // elegxos an den vrethoun syntetagmenes
     echo 'Savior coordinates not found!';
     exit();
 }
 
-// Fetch vash's coordinates from the database
+// Fetch syntetagmenes tis vashs apo th vash
 $query_vash = "SELECT lat, lng FROM vash_marker ";
 $result_vash = mysqli_query($conn, $query_vash);
 
@@ -132,7 +132,7 @@ if ($result_vash && mysqli_num_rows($result_vash) > 0) {
     $vash_lat = $row_vash['lat'];
     $vash_lng = $row_vash['lng'];
 } else {
-    // Handle case where vash coordinates are not found
+    // elegxos an den vrethoun oi syntetagmenes tis vashs
     echo 'Vash coordinates not found!';
     exit();
 }
