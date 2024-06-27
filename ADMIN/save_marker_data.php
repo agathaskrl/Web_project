@@ -1,13 +1,13 @@
 <?php
 include_once 'connect_db.php';
 
-//bring ht edata from the post
+//Fernei ta dedomena me xrhsh tou post
 $postData = file_get_contents("php://input");
 
-//json data
+
 $data = json_decode($postData);
 
-//data lan,lng 
+
 $lat = $data->lat;
 $lng = $data->lng;
 
