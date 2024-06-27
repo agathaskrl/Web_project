@@ -1,12 +1,12 @@
 <?php
 include_once 'connect_db.php';
 
-//get he selected categories with ajax requests 
+//Fernei ta categories me xrhsh AJAX request
 $data = json_decode(file_get_contents("php://input"));
 
 if (isset($data->categories)) {
     $selectedCategories = implode(',', $data->categories);
-
+//Query gia ta dedomena proiontwn
     $sql = "SELECT products.id AS id, products.name AS name, categories.category_name AS category_name, products.quantity, products.detail_name, products.detail_value, products.on_vehicle 
             FROM products 
             JOIN categories ON products.category = categories.id
@@ -14,7 +14,7 @@ if (isset($data->categories)) {
 
     $result = mysqli_query($conn, $sql);
 
-    //generate the products in warehouse page as they were 
+    //Paragwgh twn proiontwn opwns htan prin sto warehouse 
     $output = '';
     $counter = 1;
     while ($row = mysqli_fetch_assoc($result)) {
