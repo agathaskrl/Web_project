@@ -2,7 +2,6 @@
 session_start();
 include_once 'connect_db.php';
 
-// Check if user is logged in
 if (!isset($_SESSION['username'])) {
     echo "User not logged in.";
     exit;
@@ -21,7 +20,7 @@ if ($result_user->num_rows > 0) {
     $row_user = $result_user->fetch_assoc();
     $userid = $row_user['id'];
 
-    //check id this current user has coordinates
+    //check with id this current user has coordinates
     $sql_coordinates = "SELECT userid, lat, lng FROM coordinates WHERE userid = '$userid'";
     $result_coordinates = $conn->query($sql_coordinates);
 
