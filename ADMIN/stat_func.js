@@ -31,7 +31,7 @@ function createChart(data) {
     return;
   }
 
-  // Set default empty array for labels if not provided
+  //Orise ton pianka label se keno gia etiketes
   const labels = data.labels || [];
 
   if (statistics) {
@@ -58,7 +58,7 @@ function createChart(data) {
     },
   });
 }
-
+//Ananewnei to chart analoga me to epilgemeno xroniko diasthma
 function updateChart() {
   const timePeriod = document.getElementById("time-period").value;
   fetchData(timePeriod)
