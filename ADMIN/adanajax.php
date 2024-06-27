@@ -8,7 +8,7 @@ require_once 'connect_db.php';
 
 if(isset($_POST['search'])){
     $search = mysqli_real_escape_string($conn,$_POST['search']);
-
+    //query gia na fernei ta proionta me ta grammata 
     $query = "SELECT name FROM products WHERE name LIKE '%" . $search . "%'";
     $result = mysqli_query($conn,$query);
 
