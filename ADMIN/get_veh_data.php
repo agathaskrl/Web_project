@@ -19,7 +19,7 @@ if ($result) {
         echo json_encode(array()); // No data found
     }
 } else {
-    echo json_encode(array('error' => $conn->error)); // Error executing query
+    echo json_encode(array('error' => $conn->error));
 }
 
 $conn->close();
