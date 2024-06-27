@@ -1,39 +1,18 @@
-<!DOCTYPE html>
-<html lan="en" and dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title> Requests List </title>
-        <link rel="stylesheet" href="requestslist.css">
-</head>
-
-
-<body>
-<div class="main"> 
-    <div class="navbar">
-        <ul>
-            <li><a href= "homepolitis.php">HOME</a></li>
-            <li><a href= "requests.php">REQUESTS</a></li>
-            <li><a href= "announcements.php">ANNOUNCEMENTS</a></li>
-            <li><a href= "offers.php">OFFERS</a></li>
-            <li><a href="logout.php">LOGOUT</a></li>
-        </ul>
-    </div>
-</div>
-</body>
-
 <?php
-    include_once 'connect_db.php';
+include_once 'connect_db.php';
 session_start();
 
 if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
-    $query = "SELECT role FROM user WHERE username='$username'";
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT role FROM user WHERE username=?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
     
-    if ($result && mysqli_num_rows($result) > 0) {
-        $row = mysqli_fetch_assoc($result);
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
         $_SESSION['role'] = $row['role']; 
-        // echo $_SESSION['role']; 
     }
 }
 
@@ -46,7 +25,6 @@ function checkLoggedIn() {
         exit(); 
     }
     
-    // Check if the user's role is "SAVIOR" or "ADMIN", and deny access
     if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "ADMIN")) {
         echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
         echo 'Unauthorized access!';
@@ -57,54 +35,74 @@ function checkLoggedIn() {
 
 checkLoggedIn();
 
+$sql1 = "SELECT name, surname FROM user WHERE username=?";
+$stmt1 = $conn->prepare($sql1);
+$stmt1->bind_param("s", $username);
+$stmt1->execute();
+$result1 = $stmt1->get_result();
+$row1 = $result1->fetch_assoc();
+$civ_name = $row1['name'];
+$civ_surname = $row1['surname'];
 
-// Fetch data from the database
-$sql = "SELECT req_product, demand, req_date, under_date, veh_username FROM requests";
-$result = $conn->query($sql);
-
+$sql = "SELECT * FROM requests WHERE civ_name = ? AND civ_surname = ?";
+$stmt2 = $conn->prepare($sql);
+$stmt2->bind_param("ss", $civ_name, $civ_surname);
+$stmt2->execute();
+$result = $stmt2->get_result();
 ?>
 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title>Requests List</title>
+    <link rel="stylesheet" href="requestslist.css">
+</head>
+<body>
+<div class="main"> 
+    <div class="navbar">
+        <ul>
+            <li><a href="homepolitis.php">HOME</a></li>
+            <li><a href="requests.php">REQUESTS</a></li>
+            <li><a href="announcements.php">ANNOUNCEMENTS</a></li>
+            <li><a href="offers.php">OFFERS</a></li>
+            <li><a href="logout.php">LOGOUT</a></li>
+        </ul>
+    </div>
+</div>
 
 <div class="form-box">
-            <table>
-                <thead>
-                    <tr>
-                        
-<?php
-// Check if there are any results
-if ($result->num_rows > 0) {
-    echo "<table>";
-    echo "<thead>";
-    echo "<tr>";
-    echo "<th>Item</th>";
-    echo "<th>People in need</th>";
-    echo "<th>Request Date</th>";
-    echo "<th>Undertaken Date</th>";
-    echo "<th>Vehicle</th>";
-    echo "</tr>";
-    echo "</thead>";
-    echo "<tbody>";
-
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["req_product"] . "</td>";
-        echo "<td>" . $row["demand"] . "</td>";
-        echo "<td>" . $row["req_date"] . "</td>";
-        echo "<td>" . $row["under_date"] . "</td>";
-        echo "<td>" . $row["veh_username"] . "</td>";
-        echo "</tr>";
-    }
-
-    echo "</tbody>";
-    echo "</table>";
-} else {
-    echo "No requests found.";
-}
-
-// Close the database connection
-$conn->close();
-?>
-</tr>
-</thead>
-<tbody>
+    <table>
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>People in need</th>
+                <th>Request Date</th>
+                <th>Undertaken Date</th>
+                <th>Vehicle</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+                    echo "<tr>";
+                    echo "<td>" . $row["req_product"] . "</td>";
+                    echo "<td>" . $row["demand"] . "</td>";
+                    echo "<td>" . $row["req_date"] . "</td>";
+                    echo "<td>" . $row["under_date"] . "</td>";
+                    echo "<td>" . $row["veh_username"] . "</td>";
+                    echo "<td>" . $row["status"] . "</td>";
+                    echo "</tr>";
+                }
+            } else {
+                echo "<tr><td colspan='6' style='text-align: center;'>No requests found!</td></tr>";
+            }
+            $conn->close();
+            ?>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
