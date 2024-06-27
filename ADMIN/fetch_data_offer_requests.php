@@ -1,14 +1,14 @@
 <?php
 include_once 'connect_db.php';
 
-// Check for the time parameter 
+// Elegxos gia thn parametro toy xronoy 
 if (isset($_GET['timePeriod'])) {
     $timePeriod = $_GET['timePeriod'];
 } else {
     $timePeriod = 7;
 }
 
-// Calculate start date based on the selected time period
+// Ypologismos ths hmeras ekkinhshs me vash thn epilogh timeperiod
 switch ($timePeriod) {
     case '7':
         $startDate = date('Y-m-d', strtotime('-7 days'));
@@ -31,6 +31,7 @@ try {
     ];
 
     $queries = [
+        //Queries gia na fernei ta dedomena offers kai requests analog ame to status
         "SELECT COUNT(*) AS count FROM requests WHERE req_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Requests',
         "SELECT COUNT(*) AS count FROM offers WHERE subm_date >= ? AND status = NULL || status = 'ONGOING'" => 'New Offers',
         "SELECT COUNT(*) AS count FROM requests WHERE status = 'COMPLETE' AND req_date >= ?" => 'Complete Requests',
