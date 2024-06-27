@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="tasks.css">
     <script>
         function calculateDistance(lat1, lon1, lat2, lon2) {
-            const R = 6371000; // Radius of the earth in meters
+            const R = 6371000; // Rad tis gis se metra
             const φ1 = (lat1 * Math.PI) / 180;
             const φ2 = (lat2 * Math.PI) / 180;
             const Δφ = ((lat2 - lat1) * Math.PI) / 180;
@@ -17,7 +17,7 @@
                 Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
             const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-            const distance = R * c; // Distance in meters
+            const distance = R * c; // apostasi se metra
             return distance;
         }
 
@@ -29,7 +29,7 @@
                 offerCoords.lng
             );
             console.log("Distance between vehicle and offer:", distance, "meters");
-            return distance <= 50; // Returns true if distance is 50 meters or less
+            return distance <= 50; // Returns true an i apostasi einai 50 metra i ligotero
         }
 
         function checkvehandreqdis(vehicleCoords, requestCoords) {
@@ -40,7 +40,7 @@
                 requestCoords.lng
             );
             console.log("Distance between vehicle and request:", distance, "meters");
-            return distance <= 50; // Returns true if distance is 50 meters or less
+            return distance <= 50; // Returns true an i apostasi einai 50 metra i ligotero
         }
     </script>
 </head>
@@ -59,7 +59,7 @@
     include_once "connect_db.php";
     session_start();
 
-    // Function to check if user is logged in and authorized
+    // Function gia elegxo an o xristis einai logged in
     function checkLoggedIn() {
         if (!isset($_SESSION["username"])) {
             echo "<div style='text-align: center; padding: 80px; color: rgba(76, 56, 30, 1);'>";
@@ -113,7 +113,7 @@
                 $update_sql2 = "UPDATE vehicle SET under_tasks = under_tasks - 1, cargo = $new_cargo, items = '$new_items' WHERE sav_username = '$username'";
                 $update_sql3 = "UPDATE products SET on_vehicle = NULL WHERE name ='$offer_item'";
                 if (mysqli_query($conn, $update_sql) && mysqli_query($conn, $update_sql2) && mysqli_query($conn, $update_sql3)) {
-                    // Reload the page after successful update
+                    // ananewsi selidas meta apo update
                     echo "<meta http-equiv='refresh' content='0'>";
                 } else {
                     echo "Error updating record: " . mysqli_error($conn);
@@ -132,7 +132,7 @@
             $cancel_sql = "UPDATE offers SET status = NULL, ret_date = NULL, usrnm_veh = NULL WHERE offer_id = $offer_id";
             $cancel_sql2 = "UPDATE vehicle SET under_tasks = under_tasks - 1 WHERE sav_username = '$username'";
             if (mysqli_query($conn, $cancel_sql) && mysqli_query($conn, $cancel_sql2)) {
-                // Reload the page after successful
+                // ananewsi selidas meta apo update
                 echo "<meta http-equiv='refresh' content='0'>";
             } else {
                 echo "Error updating record: " . mysqli_error($conn);
@@ -174,7 +174,7 @@
                     $update_sql2 = "UPDATE vehicle SET under_tasks = under_tasks - 1, cargo = $new_cargo, items = '$new_items' WHERE sav_username = '$username'";
         
                     if (mysqli_query($conn, $update_sql) && mysqli_query($conn, $update_sql2)) {
-                        // Reload the page after successful update
+                        // ananewsi selidas meta apo update
                         echo "<meta http-equiv='refresh' content='0'>";
                     } else {
                         echo "Error updating record: " . mysqli_error($conn);
@@ -200,7 +200,7 @@
         }
     
 
-    // Fetch offers from the database
+    // Fetch offers apo ti vasi
     $query1 = "SELECT * FROM offers WHERE usrnm_veh = '$username'";
     $result1 = $conn->query($query1);
     ?>
@@ -245,7 +245,7 @@
                                 <form action="" method="POST">
                                     <input type="hidden" name="offer_id" value="<?php echo $row["offer_id"]; ?>">
                                     <?php
-                                   // check the distance between the vehicle and the offer
+                                   // elegxos apostasis metaksi vehicle kai offer
                                     echo "<script>
                                          var distance = checkvehandoffersdis({lat: $vehicle_lat, lng: $vehicle_lng}, {lat: $offer_lat, lng: $offer_lng});
                                         if (distance) {
@@ -276,7 +276,7 @@
     </div>
 
     <?php
-    // Fetch requests from the database
+    // Fetch requests apo ti vasi
     $query2 = "SELECT * FROM requests WHERE veh_username = '$username'";
     $result2 = $conn->query($query2);
     ?>
@@ -320,7 +320,7 @@
                                 <form action="" method="POST">
                                     <input type="hidden" name="req_id" value="<?php echo $row["req_id"]; ?>">
                                     <?php
-                                    // Check the distance between vehicle and request
+                                    // elegxos apostasis metaksi vehicle kai request
                                     echo "<script>
                                         var distance = checkvehandreqdis({lat: $vehicle_lat, lng: $vehicle_lng}, {lat: $request_lat, lng: $request_lng});
                                         if (distance) {
