@@ -2,34 +2,34 @@
 include_once 'connect_db.php';
 session_start();
 
-// Check if the user is logged in
+// elegxos an o user einai logged in
 if (!isset($_SESSION['username'])) {
     echo "User is not logged in";
     exit(); // Stop further execution
 }
 
-// Get the current session's username
+// Pairnei to username tou xristi tou trexontos session
 $username = $_SESSION['username'];
 
-// Fetch the savior's coordinates from the database
+// pairnei tis syntetagmenes toy savior apo ti vash
 $sql = "SELECT lat, lng FROM coordinates WHERE username = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Check if any coordinates were found
+// elegxos an vrethikan syntetagmenes
 if ($result->num_rows > 0) {
-    // Fetch the coordinates and encode them as JSON
+    // Fetch tis syntetagmenes kai metatropi tous se JSON
     $row = $result->fetch_assoc();
     $coordinates = array("lat" => $row["lat"], "lng" => $row["lng"]);
     echo json_encode($coordinates);
 } else {
-    // If no coordinates were found, return an error message
+    // error message an den brethikan systetagmenes
     echo "No savior coordinates found for user: $username";
 }
 
-// Close prepared statement and database connection
+// Kleinei to statement kai i syndesi me vash
 $stmt->close();
 $conn->close();
 ?>
