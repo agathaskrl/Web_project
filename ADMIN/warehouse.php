@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Warehouse</title>
-    <link rel="stylesheet" href="adstyle.css?v=16">
+    <link rel="stylesheet" href="adstyle.css">
 </head>
 <body>     
     <div class="main">
@@ -19,20 +19,39 @@
         </div>
 
         <?php
-        include_once 'connect_db.php';
+    include_once 'connect_db.php';
+session_start();
 
-        // Function to check if the user is logged in
-        function checkLoggedIn() { 
-            session_start();
-            if (!isset($_SESSION['username'])) {
-                echo '<div style="text-align: center; padding: 80px; background-color: rgb(247, 240, 235); color: rgba(76, 56, 30, 1); ">';
-                echo 'User not logged in. Please <a href="login.php">Log in!</a>.';
-                echo '</div>';
-                exit(); // Exit the script
-            }
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    $query = "SELECT role FROM user WHERE username='$username'";
+    $result = mysqli_query($conn, $query);
+    
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $_SESSION['role'] = $row['role']; 
         }
-        checkLoggedIn(); // Call the function to check if the user is logged in
-        ?>
+}
+
+function checkLoggedIn() {
+    // Check if the user is not logged in
+    if (!isset($_SESSION['username'])) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'User not logged in!';
+        echo '</div>';
+        exit(); 
+    }
+    
+    if (isset($_SESSION['role']) && ($_SESSION['role'] == "SAVIOR" || $_SESSION['role'] == "CITIZEN")) {
+        echo '<div style="text-align: center; padding: 80px; color: rgba(76, 56, 30, 1); ">';
+        echo 'Unauthorized access!';
+        echo '</div>';
+        exit(); 
+    }
+}
+
+checkLoggedIn();
+?>
 
         <br>
         <div class="button-container">
@@ -79,11 +98,11 @@
 
                         $result = mysqli_query($conn, $sql);
 
-                        $counter = 1; // Initialize the counter
+                        $counter = 1; 
                         // Fetch and display each product
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
-                            echo "<td>{$counter}</td>"; // Output the counter
+                            echo "<td>{$counter}</td>"; 
                             echo "<td>{$row['name']}</td>";
                             echo "<td>{$row['category_name']}</td>";
                             echo "<td>{$row['quantity']}</td>";
@@ -138,7 +157,6 @@ function applyFilter() {
     var selectedCategories = [];
     var categoryCheckboxes = document.getElementsByName("category[]");
 
-    //loop to find the selected categories
     for (var i = 0; i < categoryCheckboxes.length; i++) {
         if (categoryCheckboxes[i].checked) {
             selectedCategories.push(categoryCheckboxes[i].value);
@@ -152,7 +170,7 @@ function applyFilter() {
 
     xhr.onreadystatechange = function() {
     if (xhr.readyState === 4 && xhr.status === 200) {
-        //update the table in the warehouse.php
+        //update the table in the warehouse
         var productsTable = document.getElementById("products");
         productsTable.innerHTML = xhr.responseText;
     }
