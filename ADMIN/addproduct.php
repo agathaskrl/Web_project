@@ -80,7 +80,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $detail_name = $_POST['detail_name'];
     $detail_value = $_POST['detail_value'];
 
-    // Check if the product already exists
     $query = "SELECT * FROM products WHERE name = '$item'";
     $result = mysqli_query($conn, $query);
 
