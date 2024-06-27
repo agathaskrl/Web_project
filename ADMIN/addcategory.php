@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (mysqli_num_rows($result) > 0) {
         echo "<script>alert('Category already exists. Please choose a different name.');</script>";
     } else {
-        // Get the last ID from the categories table
+        // Get the last id from the categories table
         $last_id_query = "SELECT id FROM categories ORDER BY id DESC LIMIT 1";
         $last_id_result = mysqli_query($conn, $last_id_query);
 
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $new_id = 1; // If no categories exist, start from 1
         }
 
-        // Insert the new category with the incremented ID
+        // Insert the new category with the incremented id
         $insert_query = "INSERT INTO categories (id, category_name) VALUES ('$new_id', '$category')";
         if (mysqli_query($conn, $insert_query)) {
             echo "<script>alert('Category added successfully.');</script>";
